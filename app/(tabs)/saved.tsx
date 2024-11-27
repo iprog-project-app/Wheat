@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 
-export default function TabOneScreen() {
+export default function TabTwoScreen() {
   return (
     // TODO: Implement Presenter
     <View style={styles.container}>
-      <Text style={styles.title}>Explore</Text>
+      <Text style={styles.title}>Saved</Text>
       <View style={styles.separator} />
     </View>
   );
