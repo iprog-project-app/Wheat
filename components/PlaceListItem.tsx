@@ -2,10 +2,6 @@ import React from "react";
 import { View, Image, Text, StyleSheet, Pressable } from "react-native";
 import Colors from "../constants/Colors";
 import { FontAwesome } from "@expo/vector-icons";
-import Reanimated, {
-  SharedValue,
-  useAnimatedStyle,
-} from "react-native-reanimated";
 
 export interface PlaceListItemProps {
   id: string;
