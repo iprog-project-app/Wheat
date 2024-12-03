@@ -8,7 +8,7 @@ export interface SearchViewProps {
   searchResults: Array<
     Pick<
       PlacePreviewSchema,
-      "id" | "title" | "location" | "imageUri" | "rating"
+      "id" | "title" | "location" | "imageUri" | "rating" | "isLiked"
     >
   >;
   searchQuery: string;
