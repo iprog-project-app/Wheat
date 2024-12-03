@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet, Text, View } from "react-native";
 
+// TODO: Rename to settingsScreen
 export default function ModalScreen() {
   return (
     // TODO: Implement Presenter
