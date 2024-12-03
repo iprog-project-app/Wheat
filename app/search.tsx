@@ -1,11 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import SearchModalPresenter from "../presenters/SearchModalPresenter";
+import SearchPresenter from "../presenters/SearchPresenter";
 
-export default function ModalScreen() {
+export default function SearchScreen() {
   return (
     // TODO: Implement Presenter
-    <SearchModalPresenter />
+    <SearchPresenter />
   );
 }
 
