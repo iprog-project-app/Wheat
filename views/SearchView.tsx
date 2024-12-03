@@ -1,6 +1,6 @@
 import { PlaceListItem } from "@/components/PlaceListItem";
 import { PlacePreviewSchema } from "@/constants/types";
-import { SearchBar } from "react-native-elements";
+import { SearchBar } from "@rneui/themed";
 import { FlatList, Platform, StyleSheet, View } from "react-native";
 import Colors from "../constants/Colors";
 
@@ -26,19 +26,10 @@ const SearchBarComponent = ({
 }) => (
   <SearchBar
     key="searchBar"
-    platform="default" //{Platform.OS === "ios" ? "ios" : "android"}
+    platform={Platform.OS === "ios" ? "ios" : "android"}
     placeholder="Type Here..."
     value={searchQuery}
-    onChangeText={onChangeText(searchQuery)}
-    containerStyle={{
-      backgroundColor: Colors.white,
-      borderBottomColor: "transparent",
-      borderTopColor: "transparent",
-    }}
-    inputContainerStyle={{
-      backgroundColor: Colors.gray4,
-      borderRadius: 8,
-    }}
+    onChangeText={onChangeText}
   />
 );
 
