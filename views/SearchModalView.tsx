@@ -1,11 +1,16 @@
 import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import SearchModalPresenter from "../presenters/searchModalPresenter";
 
-export default function ModalScreen() {
+export default function SearchModalView() {
   return (
     // TODO: Implement Presenter
-    <SearchModalPresenter />
+    <View style={styles.container}>
+      <Text style={styles.title}>Search Modal</Text>
+      <View style={styles.separator} />
+
+      {/* Use a light status bar on iOS to account for the black space above the modal */}
+      <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
+    </View>
   );
 }
 
