@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import SearchModalPresenter from "../presenters/searchModalPresenter";
+import SearchModalPresenter from "../presenters/SearchModalPresenter";
 
 export default function ModalScreen() {
   return (
