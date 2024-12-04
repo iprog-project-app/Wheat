@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { StyleSheet, View } from "react-native";
 import Colors from "../constants/Colors";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
@@ -18,55 +18,60 @@ export interface AnimatedButtonProps {
   children: React.ReactNode;
 }
 
-export function AnimatedButton({
-  minScale = 0.97,
-  duration = 300,
-  elasticity = 1.5,
-  onPress,
-  onLongPress,
-  children,
-  style,
-}: AnimatedButtonProps & View["props"]) {
-  const animatedScale = useSharedValue(1);
-  const opacity = useSharedValue(1);
+export const AnimatedButton = forwardRef(
+  (
+    {
+      minScale = 0.97,
+      duration = 300,
+      elasticity = 1.5,
+      onPress,
+      onLongPress,
+      children,
+      style,
+    }: AnimatedButtonProps & View["props"],
+    ref: React.Ref<View>
+  ) => {
+    const animatedScale = useSharedValue(1);
+    const opacity = useSharedValue(1);
 
-  const animatedButtonStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: animatedScale.value }],
-    opacity: opacity.value,
-  }));
+    const animatedButtonStyle = useAnimatedStyle(() => ({
+      transform: [{ scale: animatedScale.value }],
+      opacity: opacity.value,
+    }));
 
-  const pressAnimation = (targetScale: number) => {
-    return () => {
-      "worklet";
-      animatedScale.value = withTiming(targetScale, {
-        duration,
-        easing: Easing.elastic(elasticity),
-      });
+    const pressAnimation = (targetScale: number) => {
+      return () => {
+        "worklet";
+        animatedScale.value = withTiming(targetScale, {
+          duration,
+          easing: Easing.elastic(elasticity),
+        });
+      };
     };
-  };
 
-  return (
-    <TouchableWithoutFeedback
-      onPressIn={() => {
-        pressAnimation(minScale)();
-        console.log("pressIn");
-      }}
-      onPressOut={() => {
-        pressAnimation(1)();
-        console.log("pressOut");
-      }}
-      onPress={onPress}
-      onLongPress={() => {
-        console.log("longPress");
-        pressAnimation(1)();
-        onLongPress?.();
-      }}
-    >
-      <Animated.View style={[style, animatedButtonStyle]}>
-        {children}
-      </Animated.View>
-    </TouchableWithoutFeedback>
-  );
-}
+    return (
+      <TouchableWithoutFeedback
+        onPressIn={() => {
+          pressAnimation(minScale)();
+          console.log("pressIn");
+        }}
+        onPressOut={() => {
+          pressAnimation(1)();
+          console.log("pressOut");
+        }}
+        onPress={onPress}
+        onLongPress={() => {
+          console.log("longPress");
+          pressAnimation(1)();
+          onLongPress?.();
+        }}
+      >
+        <Animated.View ref={ref} style={[style, animatedButtonStyle]}>
+          {children}
+        </Animated.View>
+      </TouchableWithoutFeedback>
+    );
+  }
+);
 
 const styles = StyleSheet.create({});
