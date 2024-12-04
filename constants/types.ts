@@ -5,6 +5,7 @@ export type PlacePreviewSchema = {
   rating: number;
   location: string;
   isLiked: boolean;
+  note?: string;
 };
 
 export type PlaceFullSchema = PlacePreviewSchema & {
