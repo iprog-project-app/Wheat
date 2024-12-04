@@ -5,12 +5,7 @@ import { useState } from "react";
 export default function SearchPresenter() {
   // TODO: Fetch search results
   // Mock data (this would represent all places in the database) but we would fetch based on a query (I guess)
-  const placesData: Array<
-    Pick<
-      PlacePreviewSchema,
-      "id" | "title" | "location" | "imageUri" | "rating" | "isLiked"
-    >
-  > = [
+  const placesData: PlacePreviewSchema[] = [
     {
       id: "omnipollos",
       title: "Omnipollos hatt",

@@ -7,12 +7,7 @@ import { useMemo } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 
 export interface SearchViewProps {
-  searchResults: Array<
-    Pick<
-      PlacePreviewSchema,
-      "id" | "title" | "location" | "imageUri" | "rating" | "isLiked"
-    >
-  >;
+  searchResults: PlacePreviewSchema[];
   searchQuery: string;
   onChangeText: (searchQuery: string) => void;
   toggleLike: (id: string) => () => void;
