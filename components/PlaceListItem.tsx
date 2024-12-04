@@ -10,6 +10,7 @@ export interface PlaceListItemProps {
   imageUri: string;
   rating: number;
   isLiked: boolean;
+  note?: string;
   toggleLike: () => void;
   onPress: () => void;
 }
@@ -20,6 +21,7 @@ export function PlaceListItem({
   imageUri,
   rating,
   isLiked,
+  note,
   toggleLike,
   onPress,
 }: PlaceListItemProps) {
@@ -37,45 +39,59 @@ export function PlaceListItem({
         hitSlop={12}
         onPress={onPress}
         style={({ pressed }) => ({
-          flexDirection: "row",
-          gap: 16,
+          gap: 8,
           opacity: pressed ? 0.8 : 1,
           flex: 1,
         })}
       >
-        <View
-          style={{
-            width: 80,
-            height: 80,
-            borderRadius: 8,
-            borderCurve: "continuous",
-            overflow: "hidden",
-          }}
-        >
-          <Image
-            source={{ uri: imageUri }}
-            style={{
-              width: "100%",
-              height: "100%",
-            }}
-          />
-        </View>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            gap: 4,
-          }}
-        >
-          <Text style={{ fontSize: 18, fontWeight: "bold" }}>{title}</Text>
-          <Text style={{ fontSize: 16, color: Colors.gray1 }}>{location}</Text>
+        <View style={{ flexDirection: "row", gap: 16, flex: 1 }}>
           <View
-            style={{ flexDirection: "row", alignContent: "center", gap: 4 }}
+            style={{
+              width: 80,
+              height: 80,
+              borderRadius: 8,
+              borderCurve: "continuous",
+              overflow: "hidden",
+            }}
           >
-            <Text style={{ fontSize: 16, color: Colors.gray1 }}>{rating}</Text>
-            <FontAwesome name="star" size={18} color={Colors.yellow} />
+            <Image
+              source={{ uri: imageUri }}
+              style={{
+                width: "100%",
+                height: "100%",
+              }}
+            />
+          </View>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              gap: 4,
+            }}
+          >
+            <Text style={{ fontSize: 18, fontWeight: "bold" }}>{title}</Text>
+            <Text style={{ fontSize: 16, color: Colors.gray1 }}>
+              {location}
+            </Text>
+            <View
+              style={{ flexDirection: "row", alignContent: "center", gap: 4 }}
+            >
+              <Text style={{ fontSize: 16, color: Colors.gray1 }}>
+                {rating}
+              </Text>
+              <FontAwesome name="star" size={18} color={Colors.yellow} />
+            </View>
           </View>
         </View>
+        {note && (
+          <Text
+            style={{ fontSize: 18, color: Colors.gray2 }}
+            numberOfLines={2}
+            ellipsizeMode="tail"
+          >
+            {note}
+          </Text>
+        )}
       </Pressable>
       <Pressable
         hitSlop={12}
