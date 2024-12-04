@@ -15,31 +15,32 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import { Link } from "expo-router";
+import { AnimatedButton } from "./AnimatedButton";
 
 const styles = StyleSheet.create({
   tabBar: {
     position: "absolute",
+    width: "100%",
     bottom: 0,
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "white",
-    paddingBottom: 24,
-    paddingTop: 16,
-    borderTopWidth: 1,
-    borderTopColor: Colors.gray4,
-  },
-  tabBarItem: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    gap: 16,
+    paddingBottom: 24,
   },
-  FAB: {
+  mainButton: {
     width: 80,
     height: 80,
-    marginTop: -40,
     borderRadius: 999,
     backgroundColor: Colors.primary,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  secondaryButton: {
+    width: 64,
+    height: 64,
+    borderRadius: 999,
+    backgroundColor: Colors.secondary,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -80,73 +81,32 @@ export default function TabBar({
 
   return (
     <View style={styles.tabBar}>
-      <TouchableOpacity
-        accessibilityState={state.index === 0 ? { selected: true } : {}}
-        accessibilityLabel={
-          descriptors[state.routes[0].key].options.tabBarAccessibilityLabel
-        }
-        testID={descriptors[state.routes[0].key].options.tabBarButtonTestID}
-        onPress={() => navigation.navigate(state.routes[0].name)}
-        onLongPress={() =>
-          navigation.emit({ type: "tabLongPress", target: state.routes[0].key })
-        }
-        style={styles.tabBarItem}
-      >
-        {icons[state.routes[0].name]({
-          color: state.index === 0 ? Colors.primary : Colors.gray0,
-        })}
-        <Text
-          style={{ color: state.index === 0 ? Colors.primary : Colors.gray0 }}
-        >
-          {getLabel(
-            state.routes[0],
-            descriptors[state.routes[0].key],
-            state.index === 0
-          )}
-        </Text>
-      </TouchableOpacity>
+      {/* TODO: Add random modal. First implementation would just be the details modal with a random id from saved */}
+      <Link href="/" asChild>
+        <AnimatedButton style={animatedStyle}>
+          <View style={styles.secondaryButton}>
+            <FontAwesome
+              name="random"
+              size={28}
+              color={Colors.primaryDisabled}
+            />
+          </View>
+        </AnimatedButton>
+      </Link>
 
-      <Animated.View style={animatedStyle}>
-        <Link href="/search" asChild>
-          <Pressable
-            style={styles.FAB}
-            onPressIn={() => {
-              scale.value = withSpring(0.95, { stiffness: 300 });
-            }}
-            onPressOut={() => {
-              scale.value = withSpring(1, { stiffness: 300 });
-            }}
-          >
-            <FontAwesome name="search" size={28} color={Colors.white} />
-          </Pressable>
-        </Link>
-      </Animated.View>
+      <Link href="/search" asChild>
+        <AnimatedButton style={animatedStyle}>
+          <View style={styles.mainButton}>
+            <FontAwesome name="plus" size={32} color={Colors.white} />
+          </View>
+        </AnimatedButton>
+      </Link>
 
-      <TouchableOpacity
-        accessibilityState={state.index === 1 ? { selected: true } : {}}
-        accessibilityLabel={
-          descriptors[state.routes[1].key].options.tabBarAccessibilityLabel
-        }
-        testID={descriptors[state.routes[1].key].options.tabBarButtonTestID}
-        onPress={() => navigation.navigate(state.routes[1].name)}
-        onLongPress={() =>
-          navigation.emit({ type: "tabLongPress", target: state.routes[1].key })
-        }
-        style={styles.tabBarItem}
-      >
-        {icons[state.routes[1].name]({
-          color: state.index === 1 ? Colors.primary : Colors.gray0,
-        })}
-        <Text
-          style={{ color: state.index === 1 ? Colors.primary : Colors.gray0 }}
-        >
-          {getLabel(
-            state.routes[1],
-            descriptors[state.routes[1].key],
-            state.index === 1
-          )}
-        </Text>
-      </TouchableOpacity>
+      <AnimatedButton style={animatedStyle}>
+        <View style={styles.secondaryButton}>
+          <FontAwesome name="filter" size={28} color={Colors.primaryDisabled} />
+        </View>
+      </AnimatedButton>
     </View>
   );
 }
