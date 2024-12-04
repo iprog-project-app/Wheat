@@ -107,7 +107,8 @@ export default function TabBar({
       </TouchableOpacity>
 
       <Animated.View style={animatedStyle}>
-        <Link href="/search" asChild>
+        {/* Ändrat länken från search till details för testning */}
+        <Link href="/details" asChild> 
           <Pressable
             style={styles.FAB}
             onPressIn={() => {
