@@ -21,6 +21,7 @@ const SearchBarComponent = ({
   searchQuery: string;
   onChangeText: (text: string) => void;
 }) => (
+  // TODO: Keyboard does not persist taps. Maybe add above FlatList: https://stackoverflow.com/questions/62148855/flatlist-search-bar-does-not-persist-keyboard-react-native
   <SearchBar
     key="searchBar"
     platform="default"
