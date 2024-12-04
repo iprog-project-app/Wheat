@@ -14,6 +14,7 @@ export default function SearchPresenter() {
         "https://thumbor.junction.travel/zOTYvRLxJ3fkKYbywkrX7EtjNHY=/1092x0/smart/https%3A%2F%2Fcontent.res.se%2Fsites%2Fdefault%2Ffiles%2Fgoogle-places%2FChIJowodOvt3X0YRjYM1JobP3Gg.jpg",
       rating: 4.5,
       isLiked: true,
+      note: "Marcus favoritställe! Bästa ölen och bästa pizzan! (Prova “slush-ölen”!!)",
     },
     {
       id: "fotografiska",
@@ -32,6 +33,7 @@ export default function SearchPresenter() {
         "https://www.visitstockholm.com/media/images/44b4242d91b743c9ae24862e94277205.width-1020.jpg",
       rating: 4.7,
       isLiked: false,
+      note: "Undvik till varje pris! Jag tycker minsann de har lite för stora egon på detta ställe",
     },
     {
       id: "meatballs",
