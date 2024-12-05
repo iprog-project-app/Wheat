@@ -28,6 +28,7 @@ const SearchBarComponent = ({
   <SearchBar
     key="searchBar"
     placeholder="Find a restaurant"
+    autoFocus
     value={searchQuery}
     onChangeText={onChangeText}
     containerStyle={{
@@ -45,13 +46,11 @@ const SearchBarComponent = ({
   />
 );
 
-const EmptyState = ({ searchQuery }: { searchQuery: string }) => (
+const EmptyState = () => (
   <View style={styles.emptyContainer}>
     <Ionicons name="search" size={40} color={Colors.gray2} />
     <Text style={styles.emptyText}>
-      {searchQuery
-        ? "No results found.\nTry a different search."
-        : "Start searching to see restaurants!"}
+      {"Start searching to see restaurants!"}
     </Text>
   </View>
 );
@@ -85,7 +84,7 @@ export default function SearchView({
       data={searchResults}
       ListHeaderComponent={headerComponent}
       stickyHeaderIndices={[0]}
-      ListEmptyComponent={<EmptyState searchQuery={searchQuery} />}
+      ListEmptyComponent={<EmptyState />}
       renderItem={({ item }) => (
         <PlaceListItem
           key={item.id}
