@@ -1,6 +1,6 @@
 import { PlaceListItem } from "@/components/PlaceListItem";
 import { PlacePreviewSchema } from "@/constants/types";
-import { SearchBar } from "@rneui/themed";
+import { SearchBar } from "../components/SearchBar";
 import { FlatList, StyleSheet, View, Text } from "react-native";
 import Colors from "../constants/Colors";
 import { useMemo } from "react";
@@ -24,8 +24,7 @@ const SearchBarComponent = ({
   // TODO: Keyboard does not persist taps. Maybe add above FlatList: https://stackoverflow.com/questions/62148855/flatlist-search-bar-does-not-persist-keyboard-react-native
   <SearchBar
     key="searchBar"
-    platform="default"
-    placeholder="Type Here..."
+    placeholder="Find a restaurant"
     value={searchQuery}
     onChangeText={onChangeText}
     containerStyle={{
@@ -38,15 +37,6 @@ const SearchBarComponent = ({
       backgroundColor: Colors.gray5,
       borderRadius: 8,
       borderCurve: "continuous",
-    }}
-    inputStyle={{
-      color: Colors.black,
-    }}
-    clearIcon={{ color: Colors.gray2, size: 20 }}
-    searchIcon={{
-      color: Colors.gray2,
-      size: 24,
-      hitSlop: 8,
     }}
   />
 );
