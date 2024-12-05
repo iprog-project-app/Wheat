@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import DetailsView from "../views/DetailsView";
+import { PlaceFullSchema } from "@/constants/types";
 
 export default function DetailsPresenter() {
   // Mock data
-  const mockData = {
+  const mockData: PlaceFullSchema = {
     id: "1",
     title: "Waipo Mood",
     description:
