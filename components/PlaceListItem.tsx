@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Image, Text, StyleSheet, Pressable } from "react-native";
 import Colors from "../constants/Colors";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 
 export interface PlaceListItemProps {
   id: string;
@@ -101,10 +101,10 @@ export function PlaceListItem({
           opacity: pressed ? 0.8 : 1,
         })}
       >
-        <FontAwesome
-          name="heart"
-          size={24}
-          color={isLiked ? Colors.red : Colors.gray4}
+        <Ionicons
+          name={isLiked ? "heart" : "heart-outline"}
+          size={28}
+          color={isLiked ? Colors.red : Colors.gray3}
         />
       </Pressable>
     </View>
