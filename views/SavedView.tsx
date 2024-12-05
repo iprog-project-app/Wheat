@@ -1,12 +1,12 @@
 import { PlaceListItem } from "@/components/PlaceListItem";
 import { PlacePreviewSchema } from "@/constants/types";
-import { SearchBar } from "../components/SearchBar";
+import { SearchBar } from "@rneui/themed";
 import { FlatList, StyleSheet, View, Text } from "react-native";
 import Colors from "../constants/Colors";
 import { useMemo } from "react";
 import { Ionicons } from "@expo/vector-icons";
 
-export interface SearchViewProps {
+export interface SavedViewProps {
   searchResults: PlacePreviewSchema[];
   searchQuery: string;
   onChangeText: (searchQuery: string) => void;
@@ -24,7 +24,8 @@ const SearchBarComponent = ({
   // TODO: Keyboard does not persist taps. Maybe add above FlatList: https://stackoverflow.com/questions/62148855/flatlist-search-bar-does-not-persist-keyboard-react-native
   <SearchBar
     key="searchBar"
-    placeholder="Find a restaurant"
+    platform="default"
+    placeholder="Search saved restaurants"
     value={searchQuery}
     onChangeText={onChangeText}
     containerStyle={{
@@ -38,27 +39,40 @@ const SearchBarComponent = ({
       borderRadius: 8,
       borderCurve: "continuous",
     }}
+    inputStyle={{
+      color: Colors.black,
+    }}
+    clearIcon={{ color: Colors.gray2, size: 20 }}
+    searchIcon={{
+      color: Colors.gray2,
+      size: 24,
+      hitSlop: 8,
+    }}
   />
 );
 
 const EmptyState = ({ searchQuery }: { searchQuery: string }) => (
   <View style={styles.emptyContainer}>
-    <Ionicons name="search" size={40} color={Colors.gray2} />
+    <Ionicons
+      name={searchQuery ? "search" : "add"}
+      size={40}
+      color={Colors.gray2}
+    />
     <Text style={styles.emptyText}>
       {searchQuery
         ? "No results found.\nTry a different search."
-        : "Start searching to see restaurants!"}
+        : "Save restaurants to see them here!"}
     </Text>
   </View>
 );
 
-export default function SearchView({
+export default function SavedView({
   searchResults,
   searchQuery,
   onChangeText,
   toggleLike,
   onPressItem,
-}: SearchViewProps) {
+}: SavedViewProps) {
   const headerComponent = useMemo(
     () => (
       <SearchBarComponent
@@ -73,6 +87,7 @@ export default function SearchView({
     // TODO: Allow scroll to bottom
     <FlatList
       style={{
+        width: "100%",
         backgroundColor: Colors.white,
       }}
       contentContainerStyle={{ marginBottom: 32 }}

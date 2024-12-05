@@ -2,7 +2,7 @@ export default {
   // Primary colors
   primary: '#3874FF',
   primaryDisabled: '#4F6CA6',
-  secondary: '#B2D2FF',
+  secondary: '#D9E9FF',
 
   // Base colors
   white: '#FFFFFF',
