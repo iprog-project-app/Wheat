@@ -53,7 +53,9 @@ function RootLayoutNav() {
           name="search"
           options={{ presentation: "modal", headerShown: false }}
         />
-      </Stack>
+        <Stack.Screen name="details" options={{ presentation: "modal", headerShown: false }} />
+
+    </Stack>
     </GestureHandlerRootView>
   );
 }
