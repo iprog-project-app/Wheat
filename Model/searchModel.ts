@@ -19,7 +19,7 @@ export const fetchPlacesByTextSearch = async (query: string): Promise<PlaceFullS
   }
 
   // Map API results to the PlaceFullSchema
-  return data.results.slice(0,3).map((place: any) => ({
+  return data.results.map((place: any) => ({
     id: place.place_id,
     title: place.name,
     imageUri: place.photos
