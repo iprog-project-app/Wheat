@@ -1,74 +1,101 @@
 import { StatusBar } from "expo-status-bar";
-import { Platform, StyleSheet, Text, View, Image, TextInput, TouchableOpacity, ScrollView } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import Colors from "../constants/Colors";
+import { PlaceFullSchema } from "@/constants/types";
+import { useFocusEffect } from "expo-router";
+import React from "react";
 
-export default function DetailsView() {
-  // Mock data
-  const mockData = {
-    title: "Waipo Mood",
-    description: "Waipo means Grandma in Chinese & is an appropriate name for this homey & welcoming restaurant.",
-    location: "Jakobsbergsgatan 15",
-    rating: 4.2,
-    price: "$$",
-    imageUri: "https://media-cdn.tripadvisor.com/media/photo-s/16/6e/ce/8f/picture-from-waipo-stockholm.jpg", 
-    webLink: "https://waipo.se",
-    isLiked: true,
-    note: "",
-  };
+type DetailsViewProps = {
+  placeData: PlaceFullSchema;
+  onLikeToggle: () => void;
+  onNoteChange: (text: string) => void;
+  onBackPress: () => void;
+  onModalClose: () => void;
+  onLinkPress: () => void;
+};
 
-  
+export default function DetailsView({
+  placeData,
+  onLikeToggle,
+  onNoteChange,
+  onBackPress,
+  onModalClose,
+  onLinkPress,
+}: DetailsViewProps) {
   return (
-    <View style={styles.container}>
-      <ScrollView  style={{ flex: 1 }}>
-        <View style={styles.imageContainer}>
-          <Image source={{ uri: mockData.imageUri }} style={styles.image} />
-        </View>
-
-        {/* Title and Information */}
-        <View style={styles.infoContainer}>
-          <View style={styles.titleRow}>
-            <Text style={styles.title}>{mockData.title}</Text>
-            <Text style={styles.subtitle}>{mockData.rating} ★</Text>
+    useFocusEffect(
+      React.useCallback(() => {
+        return () => {
+          onModalClose();
+        };
+      }, [])
+    ),
+    (
+      <View style={styles.container}>
+        <ScrollView style={{ flex: 1 }}>
+          <View style={styles.imageContainer}>
+            <Image source={{ uri: placeData.imageUri }} style={styles.image} />
           </View>
-          <View style={styles.titleRow}>
-            <Text style={styles.subtitle}>⚲ {mockData.location}</Text> 
-            <Text style={styles.subtitle}>{mockData.price}</Text>
+
+          {/* Title and Information */}
+          <View style={styles.infoContainer}>
+            <View style={styles.titleRow}>
+              <Text style={styles.title}>{placeData.title}</Text>
+              <Text style={styles.subtitle}>{placeData.rating} ★</Text>
+            </View>
+            <View style={styles.titleRow}>
+              <Text style={styles.subtitle}>⚲ {placeData.location}</Text>
+              <Text style={styles.subtitle}>{placeData.price}</Text>
+            </View>
+            {placeData.website && (
+              <>
+                <Text style={styles.link} onPress={onLinkPress}>
+                  ⚭{placeData.website}
+                </Text>
+                <Text style={styles.description}>{placeData.description}</Text>
+              </>
+            )}
           </View>
-          <Text style={styles.link} onPress={() => console.log("Open link")}>⚭ 
-            {mockData.webLink}
-          </Text>
-          <Text style={styles.description}>{mockData.description}</Text>
+
+          {/* Notes Section */}
+          <View style={styles.notesContainer}>
+            <Text style={styles.notesTitle}>Notes</Text>
+            <TextInput
+              style={styles.notesInput}
+              placeholder="Add a note"
+              value={placeData.note}
+              onChangeText={onNoteChange}
+            />
+          </View>
+
+          {/* Flexible space to push buttons to the bottom */}
+          <View style={{ flex: 1 }} />
+        </ScrollView>
+
+        {/* Buttons */}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.backButton} onPress={onBackPress}>
+            <Text style={styles.backText}>❮</Text>
+            <Text style={styles.backText}>Back</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.saveButton} onPress={onLikeToggle}>
+            <Text style={styles.saveText}>♥︎</Text>
+            <Text style={styles.saveText}>Save</Text>
+          </TouchableOpacity>
         </View>
 
-        {/* Notes Section */}
-        <View style={styles.notesContainer}>
-          <Text style={styles.notesTitle}>Notes</Text>
-          <TextInput
-            style={styles.notesInput}
-            placeholder="Add a note"
-            value={mockData.note}
-            onChangeText={(text) => console.log("Note changed:", text)}
-          />
-        </View>
-
-        {/* Flexible space to push buttons to the bottom */}
-        <View style={{ flex: 1 }} />
-      </ScrollView>
-
-      {/* Buttons */}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.backButton} onPress={() => console.log("Go Back")}>
-          <Text style={styles.backText}>❮</Text>
-          <Text style={styles.backText}>Back</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.saveButton} onPress={() => console.log("Save pressed")}>
-          <Text style={styles.saveText}>♥︎</Text>
-          <Text style={styles.saveText}>Save</Text>
-        </TouchableOpacity>
+        <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
       </View>
-
-      <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
-    </View>
+    )
   );
 }
 
@@ -82,7 +109,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 24,
   },
-  
+
   image: {
     width: 345,
     height: 200,
@@ -93,20 +120,20 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     paddingHorizontal: 24,
-    marginBottom: 12
+    marginBottom: 12,
   },
   titleRow: {
-    flexDirection: "row", 
-    justifyContent: "space-between", 
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 6,
   },
-  
+
   title: {
     fontSize: 24,
     fontWeight: "bold",
   },
-  
+
   subtitle: {
     fontSize: 18,
     color: Colors.gray0,
@@ -120,7 +147,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: Colors.primary,
     marginBottom: 12,
-
   },
   notesContainer: {
     paddingHorizontal: 24,
@@ -137,12 +163,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   buttonContainer: {
-  position: 'absolute',
-  bottom: 100, //Den hamnar för långt ner utan detta, fattar ej varför
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  paddingHorizontal: 24,
-
+    position: "absolute",
+    bottom: 100, //Den hamnar för långt ner utan detta, fattar ej varför
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 24,
   },
   backButton: {
     flex: 1,
@@ -151,16 +176,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#e2ecfe",
     borderRadius: 16,
     alignItems: "center",
-        // Shadow for iOS
-        shadowColor: "#000",
-        shadowOffset: {
-        width: 0,
-        height: 2,
-        },
-        shadowOpacity: 0.1,
-        shadowRadius: 8,
-        // Shadow for Android
-        elevation: 5,
+    // Shadow for iOS
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    // Shadow for Android
+    elevation: 5,
   },
   saveButton: {
     flex: 1,
@@ -172,14 +197,13 @@ const styles = StyleSheet.create({
     // Shadow for iOS
     shadowColor: "#000",
     shadowOffset: {
-    width: 0,
-    height: 2,
+      width: 0,
+      height: 2,
     },
     shadowOpacity: 0.1,
     shadowRadius: 8,
     // Shadow for Android
     elevation: 5,
-
   },
   backText: {
     color: "#4F6CA6",
