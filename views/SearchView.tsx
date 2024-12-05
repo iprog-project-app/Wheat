@@ -12,14 +12,17 @@ export interface SearchViewProps {
   onChangeText: (searchQuery: string) => void;
   toggleLike: (id: string) => () => void;
   onPressItem: (id: string) => () => void;
+  onSearch: () => void;
 }
 
 const SearchBarComponent = ({
   searchQuery,
   onChangeText,
+  onSubmit,
 }: {
   searchQuery: string;
   onChangeText: (text: string) => void;
+  onSubmit: () => void;
 }) => (
   // TODO: Keyboard does not persist taps. Maybe add above FlatList: https://stackoverflow.com/questions/62148855/flatlist-search-bar-does-not-persist-keyboard-react-native
   <SearchBar
@@ -38,6 +41,7 @@ const SearchBarComponent = ({
       borderRadius: 8,
       borderCurve: "continuous",
     }}
+    onSubmitEditing={() => onSubmit()}
   />
 );
 
@@ -58,12 +62,14 @@ export default function SearchView({
   onChangeText,
   toggleLike,
   onPressItem,
+  onSearch,
 }: SearchViewProps) {
   const headerComponent = useMemo(
     () => (
       <SearchBarComponent
         searchQuery={searchQuery}
         onChangeText={onChangeText}
+        onSubmit={onSearch}
       />
     ),
     [searchQuery, onChangeText]
@@ -88,7 +94,7 @@ export default function SearchView({
           {...item}
         />
       )}
-      keyExtractor={(item) => item.title}
+      keyExtractor={(item) => item.id}
       ItemSeparatorComponent={() => (
         <View
           style={{ height: 1, width: "100%", backgroundColor: Colors.gray4 }}

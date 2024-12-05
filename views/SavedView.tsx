@@ -93,7 +93,7 @@ export default function SavedView({
           {...item}
         />
       )}
-      keyExtractor={(item) => item.title}
+      keyExtractor={(item) => item.id}
       ItemSeparatorComponent={() => (
         <View
           style={{ height: 1, width: "100%", backgroundColor: Colors.gray4 }}

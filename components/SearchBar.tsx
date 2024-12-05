@@ -16,6 +16,7 @@ interface SearchBarProps {
   inputContainerStyle?: React.ComponentProps<typeof View>["style"];
   returnKeyLabel?: ReturnKeyTypeOptions;
   onSubmitEditing?: () => void;
+  autoFocus?: boolean;
 }
 
 export function SearchBar({
@@ -26,6 +27,7 @@ export function SearchBar({
   inputContainerStyle,
   returnKeyLabel = "search",
   onSubmitEditing,
+  autoFocus = false,
 }: SearchBarProps) {
   return (
     <View style={[styles.container, containerStyle]}>
@@ -45,6 +47,7 @@ export function SearchBar({
           placeholderTextColor={Colors.gray2}
           returnKeyType={returnKeyLabel}
           onSubmitEditing={onSubmitEditing}
+          autoFocus={autoFocus}
         />
         {value.length > 0 && (
           <TouchableOpacity onPress={() => onChangeText("")}>
