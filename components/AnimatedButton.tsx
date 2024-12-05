@@ -46,6 +46,10 @@ export const AnimatedButton = forwardRef(
           duration,
           easing: Easing.elastic(elasticity),
         });
+        opacity.value = withTiming(targetScale === 1 ? 1 : 0.9, {
+          duration: 50,
+          easing: Easing.elastic(elasticity),
+        });
       };
     };
 
