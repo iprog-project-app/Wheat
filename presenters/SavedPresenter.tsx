@@ -1,13 +1,14 @@
-import { PlacePreviewSchema } from "@/constants/types";
+import { PlaceFullSchema, PlacePreviewSchema } from "@/constants/types";
 import SavedView from "../views/SavedView";
 import { useState } from "react";
-import { placesData } from "../store/model";
+import useStore, { likedPlacesData } from "../store/model";
+import { router } from "expo-router";
 
 export default function SavedPresenter() {
-  // TODO: Fetch search results from API instead of placesData
+  const { setActivePlaceData } = useStore();
 
   // TODO: Fetch liked data from user
-  const likedData = placesData.filter((item) => item.isLiked);
+  const likedData = likedPlacesData.filter((item) => item.isLiked);
 
   const sortResults = (
     results: Array<PlacePreviewSchema>
@@ -28,13 +29,30 @@ export default function SavedPresenter() {
 
   const sortedResults = sortResults(searchResults);
 
+  function idToItem(id: string) {
+    return likedData.find((item) => item.id === id);
+  }
+
+  const toggleActiveData = (id: string) => () => {
+    const data = idToItem(id);
+    if (data) {
+      setActivePlaceData(data as PlaceFullSchema);
+      router.push("/details");
+    }
+  };
+
+  const handleLikeToggle = (id: string) => () => {
+    // TODO: Toggle like for item (same as in DetailsPresenter and SearchPresenter).  Add an alert if its a dislike to make sure the user wants to remove it
+    console.log("Toggle like: ", id);
+  };
+
   return (
     <SavedView
       searchQuery={search}
       searchResults={search ? sortedResults : likedData}
       onChangeText={updateSearch}
-      toggleLike={(id) => () => console.log("Toggle like: ", id)} // TODO: Toggle like for item
-      onPressItem={(id) => () => console.log("Press item: ", id)} // TODO: Open modal with details
+      toggleLike={handleLikeToggle}
+      onPressItem={toggleActiveData}
     />
   );
 }
