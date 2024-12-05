@@ -5,16 +5,24 @@ import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { AnimatedButton } from "./AnimatedButton";
+import useStore, { likedPlacesData } from "@/store/model";
 
 export default function TabBar({}: BottomTabBarProps) {
+  const { setActivePlaceData } = useStore();
+
+  const handleSetRandom = () => {
+    setActivePlaceData(
+      likedPlacesData[Math.floor(Math.random() * likedPlacesData.length)]
+    );
+  };
   return (
     <View style={styles.tabBar}>
       {/* TODO: Add random modal. First implementation would just be the details modal with a random id from saved */}
-      <Link href="/" asChild>
+      <Link href="/details" asChild onPress={handleSetRandom}>
         <AnimatedButton>
           <View style={styles.secondaryButton}>
             <Ionicons
-              name="restaurant-outline"
+              name="dice-outline"
               size={28}
               color={Colors.primaryDisabled}
             />
@@ -25,7 +33,7 @@ export default function TabBar({}: BottomTabBarProps) {
       <Link href="/search" asChild>
         <AnimatedButton>
           <View style={styles.mainButton}>
-            <Ionicons name="add" size={52} color={Colors.white} />
+            <Ionicons name="search" size={40} color={Colors.white} />
           </View>
         </AnimatedButton>
       </Link>
