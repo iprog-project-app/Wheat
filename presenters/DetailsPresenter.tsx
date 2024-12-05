@@ -1,56 +1,47 @@
-import React, { useState } from "react";
+import React from "react";
 import DetailsView from "../views/DetailsView";
-import { PlaceFullSchema } from "@/constants/types";
+import useStore from "@/store/model";
+import { router } from "expo-router";
 
 export default function DetailsPresenter() {
-  // Mock data
-  const mockData: PlaceFullSchema = {
-    id: "1",
-    title: "Waipo Mood",
-    description:
-      "Waipo means Grandma in Chinese & is an appropriate name for this homey & welcoming restaurant.",
-    location: "Jakobsbergsgatan 15",
-    rating: 4.2,
-    price: "$$",
-    imageUri:
-      "https://media-cdn.tripadvisor.com/media/photo-s/16/6e/ce/8f/picture-from-waipo-stockholm.jpg",
-    website: "https://waipo.se",
-    isLiked: true,
-    note: "",
-  };
-
-  // State for dynamic behavior
-  const [placeData, setPlaceData] = useState(mockData);
+  const { activePlaceData, setActivePlaceData } = useStore();
 
   // Event handlers
-  const onLikeToggle = () => {
+  const handleLikeToggle = () => {
+    // TODO: Toggle like for item (same as in SearchPresenter adn SavedPresenter). Add an alert if its a dislike to make sure the user wants to remove it
     console.log("Liked");
   };
 
-  const onNoteChange = () => {
+  // TODO: Remove onNoteChange
+  const handleNoteChange = () => {
     console.log("Note changed");
   };
 
-  const onBackPress = () => {
-    console.log("Back button pressed");
+  const handleBackPress = () => {
+    router.back();
   };
 
-  const onModalClose = () => {
-    console.log("Modal closed");
+  const handleModalClose = () => {
+    // Ha kvar TODO:n nedan, men tills vidare kan passa *note* in i denna funktion och console.logga
+    console.log("Modal closed, save note");
+    // TODO
   };
 
-  const onLinkPress = () => {
+  const handleLinkPress = () => {
     console.log("Weblink pressed");
+    // TODO
   };
 
   return (
     <DetailsView
-      placeData={placeData}
-      onLikeToggle={onLikeToggle}
-      onNoteChange={onNoteChange}
-      onBackPress={onBackPress}
-      onModalClose={onModalClose}
-      onLinkPress={onLinkPress}
+      placeData={activePlaceData}
+      onLikeToggle={handleLikeToggle}
+      // TODO: Remove onNoteChange
+      onNoteChange={handleNoteChange}
+      onBackPress={handleBackPress}
+      // TODO: Add note parameter to onModalClose
+      onModalClose={handleModalClose}
+      onLinkPress={handleLinkPress}
     />
   );
 }
