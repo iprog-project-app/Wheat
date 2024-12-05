@@ -1,18 +1,16 @@
 import { PlaceFullSchema, PlacePreviewSchema } from "@/constants/types";
 import SearchView from "../views/SearchView";
-import { useState } from "react";
-import { useStore, placesData } from "@/store/model";
+import { useStore, likedPlacesData } from "@/store/model";
 import { SearchModel } from "@/Model/searchModel";
+import { router } from "expo-router";
 
 export default function SearchPresenter() {
-  const { activePlaceData, setActivePlaceData } = useStore();
-  const [query, setQuery] = useState("");
-  const [searchResultsData, setSearchResultsData] = useState(
-    [] as PlaceFullSchema[]
-  );
+  const { setActivePlaceData } = useStore();
+  const { searchQuery, setSearchQuery } = useStore();
+  const { searchResultsData, setSearchResultsData } = useStore();
 
   // TODO: Fetch search results
-  // Imported placesData is mock data (this would represent all places in the database) but we would fetch based on a query (I guess)
+  // Imported placesData is mock data (this would represent all places in the database) but we would fetch based on a searchQuery (I guess)
 
   // TODO: Fetch recent searches from model (not needed though, it works without)
   // Mock recent searches (should probably be the full objects)
@@ -38,20 +36,20 @@ export default function SearchPresenter() {
     .filter((place): place is PlaceFullSchema => place !== undefined);
 
   const updateSearch = (search: string) => {
-    setQuery(search);
+    setSearchQuery(search);
   };
 
   // TODO: Implement search, but through the API
   // Mock search
-  const searchResults = placesData.filter((item) =>
-    item.title.toLowerCase().startsWith(query.toLowerCase())
+  const searchResults = likedPlacesData.filter((item) =>
+    item.title.toLowerCase().startsWith(searchQuery.toLowerCase())
   );
 
   const sortedResults = sortResults(searchResults);
 
   // Convert to PlacePreviewSchema before passing to view
   const resultsToDisplay: PlacePreviewSchema[] = (
-    query ? sortedResults : recentSearchesData
+    searchQuery ? sortedResults : recentSearchesData
   ).map((place) => ({
     id: place.id,
     title: place.title,
@@ -65,19 +63,21 @@ export default function SearchPresenter() {
   const toggleActiveData = (id: string) => () => {
     const data = idToItem(id);
     if (data) {
+      console.log("Active data: ", data.id);
       setActivePlaceData(data as PlaceFullSchema);
-      console.log("Set Active data: ", activePlaceData);
+      router.push("/details");
     }
   };
 
-  const toggleLike = (id: string) => () => {
+  const handleToggleLike = (id: string) => () => {
+    // TODO: Toggle like for item (same as in DetailsPresenter and SavedPresenter). Add an alert if its a dislike to make sure the user wants to remove it
     console.log("Toggle like: ", id);
   };
 
   const handleSearch = async () => {
     try {
       // Call the fetchPlacesByTextSearch function and await the result
-      const places = await SearchModel.fetchPlacesByTextSearch(query);
+      const places = await SearchModel.fetchPlacesByTextSearch(searchQuery);
 
       setSearchResultsData(places);
 
@@ -90,11 +90,11 @@ export default function SearchPresenter() {
 
   return (
     <SearchView
-      searchQuery={query}
+      searchQuery={searchQuery}
       searchResults={searchResultsData}
       onChangeText={updateSearch}
-      toggleLike={toggleLike} // TODO: Toggle like for item
-      onPressItem={toggleActiveData} // TODO: Open modal with details
+      toggleLike={handleToggleLike} // TODO: Toggle like for item
+      onPressItem={toggleActiveData}
       onSearch={handleSearch}
     />
   );
