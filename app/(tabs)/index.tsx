@@ -1,11 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import SavedPresenter from "@/presenters/SavedPresenter";
 
-export default function TabOneScreen() {
+export default function HomeScreen() {
   return (
-    // TODO: Implement Presenter
+    // TODO: Allow scroll to bottom
     <View style={styles.container}>
-      <Text style={styles.title}>Explore</Text>
-      <View style={styles.separator} />
+      {/* <View style={{ height: "92%" }}>  */}
+      <SavedPresenter />
+      <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
     </View>
   );
 }
@@ -15,14 +18,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
   },
 });
