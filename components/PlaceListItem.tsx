@@ -83,11 +83,7 @@ export function PlaceListItem({
           </View>
         </View>
         {note && (
-          <Text
-            style={{ fontSize: 18, color: Colors.gray2 }}
-            numberOfLines={2}
-            ellipsizeMode="tail"
-          >
+          <Text style={{ fontSize: 18, color: Colors.gray2 }} numberOfLines={2}>
             {note}
           </Text>
         )}

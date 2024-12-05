@@ -15,7 +15,7 @@ import { useFocusEffect } from "expo-router";
 import React from "react";
 
 type DetailsViewProps = {
-  placeData: PlaceFullSchema;
+  placeData: PlaceFullSchema | null;
   onLikeToggle: () => void;
   onNoteChange: (text: string) => void;
   onBackPress: () => void;
@@ -41,59 +41,73 @@ export default function DetailsView({
     ),
     (
       <View style={styles.container}>
-        <ScrollView style={{ flex: 1 }}>
-          <View style={styles.imageContainer}>
-            <Image source={{ uri: placeData.imageUri }} style={styles.image} />
-          </View>
+        {!placeData ? (
+          // TOTO: Fix. Will never happen with current solution.
+          <Text>Loading...</Text>
+        ) : (
+          <>
+            <ScrollView style={{ flex: 1 }}>
+              <View style={styles.imageContainer}>
+                <Image
+                  source={{ uri: placeData.imageUri }}
+                  style={styles.image}
+                />
+              </View>
 
-          {/* Title and Information */}
-          <View style={styles.infoContainer}>
-            <View style={styles.titleRow}>
-              <Text style={styles.title}>{placeData.title}</Text>
-              <Text style={styles.subtitle}>{placeData.rating} ★</Text>
+              {/* Title and Information */}
+              <View style={styles.infoContainer}>
+                <View style={styles.titleRow}>
+                  <Text style={styles.title}>{placeData.title}</Text>
+                  <Text style={styles.subtitle}>{placeData.rating} ★</Text>
+                </View>
+                <View style={styles.titleRow}>
+                  <Text style={styles.subtitle}>⚲ {placeData.location}</Text>
+                  <Text style={styles.subtitle}>{placeData.price}</Text>
+                </View>
+                {placeData.website && (
+                  <>
+                    <Text style={styles.link} onPress={onLinkPress}>
+                      ⚭{placeData.website}
+                    </Text>
+                    <Text style={styles.description}>
+                      {placeData.description}
+                    </Text>
+                  </>
+                )}
+              </View>
+
+              {/* Notes Section */}
+              <View style={styles.notesContainer}>
+                <Text style={styles.notesTitle}>Notes</Text>
+                <TextInput
+                  style={styles.notesInput}
+                  placeholder="Add a note"
+                  value={placeData.note}
+                  onChangeText={onNoteChange}
+                />
+              </View>
+
+              {/* Flexible space to push buttons to the bottom */}
+              <View style={{ flex: 1 }} />
+            </ScrollView>
+
+            {/* Buttons */}
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.backButton} onPress={onBackPress}>
+                <Text style={styles.backText}>❮</Text>
+                <Text style={styles.backText}>Back</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.saveButton}
+                onPress={onLikeToggle}
+              >
+                <Text style={styles.saveText}>♥︎</Text>
+                <Text style={styles.saveText}>Save</Text>
+              </TouchableOpacity>
             </View>
-            <View style={styles.titleRow}>
-              <Text style={styles.subtitle}>⚲ {placeData.location}</Text>
-              <Text style={styles.subtitle}>{placeData.price}</Text>
-            </View>
-            {placeData.website && (
-              <>
-                <Text style={styles.link} onPress={onLinkPress}>
-                  ⚭{placeData.website}
-                </Text>
-                <Text style={styles.description}>{placeData.description}</Text>
-              </>
-            )}
-          </View>
-
-          {/* Notes Section */}
-          <View style={styles.notesContainer}>
-            <Text style={styles.notesTitle}>Notes</Text>
-            <TextInput
-              style={styles.notesInput}
-              placeholder="Add a note"
-              value={placeData.note}
-              onChangeText={onNoteChange}
-            />
-          </View>
-
-          {/* Flexible space to push buttons to the bottom */}
-          <View style={{ flex: 1 }} />
-        </ScrollView>
-
-        {/* Buttons */}
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.backButton} onPress={onBackPress}>
-            <Text style={styles.backText}>❮</Text>
-            <Text style={styles.backText}>Back</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.saveButton} onPress={onLikeToggle}>
-            <Text style={styles.saveText}>♥︎</Text>
-            <Text style={styles.saveText}>Save</Text>
-          </TouchableOpacity>
-        </View>
-
-        <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
+            <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
+          </>
+        )}
       </View>
     )
   );
