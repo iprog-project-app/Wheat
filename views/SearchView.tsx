@@ -4,7 +4,7 @@ import { SearchBar } from "@rneui/themed";
 import { FlatList, StyleSheet, View, Text } from "react-native";
 import Colors from "../constants/Colors";
 import { useMemo } from "react";
-import { FontAwesome } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 export interface SearchViewProps {
   searchResults: PlacePreviewSchema[];
@@ -25,7 +25,7 @@ const SearchBarComponent = ({
   <SearchBar
     key="searchBar"
     platform="default"
-    placeholder="Type Here..."
+    placeholder="Find a restaurant"
     value={searchQuery}
     onChangeText={onChangeText}
     containerStyle={{
@@ -53,7 +53,7 @@ const SearchBarComponent = ({
 
 const EmptyState = ({ searchQuery }: { searchQuery: string }) => (
   <View style={styles.emptyContainer}>
-    <FontAwesome name="search" size={40} color={Colors.gray2} />
+    <Ionicons name="search" size={40} color={Colors.gray2} />
     <Text style={styles.emptyText}>
       {searchQuery
         ? "No results found.\nTry a different search."
