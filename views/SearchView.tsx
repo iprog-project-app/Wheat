@@ -25,7 +25,7 @@ const SearchBarComponent = ({
   <SearchBar
     key="searchBar"
     platform="default"
-    placeholder="Type Here..."
+    placeholder="Find a restaurant"
     value={searchQuery}
     onChangeText={onChangeText}
     containerStyle={{
