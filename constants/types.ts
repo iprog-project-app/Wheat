@@ -12,5 +12,4 @@ export type PlaceFullSchema = PlacePreviewSchema & {
   description: string;
   price: '$' | '$$' | '$$$' | '$$$$';
   website: string;
-  note: string;
 };
