@@ -3,6 +3,7 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 
 export {
@@ -44,10 +45,15 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   return (
-    <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="settings" options={{ presentation: "modal" }} />
-      <Stack.Screen name="search" options={{ presentation: "modal" }} />
-    </Stack>
+    <GestureHandlerRootView>
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="settings" options={{ presentation: "modal" }} />
+        <Stack.Screen
+          name="search"
+          options={{ presentation: "modal", headerShown: false }}
+        />
+      </Stack>
+    </GestureHandlerRootView>
   );
 }
