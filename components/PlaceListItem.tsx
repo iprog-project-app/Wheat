@@ -1,4 +1,3 @@
-import React from "react";
 import { View, Image, Text, StyleSheet, Pressable } from "react-native";
 import Colors from "../constants/Colors";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
@@ -97,7 +96,6 @@ export function PlaceListItem({
         hitSlop={12}
         onPress={toggleLike}
         style={({ pressed }) => ({
-          // backgroundColor: "red",
           opacity: pressed ? 0.8 : 1,
         })}
       >
