@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import {getAuth} from "firebase/auth";
+import {getFirestore} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyACMfLFTxyqEGVJYWqzXaCBygzrrKQOQXo",
@@ -12,6 +13,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+
+export const db = getFirestore(app);
 
 // IOS client ID: 1001708917415-2vf56juoiu0g0bi8ctpi5fn3r61pf7l5.apps.googleusercontent.com
 // Android client ID: 1001708917415-ocvpdnilkd5kr2218gt05fcppa27p6ul.apps.googleusercontent.com
