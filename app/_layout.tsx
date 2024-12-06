@@ -3,6 +3,7 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 
@@ -47,11 +48,32 @@ function RootLayoutNav() {
   return (
     <GestureHandlerRootView>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="settings" options={{ presentation: "modal" }} />
+        <Stack.Screen
+          name="(tabs)"
+          options={{
+            title: "Saved Restaurants",
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="settings"
+          options={{ title: "Settings", presentation: "modal" }}
+        />
         <Stack.Screen
           name="search"
-          options={{ presentation: "modal", headerShown: false }}
+          options={{
+            title: "Search",
+            presentation: "modal",
+            headerShown: Platform.OS !== "ios",
+          }}
+        />
+        <Stack.Screen
+          name="details"
+          options={{
+            title: "Restaurant Details",
+            presentation: "modal",
+            headerShown: Platform.OS !== "ios",
+          }}
         />
         <Stack.Screen name="account" options={{ title: "Account Settings" }} />
         <Stack.Screen name="friends" options={{ title: "Manage Friends" }} />
