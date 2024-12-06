@@ -53,9 +53,9 @@ function RootLayoutNav() {
           name="search"
           options={{ presentation: "modal", headerShown: false }}
         />
-        <Stack.Screen name="details" options={{ presentation: "modal", headerShown: false }} />
-
-    </Stack>
+        <Stack.Screen name="account" options={{ title: "Account Settings" }} />
+        <Stack.Screen name="friends" options={{ title: "Manage Friends" }} />
+      </Stack>
     </GestureHandlerRootView>
   );
 }
