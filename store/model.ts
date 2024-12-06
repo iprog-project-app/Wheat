@@ -1,4 +1,4 @@
-import { PlaceFullSchema } from '@/constants/types';
+import { FriendSchema, PlaceFullSchema } from '@/constants/types';
 import { create } from 'zustand';
 
 
@@ -191,3 +191,26 @@ export const likedPlacesData: PlaceFullSchema[] = [
       website: "https://www.riche.se/",
     },
   ];
+
+  export const friendList = [
+    {
+      userId: "1",
+      name: "Samuel de Luna",
+      email: "fhdioahiohs@hotmail.com",
+    },
+    {
+      userId: "2",
+      name: "Marcus Påhlman",
+      email: "jkfdjkf@gmail.com",
+    },
+    {
+      userId: "3",
+      name: "Elias Flowtang",
+      email: "goOutNbang@xxx.se",
+    },
+    {
+      userId: "4",
+      name: "Victor Fredrichzoon",
+      email: "coolguy@hotmale.com",
+    },
+  ] satisfies FriendSchema[];

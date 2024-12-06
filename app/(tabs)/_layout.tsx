@@ -1,5 +1,5 @@
 import { Link, Tabs } from "expo-router";
-import { Pressable } from "react-native";
+import { Platform, Pressable } from "react-native";
 import Colors from "../../constants/Colors";
 import TabBar from "../../components/TabBar";
 import { Ionicons } from "@expo/vector-icons";
@@ -12,7 +12,7 @@ export default function TabLayout() {
         options={{
           title: "Saved Restaurants",
           headerRight: () => (
-            <Link href="/settings" asChild>
+            <Link href="/settings" asChild={Platform.OS === "ios"}>
               <Pressable>
                 {({ pressed }) => (
                   <Ionicons
