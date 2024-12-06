@@ -1,20 +1,22 @@
 import { initializeApp } from "firebase/app";
 import {getAuth} from "firebase/auth";
 import {getFirestore} from "firebase/firestore";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const firebaseConfig = {
-  apiKey: "AIzaSyACMfLFTxyqEGVJYWqzXaCBygzrrKQOQXo",
-  authDomain: "wheat-9b954.firebaseapp.com",
-  projectId: "wheat-9b954",
-  storageBucket: "wheat-9b954.firebasestorage.app",
-  messagingSenderId: "977031012598",
-  appId: "1:977031012598:web:66ff746c4e9d6b16e14cd7"
+  apiKey: process.env.WHEAT_FIREBASE_APIKEY,
+  authDomain: process.env.WHEAT_FIREBASE_AUTHDOMAIN,
+  projectId: process.env.WHEAT_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.WHEAT_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.WHEAT_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.WHEAT_FIREBASE_APP_ID
 };
+  
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-
 export const db = getFirestore(app);
 
-// IOS client ID: 1001708917415-2vf56juoiu0g0bi8ctpi5fn3r61pf7l5.apps.googleusercontent.com
-// Android client ID: 1001708917415-ocvpdnilkd5kr2218gt05fcppa27p6ul.apps.googleusercontent.com
+
