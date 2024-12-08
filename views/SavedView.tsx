@@ -82,17 +82,29 @@ export default function SavedView({
       }}
       contentContainerStyle={{ marginBottom: 32 }}
       data={searchResults}
-      ListHeaderComponent={headerComponent}
-      stickyHeaderIndices={[0]}
+      initialScrollIndex={1}
+      getItemLayout={(data, index) => ({
+        // TODO: Might not be the best way
+        length: 73, // approximate height of each item
+        offset: 73 * index,
+        index,
+      })}
       ListEmptyComponent={<EmptyState searchQuery={searchQuery} />}
-      renderItem={({ item }) => (
-        <PlaceListItem
-          key={item.id}
-          toggleLike={toggleLike(item.id)}
-          onPress={onPressItem(item.id)}
-          {...item}
-        />
-      )}
+      renderItem={({ item, index }) =>
+        index === 0 ? (
+          <SearchBarComponent
+            searchQuery={searchQuery}
+            onChangeText={onChangeText}
+          />
+        ) : (
+          <PlaceListItem
+            key={item.id}
+            toggleLike={toggleLike(item.id)}
+            onPress={onPressItem(item.id)}
+            {...item}
+          />
+        )
+      }
       keyExtractor={(item) => item.id}
       ItemSeparatorComponent={() => (
         <View

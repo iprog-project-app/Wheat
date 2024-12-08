@@ -9,6 +9,10 @@ dist/
 web-build/
 expo-env.d.ts
 
+# Native verisions
+android/
+ios/
+
 # Native
 *.orig.*
 *.jks
@@ -35,3 +39,9 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+.env
+.vercel
+
+.firebase/
+.vscode/

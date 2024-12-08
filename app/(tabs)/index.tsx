@@ -8,7 +8,6 @@ export default function HomeScreen() {
     <View style={styles.container}>
       {/* <View style={{ height: "92%" }}>  */}
       <SavedPresenter />
-      <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
     </View>
   );
 }

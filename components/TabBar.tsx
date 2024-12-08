@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Platform } from "react-native";
 import Colors from "../constants/Colors";
 
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
@@ -18,7 +18,11 @@ export default function TabBar({}: BottomTabBarProps) {
   return (
     <View style={styles.tabBar}>
       {/* TODO: Add random modal. First implementation would just be the details modal with a random id from saved */}
-      <Link href="/details" asChild onPress={handleSetRandom}>
+      <Link
+        href="/details"
+        asChild={Platform.OS === "ios"}
+        onPress={handleSetRandom}
+      >
         <AnimatedButton>
           <View style={styles.secondaryButton}>
             <Ionicons
@@ -30,7 +34,7 @@ export default function TabBar({}: BottomTabBarProps) {
         </AnimatedButton>
       </Link>
 
-      <Link href="/search" asChild>
+      <Link href="/search" asChild={Platform.OS === "ios"}>
         <AnimatedButton>
           <View style={styles.mainButton}>
             <Ionicons name="search" size={40} color={Colors.white} />
