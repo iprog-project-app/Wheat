@@ -13,6 +13,8 @@ import Colors from "../constants/Colors";
 import { PlaceFullSchema } from "@/constants/types";
 import { useFocusEffect } from "expo-router";
 import React from "react";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { Linking } from "react-native";
 
 type DetailsViewProps = {
   placeData: PlaceFullSchema | null;
@@ -46,7 +48,7 @@ export default function DetailsView({
           <Text>Loading...</Text>
         ) : (
           <>
-            <ScrollView style={{ flex: 1 }}>
+            <ScrollView style={{ flex: 1}}>
               <View style={styles.imageContainer}>
                 <Image
                   source={{ uri: placeData.imageUri }}
@@ -58,22 +60,46 @@ export default function DetailsView({
               <View style={styles.infoContainer}>
                 <View style={styles.titleRow}>
                   <Text style={styles.title}>{placeData.title}</Text>
-                  <Text style={styles.subtitle}>{placeData.rating} ★</Text>
                 </View>
-                <View style={styles.titleRow}>
-                  <Text style={styles.subtitle}>⚲ {placeData.location}</Text>
-                  <Text style={styles.subtitle}>{placeData.price}</Text>
+                <View>
+                  <Text style={styles.subtitle}>
+                    {placeData.rating}{" "}
+                    <FontAwesome name="star" size={18} color={Colors.yellow} />{" "}
+                    {placeData.price}
+                  </Text>
                 </View>
+
+                <TouchableOpacity
+                  onPress={() =>
+                    Linking.openURL(
+                      `https://www.google.com/maps/search/?api=1&query=<address>&query_place_id=${placeData.id}`
+                    )
+                  }
+                >
+                  <Text style={styles.subtitle}>
+                    <Ionicons
+                      name="location-outline"
+                      size={18}
+                      color={Colors.gray0}
+                    />{" "}
+                    {placeData.location}
+                  </Text>
+                </TouchableOpacity>
+
                 {placeData.website && (
-                  <>
-                    <Text style={styles.link} onPress={onLinkPress}>
-                      ⚭{placeData.website}
-                    </Text>
-                    <Text style={styles.description}>
-                      {placeData.description}
-                    </Text>
-                  </>
+                  <TouchableOpacity
+                    style={{ alignItems: "center", flexDirection: "row" }}
+                    onPress={onLinkPress}
+                  >
+                    <Ionicons
+                      name="link-outline"
+                      size={18}
+                      color={Colors.primary}
+                    />
+                    <Text style={styles.link}>{placeData.website}</Text>
+                  </TouchableOpacity>
                 )}
+                <Text style={styles.description}>{placeData.description}</Text>
               </View>
 
               {/* Notes Section */}
@@ -84,6 +110,7 @@ export default function DetailsView({
                   placeholder="Add a note"
                   value={placeData.note}
                   onChangeText={onNoteChange}
+                  multiline
                 />
               </View>
 
@@ -94,15 +121,21 @@ export default function DetailsView({
             {/* Buttons */}
             <View style={styles.buttonContainer}>
               <TouchableOpacity style={styles.backButton} onPress={onBackPress}>
-                <Text style={styles.backText}>❮</Text>
+                <Ionicons name="arrow-back" size={24} color="#4F6CA6" />
                 <Text style={styles.backText}>Back</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={styles.saveButton}
+                style={[styles.saveButton, { backgroundColor: "#FFCBCB" }]}
                 onPress={onLikeToggle}
               >
-                <Text style={styles.saveText}>♥︎</Text>
-                <Text style={styles.saveText}>Save</Text>
+                <Ionicons
+                  name={placeData.isLiked ? "heart-dislike" : "heart"}
+                  size={28}
+                  color={placeData.isLiked ? Colors.red : Colors.red}
+                />
+                <Text style={styles.saveText}>
+                  {placeData.isLiked ? "Remove Save" : "Save"}
+                </Text>
               </TouchableOpacity>
             </View>
             <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
@@ -117,30 +150,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.white,
+    padding: 24,
+    gap: 16,
   },
 
   imageContainer: {
     alignItems: "center",
-    marginVertical: 24,
   },
 
   image: {
-    width: 345,
+    width: "100%",
     height: 200,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
+    borderRadius: 8,
+    borderCurve: "continuous",
   },
   infoContainer: {
-    paddingHorizontal: 24,
-    marginBottom: 12,
+    gap: 8,
+    marginVertical: 24,
   },
   titleRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 6,
   },
 
   title: {
@@ -151,7 +182,6 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 18,
     color: Colors.gray0,
-    marginBottom: 12,
   },
   description: {
     fontSize: 18,
@@ -160,28 +190,26 @@ const styles = StyleSheet.create({
   link: {
     fontSize: 18,
     color: Colors.primary,
-    marginBottom: 12,
   },
   notesContainer: {
-    paddingHorizontal: 24,
+    gap: 8,
   },
   notesTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 8,
   },
   notesInput: {
     borderWidth: 1,
     borderColor: Colors.gray4,
-    padding: 10,
+    padding: 8,
     borderRadius: 8,
   },
   buttonContainer: {
-    position: "absolute",
-    bottom: 100, //Den hamnar för långt ner utan detta, fattar ej varför
+    flexShrink: 1,
+    // position: "absolute",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 24,
+    paddingBottom: 80,
   },
   backButton: {
     flex: 1,
