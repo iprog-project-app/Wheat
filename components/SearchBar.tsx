@@ -71,14 +71,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderCurve: "continuous",
     paddingHorizontal: 12,
-    paddingVertical: 8,
   },
   input: {
     flex: 1,
     color: Colors.black,
     fontSize: 16,
     marginLeft: 8,
-    paddingVertical: 0,
+    paddingVertical: 8,
   },
   icon: {
     marginRight: 4,

@@ -1,6 +1,5 @@
 import React, { forwardRef } from "react";
-import { StyleSheet, View } from "react-native";
-import Colors from "../constants/Colors";
+import { View } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Animated, {
   Easing,
@@ -77,5 +76,3 @@ export const AnimatedButton = forwardRef(
     );
   }
 );
-
-const styles = StyleSheet.create({});
