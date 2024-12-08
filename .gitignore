@@ -44,3 +44,4 @@ yarn-error.*
 .vercel
 
 .firebase/
+.vscode/
