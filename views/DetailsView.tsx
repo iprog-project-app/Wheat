@@ -48,7 +48,7 @@ export default function DetailsView({
           <Text>Loading...</Text>
         ) : (
           <>
-            <ScrollView style={{ flex: 1}}>
+            <ScrollView style={{ flex: 1 }}>
               <View style={styles.imageContainer}>
                 <Image
                   source={{ uri: placeData.imageUri }}
