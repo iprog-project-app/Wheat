@@ -6,7 +6,6 @@ export type PlacePreviewSchema = {
   imageUri: string;
   rating: number;
   location: string;
-  isLiked: boolean;
   note?: string;
 };
 
@@ -15,6 +14,10 @@ export type PlaceFullSchema = PlacePreviewSchema & {
   price: '$' | '$$' | '$$$' | '$$$$';
   website: string;
 };
+
+export type PlacePreviewLikedSchema = PlacePreviewSchema & {
+  isLiked:boolean
+}
 
 export type SettingsOption = {
   title: string;

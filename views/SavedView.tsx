@@ -1,5 +1,5 @@
 import { PlaceListItem } from "@/components/PlaceListItem";
-import { PlacePreviewSchema } from "@/constants/types";
+import { PlacePreviewLikedSchema, PlacePreviewSchema } from "@/constants/types";
 import { SearchBar } from "../components/SearchBar";
 import { FlatList, StyleSheet, View, Text } from "react-native";
 import Colors from "../constants/Colors";
@@ -7,7 +7,7 @@ import { useMemo } from "react";
 import { Ionicons } from "@expo/vector-icons";
 
 export interface SavedViewProps {
-  searchResults: PlacePreviewSchema[];
+  searchResults: PlacePreviewLikedSchema[];
   searchQuery: string;
   onChangeText: (searchQuery: string) => void;
   toggleLike: (id: string) => () => void;

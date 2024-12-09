@@ -34,7 +34,6 @@ export const likedPlacesData: PlaceFullSchema[] = [
       note: "Marcus favoritställe! Bästa ölen och bästa pizzan! (Prova “slush-ölen”!!)",
       description:
         "Omnipollos hatt är en pizzeria och bryggeri som ligger på Folkungagatan på Södermalm i Stockholm. Pizzerian är känd för sina udda pizzakreationer och bryggeriet för sina öl. Pizzerian har funnits sedan 2014 och bryggeriet sedan 2011.",
-      isLiked: true,
       price: "$$",
       website: "https://omnipolloshatt.se/",
     },
@@ -47,7 +46,6 @@ export const likedPlacesData: PlaceFullSchema[] = [
       rating: 4.6,
       description:
         "Fotografiska är en internationell mötesplats om och för fotografi i Stockholm. Här visas utställningar av världens främsta fotografer.",
-      isLiked: true,
       price: "$$",
       website: "https://www.fotografiska.com/sto/",
     },
@@ -61,7 +59,6 @@ export const likedPlacesData: PlaceFullSchema[] = [
       note: "Undvik till varje pris! Jag tycker minsann de har lite för stora egon på detta ställe",
       description:
         "Lilla Ego är en restaurang på Västmannagatan i Stockholm som serverar modern svensk mat. Restaurangen är känd för sin avslappnade atmosfär och höga kvalitet på maten.",
-      isLiked: true,
       price: "$$$",
       website: "https://www.lillaego.com/",
     },
@@ -74,7 +71,6 @@ export const likedPlacesData: PlaceFullSchema[] = [
       rating: 4.4,
       description:
         "Meatballs for the People är en restaurang på Södermalm i Stockholm som specialiserar sig på köttbullar. Här kan du njuta av köttbullar i olika varianter och med olika tillbehör.",
-      isLiked: true,
       price: "$$",
       website: "https://www.meatball.se/",
     },
@@ -87,7 +83,6 @@ export const likedPlacesData: PlaceFullSchema[] = [
       rating: 4.2,
       description:
         "Urban Deli är en kombination av restaurang, bar, matbutik och saluhall. Här kan du njuta av god mat och dryck i en avslappnad miljö.",
-      isLiked: true,
       price: "$$",
       website: "https://www.urbandeli.org/",
     },
@@ -100,7 +95,6 @@ export const likedPlacesData: PlaceFullSchema[] = [
       rating: 4.3,
       description:
         "Taverna Brillo är en restaurang och bar på Stureplan i Stockholm. Här serveras italiensk mat i en livlig och social miljö.",
-      isLiked: true,
       price: "$$$",
       website: "https://www.tavernabrillo.se/",
     },
@@ -113,7 +107,6 @@ export const likedPlacesData: PlaceFullSchema[] = [
       rating: 4.8,
       description:
         "Rolfs Kök är en restaurang på Tegnérgatan i Stockholm som serverar modern svensk mat. Restaurangen är känd för sin höga kvalitet på maten och sin trevliga atmosfär.",
-      isLiked: true,
       price: "$$$",
       website: "https://www.rolfskok.se/",
     },
@@ -126,7 +119,6 @@ export const likedPlacesData: PlaceFullSchema[] = [
       rating: 4.5,
       description:
         "Pharmarium är en cocktailbar och restaurang på Stortorget i Gamla Stan, Stockholm. Här kan du njuta av innovativa cocktails och god mat i en historisk miljö.",
-      isLiked: true,
       price: "$$$",
       website: "https://www.pharmarium.se/",
     },
@@ -138,7 +130,6 @@ export const likedPlacesData: PlaceFullSchema[] = [
       rating: 4.3,
       description:
         "Grodan är en klassisk restaurang och bar på Grev Turegatan i Stockholm. Här serveras traditionell svensk mat i en elegant miljö.",
-      isLiked: true,
       price: "$$$",
       website: "https://www.grodan.se/",
     },
@@ -150,7 +141,6 @@ export const likedPlacesData: PlaceFullSchema[] = [
       rating: 4.4,
       description:
         "Pelikan är en traditionell svensk restaurang på Södermalm i Stockholm. Här kan du njuta av klassiska svenska rätter i en historisk miljö.",
-      isLiked: true,
       price: "$$",
       website: "https://www.pelikan.se/",
     },
@@ -162,7 +152,6 @@ export const likedPlacesData: PlaceFullSchema[] = [
       rating: 4.7,
       description:
         "Operakällaren är en av Stockholms mest kända och exklusiva restauranger. Här serveras gourmetmat i en elegant och historisk miljö.",
-      isLiked: true,
       price: "$$$$",
       website: "https://www.operakallaren.se/",
     },
@@ -174,7 +163,6 @@ export const likedPlacesData: PlaceFullSchema[] = [
       rating: 4.5,
       description:
         "Sturehof är en klassisk restaurang på Stureplan i Stockholm. Här serveras fisk och skaldjur i en livlig och social miljö.",
-      isLiked: true,
       price: "$$$",
       website: "https://www.sturehof.com/",
     },
@@ -186,7 +174,6 @@ export const likedPlacesData: PlaceFullSchema[] = [
       rating: 4.6,
       description:
         "Riche är en klassisk restaurang och bar på Birger Jarlsgatan i Stockholm. Här serveras traditionell svensk mat i en livlig och social miljö.",
-      isLiked: true,
       price: "$$$",
       website: "https://www.riche.se/",
     },

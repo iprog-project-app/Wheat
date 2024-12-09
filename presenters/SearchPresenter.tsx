@@ -1,4 +1,4 @@
-import { PlaceFullSchema, PlacePreviewSchema } from "@/constants/types";
+import { PlaceFullSchema, PlacePreviewLikedSchema, PlacePreviewSchema } from "@/constants/types";
 import SearchView from "../views/SearchView";
 import { useStore, likedPlacesData } from "@/store/model";
 import { SearchModel } from "@/Model/searchModel";
@@ -49,7 +49,7 @@ export default function SearchPresenter() {
   const sortedResults = sortResults(searchResults);
 
   // Convert to PlacePreviewSchema before passing to view
-  const resultsToDisplay: PlacePreviewSchema[] = (
+  const resultsToDisplay: PlacePreviewLikedSchema[] = (
     searchResultsData
   ).map((place) => ({
     id: place.id,
