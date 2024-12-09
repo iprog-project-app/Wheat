@@ -3,6 +3,7 @@ import SearchView from "../views/SearchView";
 import { useStore, likedPlacesData } from "@/store/model";
 import { SearchModel } from "@/Model/searchModel";
 import { router } from "expo-router";
+import { isPlaceLiked } from "@/utilities/likedPlaces";
 
 export default function SearchPresenter() {
   const { setActivePlaceData } = useStore();
@@ -49,14 +50,14 @@ export default function SearchPresenter() {
 
   // Convert to PlacePreviewSchema before passing to view
   const resultsToDisplay: PlacePreviewSchema[] = (
-    searchQuery ? sortedResults : recentSearchesData
+    searchResultsData
   ).map((place) => ({
     id: place.id,
     title: place.title,
     location: place.location,
     imageUri: place.imageUri,
     rating: place.rating,
-    isLiked: place.isLiked,
+    isLiked: isPlaceLiked(place.id, likedPlacesData), 
     note: place.note,
   }));
 
@@ -91,7 +92,7 @@ export default function SearchPresenter() {
   return (
     <SearchView
       searchQuery={searchQuery}
-      searchResults={searchResultsData}
+      searchResults={resultsToDisplay}
       onChangeText={updateSearch}
       toggleLike={handleToggleLike} // TODO: Toggle like for item
       onPressItem={toggleActiveData}
