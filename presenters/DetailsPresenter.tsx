@@ -32,6 +32,7 @@ export default function DetailsPresenter() {
     // TODO
   };
 
+
   return (
     <DetailsView
       placeData={activePlaceData}
@@ -42,7 +43,7 @@ export default function DetailsPresenter() {
       // TODO: Add note parameter to onModalClose
       onModalClose={handleModalClose}
       onLinkPress={handleLinkPress}
-      rightButtonState="randomize"
+      rightButtonState="liked"
     />
   );
 }
