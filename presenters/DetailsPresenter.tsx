@@ -42,6 +42,7 @@ export default function DetailsPresenter() {
       // TODO: Add note parameter to onModalClose
       onModalClose={handleModalClose}
       onLinkPress={handleLinkPress}
+      rightButtonState="randomize"
     />
   );
 }
