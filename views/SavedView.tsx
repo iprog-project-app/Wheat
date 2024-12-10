@@ -1,13 +1,14 @@
 import { PlaceListItem } from "@/components/PlaceListItem";
-import { PlacePreviewLikedSchema, PlacePreviewSchema } from "@/constants/types";
+import {PlacePreviewSchema } from "@/constants/types";
 import { SearchBar } from "../components/SearchBar";
 import { FlatList, StyleSheet, View, Text } from "react-native";
 import Colors from "../constants/Colors";
 import { useMemo } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import useStore from "@/store/model";
 
 export interface SavedViewProps {
-  searchResults: PlacePreviewLikedSchema[];
+  searchResults: PlacePreviewSchema[];
   searchQuery: string;
   onChangeText: (searchQuery: string) => void;
   toggleLike: (id: string) => () => void;
@@ -63,6 +64,7 @@ export default function SavedView({
   toggleLike,
   onPressItem,
 }: SavedViewProps) {
+  const { isLikedPlace } = useStore();
   const headerComponent = useMemo(
     () => (
       <SearchBarComponent
@@ -101,6 +103,7 @@ export default function SavedView({
             key={item.id}
             toggleLike={toggleLike(item.id)}
             onPress={onPressItem(item.id)}
+            isLiked={isLikedPlace(item.id)}
             {...item}
           />
         )

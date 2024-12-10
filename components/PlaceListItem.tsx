@@ -13,7 +13,7 @@ export interface PlaceListItemProps {
   toggleLike: () => void;
   onPress: () => void;
 }
-
+//TODO: ta bort isLiked och klassifiera om rött genom helper function
 export function PlaceListItem({
   title,
   location,

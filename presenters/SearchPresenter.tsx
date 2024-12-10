@@ -3,11 +3,10 @@ import SearchView from "../views/SearchView";
 import { useStore } from "@/store/model";
 import { SearchModel } from "@/Model/searchModel";
 import { router } from "expo-router";
-import { isPlaceLiked } from "@/utilities/likedPlaces";
 
 
 export default function SearchPresenter() {
-  const { setActivePlaceData, likedPlaces, addLikedPlace, removeLikedPlace } = useStore();
+  const { setActivePlaceData, likedPlaces, addLikedPlace, removeLikedPlace, isLikedPlace} = useStore();
   const { searchQuery, setSearchQuery } = useStore();
   const { searchResultsData, setSearchResultsData } = useStore();
 
@@ -72,7 +71,7 @@ export default function SearchPresenter() {
 
   const handleToggleLike = (id: string) => ()  => {
     const place = idToItem(id);
-    if(isPlaceLiked(id)){
+    if(isLikedPlace(id)){
       removeLikedPlace(id)
       console.log("Removed from liked places: ", id);
     }
@@ -80,7 +79,7 @@ export default function SearchPresenter() {
     else{
         if (place) {
             addLikedPlace(place);
-            console.log("Added to liked places: ", id);
+            console.log("Added to liked places: ", id), likedPlaces;
         } else {
             console.error("Could not find item with id: ", id);
       

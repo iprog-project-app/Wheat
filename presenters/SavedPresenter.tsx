@@ -5,8 +5,8 @@ import useStore from "../store/model";
 import { router } from "expo-router";
 
 export default function SavedPresenter() {
-  const { setActivePlaceData, likedPlaces } = useStore();
-
+  const { setActivePlaceData, likedPlaces, removeLikedPlace, addLikedPlace, isLikedPlace } = useStore();
+  console.log("liked places: ", likedPlaces)
   const sortResults = (
     results: Array<PlacePreviewSchema>
   ): Array<PlacePreviewSchema> => {
@@ -40,7 +40,21 @@ export default function SavedPresenter() {
 
   const handleLikeToggle = (id: string) => () => {
     // TODO: Toggle like for item (same as in DetailsPresenter and SearchPresenter).  Add an alert if its a dislike to make sure the user wants to remove it
-    console.log("Toggle like: ", id);
+    const place = idToItem(id);
+    if(isLikedPlace(id)){
+      removeLikedPlace(id)
+      console.log("Removed from liked places: ", id);
+    }
+  
+    else{
+        if (place) {
+            addLikedPlace(place);
+            console.log("Added to liked places: ", id);
+        } else {
+            console.error("Could not find item with id: ", id);
+      
+      }
+    }
   };
 
   return (

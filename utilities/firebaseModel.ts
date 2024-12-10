@@ -3,7 +3,7 @@ import { db } from "@/Config/firebaseConfig";
 import { FriendSchema, PlaceFullSchema } from "@/constants/types";
 import { useStore } from "@/store/model";
 
-const { setLikedPlaces } = useStore();
+// const { setLikedPlaces } = useStore();
 
 interface user {
     name: string,
@@ -36,7 +36,7 @@ export const addUser = async (user: user) => {
 } 
 
 // Representerar att vi fetchat likedPlaces från Firebase
-const likedPlacesData: PlaceFullSchema[] = [
+export const likedPlacesData: PlaceFullSchema[] = [
     {
       id: "ChIJowodOvt3X0YRjYM1JobP3Gg",
       title: "Omnipollos hatt",
@@ -191,7 +191,7 @@ const likedPlacesData: PlaceFullSchema[] = [
       website: "https://www.riche.se/",
     },
   ];
-  setLikedPlaces(likedPlacesData)
+//   setLikedPlaces(likedPlacesData)
 
   // Mock data
   export const friendList = [
