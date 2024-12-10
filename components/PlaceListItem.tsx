@@ -1,6 +1,7 @@
 import { View, Image, Text, StyleSheet, Pressable } from "react-native";
 import Colors from "../constants/Colors";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { useStore } from "@/store/model";
 
 export interface PlaceListItemProps {
   id: string;
@@ -14,16 +15,29 @@ export interface PlaceListItemProps {
   onPress: () => void;
 }
 //TODO: ta bort isLiked och klassifiera om rött genom helper function
+export interface PlaceListItemProps {
+  id: string;
+  title: string;
+  location: string;
+  imageUri: string;
+  rating: number;
+  note?: string;
+  toggleLike: () => void;
+  onPress: () => void;
+}
+
 export function PlaceListItem({
+  id,
   title,
   location,
   imageUri,
   rating,
-  isLiked,
   note,
   toggleLike,
   onPress,
 }: PlaceListItemProps) {
+  const { isLikedPlace } = useStore(); // Get access to the liked places from the store
+
   return (
     <View
       style={{
@@ -96,9 +110,9 @@ export function PlaceListItem({
         })}
       >
         <Ionicons
-          name={isLiked ? "heart" : "heart-outline"}
+          name={isLikedPlace(id) ? "heart" : "heart-outline"}
           size={28}
-          color={isLiked ? Colors.red : Colors.gray3}
+          color={isLikedPlace(id) ? Colors.red : Colors.gray3}
         />
       </Pressable>
     </View>

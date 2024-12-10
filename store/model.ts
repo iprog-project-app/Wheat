@@ -26,19 +26,7 @@ export const useStore = create<StoreState>((set, get) => ({
     setSearchQuery: (query: string) => set({ searchQuery: query }),
     searchResultsData: [],
     setSearchResultsData: (data: PlaceFullSchema[]) => set({ searchResultsData: data }),
-    likedPlaces: [{
-      id: "ChIJowodOvt3X0YRjYM1JobP3Gg",
-      title: "Omnipollos hatt",
-      location: "Hökens gata 1A",
-      imageUri:
-        "https://thumbor.junction.travel/zOTYvRLxJ3fkKYbywkrX7EtjNHY=/1092x0/smart/https%3A%2F%2Fcontent.res.se%2Fsites%2Fdefault%2Ffiles%2Fgoogle-places%2FChIJowodOvt3X0YRjYM1JobP3Gg.jpg",
-      rating: 4.5,
-      note: "Marcus favoritställe! Bästa ölen och bästa pizzan! (Prova “slush-ölen”!!)",
-      description:
-        "Omnipollos hatt är en pizzeria och bryggeri som ligger på Folkungagatan på Södermalm i Stockholm. Pizzerian är känd för sina udda pizzakreationer och bryggeriet för sina öl. Pizzerian har funnits sedan 2014 och bryggeriet sedan 2011.",
-      price: "$$",
-      website: "https://omnipolloshatt.se/",
-    }],
+    likedPlaces: [],
     setLikedPlaces: (places: PlaceFullSchema[]) => set({likedPlaces: places}),
     removeLikedPlace: (id: string) => {
       const currentLikedPlaces = get().likedPlaces;

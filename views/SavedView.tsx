@@ -77,6 +77,7 @@ export default function SavedView({
 
   return (
     // TODO: Allow scroll to bottom
+    
     <FlatList
       style={{
         width: "100%",
@@ -92,22 +93,15 @@ export default function SavedView({
         index,
       })}
       ListEmptyComponent={<EmptyState searchQuery={searchQuery} />}
-      renderItem={({ item, index }) =>
-        index === 0 ? (
-          <SearchBarComponent
-            searchQuery={searchQuery}
-            onChangeText={onChangeText}
-          />
-        ) : (
-          <PlaceListItem
-            key={item.id}
-            toggleLike={toggleLike(item.id)}
-            onPress={onPressItem(item.id)}
-            isLiked={isLikedPlace(item.id)}
-            {...item}
-          />
-        )
-      }
+      renderItem={({ item }) => (
+        <PlaceListItem
+          key={item.id}
+          toggleLike={toggleLike(item.id)}
+          onPress={onPressItem(item.id)}
+          isLiked={isLikedPlace(item.id)}
+          {...item}
+        />
+      )}
       keyExtractor={(item) => item.id}
       ItemSeparatorComponent={() => (
         <View

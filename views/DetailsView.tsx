@@ -18,7 +18,7 @@ import { Linking } from "react-native";
 
 type DetailsViewProps = {
   placeData: PlaceFullSchema | null;
-  onLikeToggle: () => void;
+  onLikeToggle: (id: string) => void;
   onNoteChange: (text: string) => void;
   onBackPress: () => void;
   onModalClose: () => void;
@@ -47,7 +47,7 @@ export default function DetailsView({
       <View style={styles.container}>
         {!placeData ? (
           // TOTO: Fix. Will never happen with current solution.
-          <Text>Loading...</Text>
+          <Text style={{ fontSize: 16, color: Colors.gray2, textAlign: "center" }}>No saved restaurants to chose from</Text>
         ) : (
           <>
             <ScrollView style={{ flex: 1 }}>
@@ -128,7 +128,7 @@ export default function DetailsView({
               {rightButtonState === "liked" && (
                 <TouchableOpacity
                   style={[styles.Button, { backgroundColor: Colors.redLight }]}
-                  onPress={onLikeToggle}
+                  onPress={() => onLikeToggle(placeData.id)}
                 >
                   <Ionicons name="heart-dislike" size={28} color={Colors.red} />
                   <Text style={{ color: Colors.redDark, fontSize: 18, fontWeight: "bold" }}>Remove Save</Text>
@@ -138,7 +138,7 @@ export default function DetailsView({
               {rightButtonState === "notLiked" && (
                 <TouchableOpacity
                   style={[styles.Button, { backgroundColor: Colors.redLight }]}
-                  onPress={onLikeToggle}
+                  onPress={() => onLikeToggle(placeData.id)}
                 >
                   <Ionicons name="heart" size={28} color={Colors.red} />
                   <Text style={{ color: Colors.redDark, fontSize: 18, fontWeight: "bold" }}>Save</Text>
