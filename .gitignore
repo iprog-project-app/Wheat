@@ -45,3 +45,5 @@ yarn-error.*
 
 .firebase/
 .vscode/
+# Local Netlify folder
+.netlify
