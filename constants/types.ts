@@ -15,9 +15,6 @@ export type PlaceFullSchema = PlacePreviewSchema & {
   website: string;
 };
 
-export type PlacePreviewLikedSchema = PlacePreviewSchema & {
-  isLiked:boolean
-}
 
 export type SettingsOption = {
   title: string;

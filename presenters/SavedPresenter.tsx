@@ -1,14 +1,11 @@
 import { PlaceFullSchema, PlacePreviewSchema } from "@/constants/types";
 import SavedView from "../views/SavedView";
 import { useState } from "react";
-import useStore, { likedPlacesData } from "../store/model";
+import useStore from "../store/model";
 import { router } from "expo-router";
 
 export default function SavedPresenter() {
-  const { setActivePlaceData } = useStore();
-
-  // TODO: Fetch liked data from user
-  const likedData = likedPlacesData.filter((item) => item.isLiked);
+  const { setActivePlaceData, likedPlaces } = useStore();
 
   const sortResults = (
     results: Array<PlacePreviewSchema>
@@ -23,14 +20,14 @@ export default function SavedPresenter() {
   };
 
   // Keep this, this search is just a filter of the likedData
-  const searchResults = likedData.filter((item) =>
+  const searchResults = likedPlaces.filter((item) =>
     item.title.toLowerCase().startsWith(search.toLowerCase())
   );
 
   const sortedResults = sortResults(searchResults);
 
   function idToItem(id: string) {
-    return likedData.find((item) => item.id === id);
+    return likedPlaces.find((item) => item.id === id);
   }
 
   const toggleActiveData = (id: string) => () => {
@@ -49,7 +46,7 @@ export default function SavedPresenter() {
   return (
     <SavedView
       searchQuery={search}
-      searchResults={search ? sortedResults : likedData}
+      searchResults={search ? sortedResults : likedPlaces}
       onChangeText={updateSearch}
       toggleLike={handleLikeToggle}
       onPressItem={toggleActiveData}

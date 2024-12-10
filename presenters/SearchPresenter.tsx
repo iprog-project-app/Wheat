@@ -1,12 +1,13 @@
-import { PlaceFullSchema, PlacePreviewLikedSchema, PlacePreviewSchema } from "@/constants/types";
+import { PlaceFullSchema, PlacePreviewSchema } from "@/constants/types";
 import SearchView from "../views/SearchView";
-import { useStore, likedPlacesData } from "@/store/model";
+import { useStore } from "@/store/model";
 import { SearchModel } from "@/Model/searchModel";
 import { router } from "expo-router";
 import { isPlaceLiked } from "@/utilities/likedPlaces";
 
+
 export default function SearchPresenter() {
-  const { setActivePlaceData } = useStore();
+  const { setActivePlaceData, likedPlaces, addLikedPlace, removeLikedPlace } = useStore();
   const { searchQuery, setSearchQuery } = useStore();
   const { searchResultsData, setSearchResultsData } = useStore();
 
@@ -42,14 +43,14 @@ export default function SearchPresenter() {
 
   // TODO: Implement search, but through the API
   // Mock search
-  const searchResults = likedPlacesData.filter((item) =>
+  const searchResults = likedPlaces.filter((item) =>
     item.title.toLowerCase().startsWith(searchQuery.toLowerCase())
   );
 
   const sortedResults = sortResults(searchResults);
 
   // Convert to PlacePreviewSchema before passing to view
-  const resultsToDisplay: PlacePreviewLikedSchema[] = (
+  const resultsToDisplay: PlacePreviewSchema[] = (
     searchResultsData
   ).map((place) => ({
     id: place.id,
@@ -57,7 +58,6 @@ export default function SearchPresenter() {
     location: place.location,
     imageUri: place.imageUri,
     rating: place.rating,
-    isLiked: isPlaceLiked(place.id, likedPlacesData), 
     note: place.note,
   }));
 
@@ -70,9 +70,25 @@ export default function SearchPresenter() {
     }
   };
 
-  const handleToggleLike = (id: string) => () => {
+  const handleToggleLike = (id: string) => ()  => {
+    const place = idToItem(id);
+    if(isPlaceLiked(id)){
+      removeLikedPlace(id)
+      console.log("Removed from liked places: ", id);
+    }
+  
+    else{
+        if (place) {
+            addLikedPlace(place);
+            console.log("Added to liked places: ", id);
+        } else {
+            console.error("Could not find item with id: ", id);
+      
+      }
+    }
+      // fix for remove also
     // TODO: Toggle like for item (same as in DetailsPresenter and SavedPresenter). Add an alert if its a dislike to make sure the user wants to remove it
-    console.log("Toggle like: ", id);
+    // console.log("Toggle like: ", id);
   };
 
   const handleSearch = async () => {

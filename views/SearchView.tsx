@@ -1,13 +1,14 @@
 import { PlaceListItem } from "@/components/PlaceListItem";
-import { PlacePreviewLikedSchema, PlacePreviewSchema } from "@/constants/types";
+import { PlacePreviewSchema } from "@/constants/types";
 import { SearchBar } from "../components/SearchBar";
 import { FlatList, StyleSheet, View, Text } from "react-native";
 import Colors from "../constants/Colors";
 import { useMemo } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { isPlaceLiked } from "@/utilities/likedPlaces";
 
 export interface SearchViewProps {
-  searchResults: PlacePreviewLikedSchema[];
+  searchResults: PlacePreviewSchema[];
   searchQuery: string;
   onChangeText: (searchQuery: string) => void;
   toggleLike: (id: string) => () => void;
@@ -90,6 +91,7 @@ export default function SearchView({
           key={item.id}
           toggleLike={toggleLike(item.id)}
           onPress={onPressItem(item.id)}
+          isLiked={isPlaceLiked(item.id)}
           {...item}
         />
       )}

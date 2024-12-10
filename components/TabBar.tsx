@@ -5,14 +5,14 @@ import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { AnimatedButton } from "./AnimatedButton";
-import useStore, { likedPlacesData } from "@/store/model";
+import useStore from "@/store/model";
 
 export default function TabBar({}: BottomTabBarProps) {
-  const { setActivePlaceData } = useStore();
+  const { setActivePlaceData, likedPlaces } = useStore();
 
   const handleSetRandom = () => {
     setActivePlaceData(
-      likedPlacesData[Math.floor(Math.random() * likedPlacesData.length)]
+      likedPlaces[Math.floor(Math.random() * likedPlaces.length)]
     );
   };
   return (
