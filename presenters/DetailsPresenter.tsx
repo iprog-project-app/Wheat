@@ -7,13 +7,11 @@ import { useLocalSearchParams } from "expo-router";
 export default function DetailsPresenter() {
   const { source } = useLocalSearchParams(); // Hämta 'source'
 
-  const {
-    activePlaceData,
-    likedPlaces,
-    removeLikedPlace,
-    addLikedPlace,
-    isLikedPlace,
-  } = useStore();
+  const activePlaceData = useStore((state) => state.activePlaceData);
+  const likedPlaces = useStore((state) => state.likedPlaces);
+  const removeLikedPlace = useStore((state) => state.removeLikedPlace);
+  const addLikedPlace = useStore((state) => state.addLikedPlace);
+  const isLikedPlace = useStore((state) => state.isLikedPlace);
 
   // Event handlers
   // TODO: Move to store/model.ts as its used multiple times
