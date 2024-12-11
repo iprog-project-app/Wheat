@@ -5,13 +5,11 @@ import { SearchModel } from "@/Model/searchModel";
 import { router } from "expo-router";
 
 export default function SearchPresenter() {
-  const {
-    setActivePlaceData,
-    likedPlaces,
-    addLikedPlace,
-    removeLikedPlace,
-    isLikedPlace,
-  } = useStore();
+  const setActivePlaceData = useStore((state) => state.setActivePlaceData);
+  const likedPlaces = useStore((state) => state.likedPlaces);
+  const addLikedPlace = useStore((state) => state.addLikedPlace);
+  const removeLikedPlace = useStore((state) => state.removeLikedPlace);
+  const isLikedPlace = useStore((state) => state.isLikedPlace);
   const { searchQuery, setSearchQuery } = useStore();
   const { searchResultsData, setSearchResultsData } = useStore();
 
