@@ -77,6 +77,7 @@ function RootLayoutNav() {
         />
         <Stack.Screen name="account" options={{ title: "Account Settings" }} />
         <Stack.Screen name="friends" options={{ title: "Manage Friends" }} />
+        <Stack.Screen name="signIn" />
       </Stack>
     </GestureHandlerRootView>
   );
