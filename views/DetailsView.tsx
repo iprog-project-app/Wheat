@@ -46,8 +46,12 @@ export default function DetailsView({
     (
       <View style={styles.container}>
         {!placeData ? (
-          // TOTO: Fix. Will never happen with current solution.
-          <Text style={{ fontSize: 16, color: Colors.gray2, textAlign: "center" }}>No saved restaurants to chose from</Text>
+          // TODO: Check if any other cases need to be handled
+          <Text
+            style={{ fontSize: 16, color: Colors.gray2, textAlign: "center" }}
+          >
+            No saved restaurants to chose from
+          </Text>
         ) : (
           <>
             <ScrollView style={{ flex: 1 }}>
@@ -63,41 +67,54 @@ export default function DetailsView({
                 <View style={styles.titleRow}>
                   <Text style={styles.title}>{placeData.title}</Text>
                 </View>
-                <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
+                <View
+                  style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
+                >
                   <Text style={styles.subtitle}>{placeData.rating}</Text>
                   <FontAwesome name="star" size={18} color={Colors.yellow} />
+                  {/* TODO: More gap here, the above could be in its own view */}
                   <Text style={styles.subtitle}>{placeData.price}</Text>
                 </View>
 
                 <TouchableOpacity
                   onPress={() =>
-                  Linking.openURL(
-                    `https://www.google.com/maps/search/?api=1&query=<address>&query_place_id=${placeData.id}`
-                  )
+                    Linking.openURL(
+                      `https://www.google.com/maps/search/?api=1&query=<address>&query_place_id=${placeData.id}`
+                    )
                   }
                 >
-                  <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
-                  <Ionicons
-                    name="location-outline"
-                    size={18}
-                    color={Colors.gray0}
-                  />
-                  <Text style={styles.subtitle}>{placeData.location}</Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 4,
+                    }}
+                  >
+                    <Ionicons
+                      name="location-outline"
+                      size={18}
+                      color={Colors.gray0}
+                    />
+                    <Text style={styles.subtitle}>{placeData.location}</Text>
                   </View>
                 </TouchableOpacity>
 
                 {placeData.website && (
-                    <TouchableOpacity
-                    style={{ alignItems: "center", flexDirection: "row", gap: 4 }}
+                  <TouchableOpacity
+                    style={{
+                      alignItems: "center",
+                      flexDirection: "row",
+                      gap: 4,
+                    }}
                     onPress={onLinkPress}
-                    >
+                  >
                     <Ionicons
                       name="link-outline"
                       size={18}
                       color={Colors.primary}
                     />
                     <Text style={styles.link}>{placeData.website}</Text>
-                    </TouchableOpacity>
+                  </TouchableOpacity>
                 )}
                 <Text style={styles.description}>{placeData.description}</Text>
               </View>
@@ -120,38 +137,84 @@ export default function DetailsView({
 
             {/* Buttons */}
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={[styles.Button, { backgroundColor: Colors.secondary}]} onPress={onBackPress}>
-                <Ionicons name="arrow-back" size={28} color={Colors.primaryDisabled} />
-                <Text style={{ color: Colors.primaryDisabled, fontSize: 18, fontWeight: "bold" }}>Back</Text>
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: Colors.secondary }]}
+                onPress={onBackPress}
+              >
+                <Ionicons
+                  name="arrow-back"
+                  size={28}
+                  color={Colors.primaryDisabled}
+                />
+                <Text
+                  style={{
+                    color: Colors.primaryDisabled,
+                    fontSize: 18,
+                    fontWeight: "bold",
+                  }}
+                >
+                  Back
+                </Text>
               </TouchableOpacity>
 
               {rightButtonState === "liked" && (
                 <TouchableOpacity
-                  style={[styles.Button, { backgroundColor: Colors.redLight }]}
+                  style={[styles.button, { backgroundColor: Colors.redLight }]}
                   onPress={() => onLikeToggle(placeData.id)}
                 >
                   <Ionicons name="heart-dislike" size={28} color={Colors.red} />
-                  <Text style={{ color: Colors.redDark, fontSize: 18, fontWeight: "bold" }}>Remove Save</Text>
+                  <Text
+                    style={{
+                      color: Colors.redDark,
+                      fontSize: 18,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Remove Save
+                  </Text>
                 </TouchableOpacity>
               )}
 
               {rightButtonState === "notLiked" && (
                 <TouchableOpacity
-                  style={[styles.Button, { backgroundColor: Colors.redLight }]}
+                  style={[styles.button, { backgroundColor: Colors.redLight }]}
                   onPress={() => onLikeToggle(placeData.id)}
                 >
                   <Ionicons name="heart" size={28} color={Colors.red} />
-                  <Text style={{ color: Colors.redDark, fontSize: 18, fontWeight: "bold" }}>Save</Text>
+                  <Text
+                    style={{
+                      color: Colors.redDark,
+                      fontSize: 18,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Save
+                  </Text>
                 </TouchableOpacity>
               )}
 
               {rightButtonState === "randomize" && (
                 <TouchableOpacity
-                  style={[styles.Button, { backgroundColor: Colors.yellowLight}]}
+                  style={[
+                    styles.button,
+                    { backgroundColor: Colors.yellowLight },
+                  ]}
                   onPress={() => console.log("Randomize")}
                 >
-                  <Ionicons name="dice-outline" size={28} color={Colors.orangeDark} />
-                  <Text style={{ color: Colors.orangeDark, fontSize: 18, fontWeight: "bold" }}>Randomize</Text>
+                  <Ionicons
+                    name="dice-outline"
+                    size={28}
+                    color={Colors.orangeDark}
+                  />
+                  <Text
+                    style={{
+                      color: Colors.orangeDark,
+                      fontSize: 18,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Randomize
+                  </Text>
                 </TouchableOpacity>
               )}
             </View>
@@ -230,13 +293,13 @@ const styles = StyleSheet.create({
     gap: 16,
   },
 
-  Button: {
+  button: {
     flex: 1,
     padding: 16,
     borderRadius: 16,
     alignItems: "center",
     // Shadow for iOS
-    shadowColor: "#000",
+    shadowColor: Colors.black,
     shadowOffset: {
       width: 0,
       height: 2,
