@@ -15,7 +15,6 @@ export type PlaceFullSchema = PlacePreviewSchema & {
   website: string;
 };
 
-
 export type SettingsOption = {
   title: string;
   description: string;

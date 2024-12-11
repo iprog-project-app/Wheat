@@ -1,7 +1,7 @@
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/Config/firebaseConfig"; 
 import { FriendSchema, PlaceFullSchema } from "@/constants/types";
-import { useStore } from "@/store/model";
+// import { useStore } from "@/store/model";
 
 // const { setLikedPlaces } = useStore();
 

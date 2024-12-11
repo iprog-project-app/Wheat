@@ -1,8 +1,5 @@
-import { FriendSchema, PlaceFullSchema } from '@/constants/types';
+import { PlaceFullSchema } from '@/constants/types';
 import { create } from 'zustand';
-//Mock data
-
-
 
 interface StoreState {
     activePlaceData: PlaceFullSchema | null;
@@ -16,7 +13,6 @@ interface StoreState {
     removeLikedPlace: (id: string) => void;
     addLikedPlace: (place: PlaceFullSchema) => void;
     isLikedPlace: (id: string) => boolean;
-
 }
 
 export const useStore = create<StoreState>((set, get) => ({
@@ -58,5 +54,3 @@ export const useStore = create<StoreState>((set, get) => ({
 }));
 
 export default useStore;
-
-// Mock data 
