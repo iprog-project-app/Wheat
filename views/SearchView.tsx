@@ -5,6 +5,7 @@ import { FlatList, StyleSheet, View, Text } from "react-native";
 import Colors from "../constants/Colors";
 import { useMemo } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import useStore from "@/store/model";
 
 export interface SearchViewProps {
   searchResults: PlacePreviewSchema[];
@@ -63,6 +64,7 @@ export default function SearchView({
   onPressItem,
   onSearch,
 }: SearchViewProps) {
+  const { isLikedPlace } = useStore();
   const headerComponent = useMemo(
     () => (
       <SearchBarComponent
@@ -90,6 +92,7 @@ export default function SearchView({
           key={item.id}
           toggleLike={toggleLike(item.id)}
           onPress={onPressItem(item.id)}
+          isLiked={isLikedPlace(item.id)}
           {...item}
         />
       )}

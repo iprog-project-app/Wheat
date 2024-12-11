@@ -5,6 +5,7 @@ import { FlatList, StyleSheet, View, Text } from "react-native";
 import Colors from "../constants/Colors";
 import { useMemo } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import useStore from "@/store/model";
 
 export interface SavedViewProps {
   searchResults: PlacePreviewSchema[];
@@ -44,7 +45,7 @@ const SearchBarComponent = ({
 const EmptyState = ({ searchQuery }: { searchQuery: string }) => (
   <View style={styles.emptyContainer}>
     <Ionicons
-      name={searchQuery ? "search" : "add"}
+      name={searchQuery ? "search" : "heart-outline"}
       size={40}
       color={Colors.gray2}
     />
@@ -82,7 +83,6 @@ export default function SavedView({
       }}
       contentContainerStyle={{ marginBottom: 32 }}
       data={searchResults}
-      initialScrollIndex={1}
       getItemLayout={(data, index) => ({
         // TODO: Might not be the best way
         length: 73, // approximate height of each item
@@ -90,21 +90,15 @@ export default function SavedView({
         index,
       })}
       ListEmptyComponent={<EmptyState searchQuery={searchQuery} />}
-      renderItem={({ item, index }) =>
-        index === 0 ? (
-          <SearchBarComponent
-            searchQuery={searchQuery}
-            onChangeText={onChangeText}
-          />
-        ) : (
-          <PlaceListItem
-            key={item.id}
-            toggleLike={toggleLike(item.id)}
-            onPress={onPressItem(item.id)}
-            {...item}
-          />
-        )
-      }
+      renderItem={({ item }) => (
+        <PlaceListItem
+          key={item.id}
+          toggleLike={toggleLike(item.id)}
+          onPress={onPressItem(item.id)}
+          isLiked
+          {...item}
+        />
+      )}
       keyExtractor={(item) => item.id}
       ItemSeparatorComponent={() => (
         <View

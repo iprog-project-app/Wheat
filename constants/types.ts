@@ -6,7 +6,6 @@ export type PlacePreviewSchema = {
   imageUri: string;
   rating: number;
   location: string;
-  isLiked: boolean;
   note?: string;
 };
 

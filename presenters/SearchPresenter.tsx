@@ -1,28 +1,19 @@
-import { PlaceFullSchema, PlacePreviewSchema } from "@/constants/types";
+import { PlaceFullSchema } from "@/constants/types";
 import SearchView from "../views/SearchView";
-import { useStore, likedPlacesData } from "@/store/model";
+import { useStore } from "@/store/model";
 import { SearchModel } from "@/Model/searchModel";
 import { router } from "expo-router";
 
 export default function SearchPresenter() {
-  const { setActivePlaceData } = useStore();
+  const setActivePlaceData = useStore((state) => state.setActivePlaceData);
+  const likedPlaces = useStore((state) => state.likedPlaces);
+  const addLikedPlace = useStore((state) => state.addLikedPlace);
+  const removeLikedPlace = useStore((state) => state.removeLikedPlace);
+  const isLikedPlace = useStore((state) => state.isLikedPlace);
   const { searchQuery, setSearchQuery } = useStore();
   const { searchResultsData, setSearchResultsData } = useStore();
 
-  // TODO: Fetch search results
-  // Imported placesData is mock data (this would represent all places in the database) but we would fetch based on a searchQuery (I guess)
-
-  // TODO: Fetch recent searches from model (not needed though, it works without)
-  // Mock recent searches (should probably be the full objects)
-  const recentSearches = [
-    "omnipollos",
-    "fotografiska",
-    "lilla-ego",
-    "meatballs",
-  ];
-
-  // Probably not needed, as it's better to store the full data
-  // Or maybe useful if we only want to return the ID from the view
+  // TODO: Move to store/model.ts as its used multiple times
   function idToItem(id: string) {
     return searchResultsData.find((item) => item.id === id);
   }
@@ -31,34 +22,9 @@ export default function SearchPresenter() {
     return results.sort((a, b) => a.title.localeCompare(b.title));
   };
 
-  const recentSearchesData = recentSearches
-    .map((id) => idToItem(id))
-    .filter((place): place is PlaceFullSchema => place !== undefined);
-
   const updateSearch = (search: string) => {
     setSearchQuery(search);
   };
-
-  // TODO: Implement search, but through the API
-  // Mock search
-  const searchResults = likedPlacesData.filter((item) =>
-    item.title.toLowerCase().startsWith(searchQuery.toLowerCase())
-  );
-
-  const sortedResults = sortResults(searchResults);
-
-  // Convert to PlacePreviewSchema before passing to view
-  const resultsToDisplay: PlacePreviewSchema[] = (
-    searchQuery ? sortedResults : recentSearchesData
-  ).map((place) => ({
-    id: place.id,
-    title: place.title,
-    location: place.location,
-    imageUri: place.imageUri,
-    rating: place.rating,
-    isLiked: place.isLiked,
-    note: place.note,
-  }));
 
   const toggleActiveData = (id: string) => () => {
     const data = idToItem(id);
@@ -69,9 +35,20 @@ export default function SearchPresenter() {
     }
   };
 
+  // TODO: Move to store/model.ts as its used multiple times
   const handleToggleLike = (id: string) => () => {
-    // TODO: Toggle like for item (same as in DetailsPresenter and SavedPresenter). Add an alert if its a dislike to make sure the user wants to remove it
-    console.log("Toggle like: ", id);
+    const place = idToItem(id);
+    if (isLikedPlace(id)) {
+      removeLikedPlace(id);
+      console.log("Removed from liked places: ", id);
+    } else {
+      if (place) {
+        addLikedPlace(place);
+        console.log("Added to liked places: ", id), likedPlaces;
+      } else {
+        console.error("Could not find item with id: ", id);
+      }
+    }
   };
 
   const handleSearch = async () => {
@@ -91,9 +68,9 @@ export default function SearchPresenter() {
   return (
     <SearchView
       searchQuery={searchQuery}
-      searchResults={searchResultsData}
+      searchResults={sortResults(searchResultsData)}
       onChangeText={updateSearch}
-      toggleLike={handleToggleLike} // TODO: Toggle like for item
+      toggleLike={handleToggleLike}
       onPressItem={toggleActiveData}
       onSearch={handleSearch}
     />
