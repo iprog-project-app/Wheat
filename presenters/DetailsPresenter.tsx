@@ -7,24 +7,28 @@ import { useLocalSearchParams } from "expo-router";
 export default function DetailsPresenter() {
   const { source } = useLocalSearchParams(); // Hämta 'source'
 
-  const { activePlaceData, setActivePlaceData, likedPlaces, removeLikedPlace, addLikedPlace, isLikedPlace} = useStore();
+  const {
+    activePlaceData,
+    likedPlaces,
+    removeLikedPlace,
+    addLikedPlace,
+    isLikedPlace,
+  } = useStore();
 
   // Event handlers
+  // TODO: Move to store/model.ts as its used multiple times
   const handleLikeToggle = (id: string) => {
     // TODO: Toggle like for item (same as in SearchPresenter adn SavedPresenter). Add an alert if its a dislike to make sure the user wants to remove it
     const place = activePlaceData;
-    if(activePlaceData?.id && isLikedPlace(activePlaceData.id)){
-      removeLikedPlace(activePlaceData.id)
+    if (activePlaceData?.id && isLikedPlace(activePlaceData.id)) {
+      removeLikedPlace(activePlaceData.id);
       console.log("Removed from liked places: ", activePlaceData.id);
-    }
-  
-    else{
-        if (place) {
-            addLikedPlace(place);
-            console.log("Added to liked places: ", activePlaceData.id), likedPlaces;
-        } else {
-            console.error("Could not find item with id: ");
-      
+    } else {
+      if (place) {
+        addLikedPlace(place);
+        console.log("Added to liked places: ", activePlaceData.id), likedPlaces;
+      } else {
+        console.error("Could not find item with id: ");
       }
     }
   };
@@ -50,12 +54,12 @@ export default function DetailsPresenter() {
   };
 
   const checkButtonState = activePlaceData
-  ? source === "randomize"
-    ? "randomize"
-    : isLikedPlace(activePlaceData.id)
-    ? "liked"
-    : "notLiked"
-  : "notLiked";
+    ? source === "randomize"
+      ? "randomize"
+      : isLikedPlace(activePlaceData.id)
+      ? "liked"
+      : "notLiked"
+    : "notLiked";
 
   return (
     <DetailsView
