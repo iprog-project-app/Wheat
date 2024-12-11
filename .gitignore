@@ -44,3 +44,6 @@ yarn-error.*
 .vercel
 
 .firebase/
+.vscode/
+# Local Netlify folder
+.netlify
