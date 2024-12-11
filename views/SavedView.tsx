@@ -1,5 +1,5 @@
 import { PlaceListItem } from "@/components/PlaceListItem";
-import {PlacePreviewSchema } from "@/constants/types";
+import { PlacePreviewSchema } from "@/constants/types";
 import { SearchBar } from "../components/SearchBar";
 import { FlatList, StyleSheet, View, Text } from "react-native";
 import Colors from "../constants/Colors";
@@ -45,7 +45,7 @@ const SearchBarComponent = ({
 const EmptyState = ({ searchQuery }: { searchQuery: string }) => (
   <View style={styles.emptyContainer}>
     <Ionicons
-      name={searchQuery ? "search" : "add"}
+      name={searchQuery ? "search" : "heart-outline"}
       size={40}
       color={Colors.gray2}
     />
@@ -64,7 +64,6 @@ export default function SavedView({
   toggleLike,
   onPressItem,
 }: SavedViewProps) {
-  const { isLikedPlace } = useStore();
   const headerComponent = useMemo(
     () => (
       <SearchBarComponent
@@ -77,7 +76,6 @@ export default function SavedView({
 
   return (
     // TODO: Allow scroll to bottom
-    
     <FlatList
       style={{
         width: "100%",
@@ -85,7 +83,6 @@ export default function SavedView({
       }}
       contentContainerStyle={{ marginBottom: 32 }}
       data={searchResults}
-      initialScrollIndex={1}
       getItemLayout={(data, index) => ({
         // TODO: Might not be the best way
         length: 73, // approximate height of each item
@@ -98,7 +95,7 @@ export default function SavedView({
           key={item.id}
           toggleLike={toggleLike(item.id)}
           onPress={onPressItem(item.id)}
-          isLiked={isLikedPlace(item.id)}
+          isLiked
           {...item}
         />
       )}
