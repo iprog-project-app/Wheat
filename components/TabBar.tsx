@@ -24,12 +24,13 @@ export default function TabBar({}: BottomTabBarProps) {
         onPress={handleSetRandom}
       >
         <AnimatedButton>
-          <View style={styles.secondaryButton}>
-            <Ionicons
-              name="dice-outline"
-              size={28}
-              color={Colors.primaryDisabled}
-            />
+          <View
+            style={[
+              styles.secondaryButton,
+              { backgroundColor: Colors.yellowLight },
+            ]}
+          >
+            <Ionicons name="dice-outline" size={28} color={Colors.orangeDark} />
           </View>
         </AnimatedButton>
       </Link>
@@ -43,11 +44,16 @@ export default function TabBar({}: BottomTabBarProps) {
       </Link>
 
       <AnimatedButton>
-        <View style={styles.secondaryButton}>
+        <View
+          style={[
+            styles.secondaryButton,
+            { backgroundColor: Colors.greenLight },
+          ]}
+        >
           <Ionicons
             name="person-add-outline"
             size={28}
-            color={Colors.primaryDisabled}
+            color={Colors.greenDark}
           />
         </View>
       </AnimatedButton>
@@ -77,7 +83,6 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 999,
-    backgroundColor: Colors.secondary,
     justifyContent: "center",
     alignItems: "center",
   },
