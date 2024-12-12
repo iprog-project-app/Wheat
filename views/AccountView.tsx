@@ -2,6 +2,7 @@ import { FlatList, StyleSheet, View, Text, Pressable } from "react-native";
 import Colors from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { SettingsOption } from "@/constants/types";
+import { router } from "expo-router";
 
 export interface AccountViewProps {
   userName: string;
@@ -39,6 +40,9 @@ export default function AccountView({
         >
           Sign Out
         </Text>
+      </Pressable>
+      <Pressable onPress={() => router.push("/signIn")}>
+        <Text>Sign in screen</Text>
       </Pressable>
     </View>
   );
