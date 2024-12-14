@@ -1,6 +1,11 @@
+// React
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import * as WebBrowser from "expo-web-browser";
+import { useEffect, useState } from "react";
 
+// Expo
+import { router } from "expo-router";
+
+// Firebase
 import {
   onAuthStateChanged,
   signOut,
@@ -8,22 +13,32 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+
 import { auth } from "../Config/firebaseConfig";
+import { addUser, fetchUser, updateFirebase } from "@/utilities/firebaseModel";
 
-import { useEffect, useState } from "react";
-import { router } from "expo-router";
-
-import { addUser } from "@/utilities/firebaseModel";
+// Store
+import useStore from "@/store/model";
 
 export default function SignIn() {
-  const [userId, setUserId] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
-  const [name, setName] = useState<string | null>(null);
+  const [newName, setNewName] = useState<string | null>(null);
   const [hasAccount, setHasAccount] = useState<boolean>(true);
 
+  const {
+    loggedInUserId,
+    name,
+    friends,
+    setLoggedInUserId,
+    setUser,
+    mockAddFav,
+  } = useStore();
+  const emailStore = useStore((state) => state.email);
+  const storeState = useStore();
+
   const createUser = async () => {
-    if (email && password && name) {
+    if (email && password && newName) {
       try {
         const userCredential = await createUserWithEmailAndPassword(
           auth,
@@ -34,7 +49,7 @@ export default function SignIn() {
           const user = userCredential.user;
           addUser(
             {
-              name: name,
+              name: newName,
               email: email,
               imgUrl: "No img",
               friends: [],
@@ -56,7 +71,7 @@ export default function SignIn() {
     setHasAccount(!hasAccount);
     setEmail(null);
     setPassword(null);
-    setName(null);
+    setNewName(null);
   };
 
   // Email passsword
@@ -81,7 +96,13 @@ export default function SignIn() {
 
   const handleAuthChange = async (user: User | null) => {
     if (user) {
-      setUserId(user.uid);
+      const uid = user.uid;
+      console.log(uid);
+      setLoggedInUserId(uid);
+      const userInfo = await fetchUser(uid);
+      setUser(userInfo);
+    } else {
+      setLoggedInUserId("");
     }
   };
 
@@ -142,8 +163,8 @@ export default function SignIn() {
           <View>
             <TextInput
               placeholder="Name"
-              onChangeText={(text) => setName(text)}
-              value={name || ""}
+              onChangeText={(text) => setNewName(text)}
+              value={newName || ""}
               style={{
                 borderColor: "gray",
                 borderWidth: 1,
@@ -198,9 +219,17 @@ export default function SignIn() {
         </Text>
       </Pressable>
 
-      {userId ? (
+      <Pressable
+        onPress={() => {
+          mockAddFav();
+        }}
+      >
+        <Text>Test add fav state</Text>
+      </Pressable>
+
+      {loggedInUserId ? (
         <View>
-          <Text>Name: {userId}</Text>
+          <Text>Name: {name}</Text>
         </View>
       ) : (
         <Text>No user logged in</Text>
