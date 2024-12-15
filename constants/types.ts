@@ -6,7 +6,6 @@ export type PlacePreviewSchema = {
   imageUri: string;
   rating: number;
   location: string;
-  isLiked: boolean;
   note?: string;
 };
 
@@ -35,7 +34,7 @@ export type UserSchema = {
   email: string;
   imgUrl: string;
   friends: FriendSchema[];
-  favourites: PlaceFullSchema[];
+  likedPlaces: PlaceFullSchema[];
   recentSearches: PlaceFullSchema[];
 };
 
@@ -49,6 +48,9 @@ export type StoreSchema = UserSchema & {
   setSearchQuery: (query: string) => void;
   searchResultsData: PlaceFullSchema[];
   setSearchResultsData: (data: PlaceFullSchema[]) => void;
-
-  mockAddFav: () => void;
+  likedPlaces: PlaceFullSchema[];
+  setLikedPlaces: (places: PlaceFullSchema[]) => void;
+  removeLikedPlace: (id: string) => void;
+  addLikedPlace: (place: PlaceFullSchema) => void;
+  isLikedPlace: (id: string) => boolean;
 };

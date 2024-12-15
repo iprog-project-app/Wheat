@@ -5,31 +5,32 @@ import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { AnimatedButton } from "./AnimatedButton";
-import useStore, { likedPlacesData } from "@/store/model";
+import useStore from "@/store/model";
 
 export default function TabBar({}: BottomTabBarProps) {
-  const { setActivePlaceData } = useStore();
+  const { setActivePlaceData, likedPlaces } = useStore();
 
   const handleSetRandom = () => {
     setActivePlaceData(
-      likedPlacesData[Math.floor(Math.random() * likedPlacesData.length)]
+      likedPlaces[Math.floor(Math.random() * likedPlaces.length)]
     );
   };
   return (
     <View style={styles.tabBar}>
       {/* TODO: Add random modal. First implementation would just be the details modal with a random id from saved */}
       <Link
-        href="/details"
+        href="/details?source=randomize"
         asChild={Platform.OS === "ios"}
         onPress={handleSetRandom}
       >
         <AnimatedButton>
-          <View style={styles.secondaryButton}>
-            <Ionicons
-              name="dice-outline"
-              size={28}
-              color={Colors.primaryDisabled}
-            />
+          <View
+            style={[
+              styles.secondaryButton,
+              { backgroundColor: Colors.yellowLight },
+            ]}
+          >
+            <Ionicons name="dice-outline" size={28} color={Colors.orangeDark} />
           </View>
         </AnimatedButton>
       </Link>
@@ -43,11 +44,16 @@ export default function TabBar({}: BottomTabBarProps) {
       </Link>
 
       <AnimatedButton>
-        <View style={styles.secondaryButton}>
+        <View
+          style={[
+            styles.secondaryButton,
+            { backgroundColor: Colors.greenLight },
+          ]}
+        >
           <Ionicons
             name="person-add-outline"
             size={28}
-            color={Colors.primaryDisabled}
+            color={Colors.greenDark}
           />
         </View>
       </AnimatedButton>
@@ -77,7 +83,6 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 999,
-    backgroundColor: Colors.secondary,
     justifyContent: "center",
     alignItems: "center",
   },
