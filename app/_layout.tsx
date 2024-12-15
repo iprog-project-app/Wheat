@@ -28,7 +28,7 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  const { friends, recentSearches, favourites } = useStore();
+  const { friends, recentSearches, likedPlaces } = useStore();
   const storeState = useStore();
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
@@ -38,7 +38,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     updateFirebase(storeState);
-  }, [friends, recentSearches, favourites]);
+  }, [friends, recentSearches, likedPlaces]);
 
   useEffect(() => {
     if (loaded) {

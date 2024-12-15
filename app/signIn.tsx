@@ -26,14 +26,8 @@ export default function SignIn() {
   const [newName, setNewName] = useState<string | null>(null);
   const [hasAccount, setHasAccount] = useState<boolean>(true);
 
-  const {
-    loggedInUserId,
-    name,
-    friends,
-    setLoggedInUserId,
-    setUser,
-    mockAddFav,
-  } = useStore();
+  const { loggedInUserId, name, friends, setLoggedInUserId, setUser } =
+    useStore();
   const emailStore = useStore((state) => state.email);
   const storeState = useStore();
 
@@ -53,7 +47,7 @@ export default function SignIn() {
               email: email,
               imgUrl: "No img",
               friends: [],
-              favourites: [],
+              likedPlaces: [],
               recentSearches: [],
             },
             user.uid
@@ -217,14 +211,6 @@ export default function SignIn() {
         <Text>
           {hasAccount ? "Create account" : "Already have an account?"}
         </Text>
-      </Pressable>
-
-      <Pressable
-        onPress={() => {
-          mockAddFav();
-        }}
-      >
-        <Text>Test add fav state</Text>
       </Pressable>
 
       {loggedInUserId ? (
