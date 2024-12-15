@@ -1,3 +1,5 @@
+import useStore from "@/store/model";
+import { updateFirebase } from "@/utilities/firebaseModel";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -26,10 +28,17 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
+  const { friends, recentSearches, favourites } = useStore();
+  const storeState = useStore();
+
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);
+
+  useEffect(() => {
+    updateFirebase(storeState);
+  }, [friends, recentSearches, favourites]);
 
   useEffect(() => {
     if (loaded) {
@@ -77,6 +86,7 @@ function RootLayoutNav() {
         />
         <Stack.Screen name="account" options={{ title: "Account Settings" }} />
         <Stack.Screen name="friends" options={{ title: "Manage Friends" }} />
+        <Stack.Screen name="signIn" />
       </Stack>
     </GestureHandlerRootView>
   );

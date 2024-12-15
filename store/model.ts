@@ -1,36 +1,43 @@
-import { PlaceFullSchema } from '@/constants/types';
-import { create } from 'zustand';
+import { PlaceFullSchema, UserSchema } from "@/constants/types";
+import { create } from "zustand";
+import { StoreSchema } from "@/constants/types";
 
-interface StoreState {
-    activePlaceData: PlaceFullSchema | null;
-    setActivePlaceData: (place: PlaceFullSchema) => void;
-    searchQuery: string;
-    setSearchQuery: (query: string) => void;
-    searchResultsData: PlaceFullSchema[];
-    setSearchResultsData: (data: PlaceFullSchema[]) => void;
-    likedPlaces: PlaceFullSchema[];
-    setLikedPlaces: (places: PlaceFullSchema[]) => void;
-    removeLikedPlace: (id: string) => void;
-    addLikedPlace: (place: PlaceFullSchema) => void;
-    isLikedPlace: (id: string) => boolean;
-}
+export const useStore = create<StoreSchema>((set, get) => ({
+  loggedInUserId: null,
+  name: "",
+  email: "",
+  imgUrl: "",
+  friends: [],
+  likedPlaces: [],
+  recentSearches: [],
 
-export const useStore = create<StoreState>((set, get) => ({
-    activePlaceData: null,
-    setActivePlaceData: (place: PlaceFullSchema) => set({ activePlaceData: place }),
-    searchQuery: "",
-    setSearchQuery: (query: string) => set({ searchQuery: query }),
-    searchResultsData: [],
-    setSearchResultsData: (data: PlaceFullSchema[]) => set({ searchResultsData: data }),
-    likedPlaces: [],
-    setLikedPlaces: (places: PlaceFullSchema[]) => set({likedPlaces: places}),
-    removeLikedPlace: (id: string) => {
-      const currentLikedPlaces = get().likedPlaces;
-      const updatedLikedPlaces = currentLikedPlaces.filter(place => place.id !== id);
-      if (updatedLikedPlaces.length === currentLikedPlaces.length){
-        console.warn(`Tried to remove place that was not in likedPlaces, with id: ${id}`)
-      }
-      set({ likedPlaces: updatedLikedPlaces });
+  setLoggedInUserId: (uid: string) => {
+    set({ loggedInUserId: uid });
+  },
+
+  setUser: (user: UserSchema | undefined) => {
+    set((state) => ({
+      ...state,
+      ...user,
+    }));
+  },
+
+  activePlaceData: null,
+  setActivePlaceData: (place: PlaceFullSchema) =>
+    set({ activePlaceData: place }),
+  searchQuery: "",
+  setSearchQuery: (query: string) => set({ searchQuery: query }),
+  searchResultsData: [],
+  setSearchResultsData: (data: PlaceFullSchema[]) =>
+    set({ searchResultsData: data }),
+  setLikedPlaces: (places: PlaceFullSchema[]) => set({likedPlaces: places}),
+  removeLikedPlace: (id: string) => {
+    const currentLikedPlaces = get().likedPlaces;
+    const updatedLikedPlaces = currentLikedPlaces.filter(place => place.id !== id);
+    if (updatedLikedPlaces.length === currentLikedPlaces.length){
+      console.warn(`Tried to remove place that was not in likedPlaces, with id: ${id}`)
+    }
+    set({ likedPlaces: updatedLikedPlaces });
   },
 
     addLikedPlace: (place: PlaceFullSchema) => {
