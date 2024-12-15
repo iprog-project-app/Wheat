@@ -23,6 +23,7 @@ type DetailsViewProps = {
   onBackPress: () => void;
   onModalClose: () => void;
   onLinkPress: () => void;
+  onRandomize: () => void;
   rightButtonState: "liked" | "notLiked" | "randomize";
 };
 
@@ -33,6 +34,7 @@ export default function DetailsView({
   onBackPress,
   onModalClose,
   onLinkPress,
+  onRandomize,
   rightButtonState,
 }: DetailsViewProps) {
   return (
@@ -68,11 +70,22 @@ export default function DetailsView({
                   <Text style={styles.title}>{placeData.title}</Text>
                 </View>
                 <View
-                  style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 16,
+                  }}
                 >
-                  <Text style={styles.subtitle}>{placeData.rating}</Text>
-                  <FontAwesome name="star" size={18} color={Colors.yellow} />
-                  {/* TODO: More gap here, the above could be in its own view */}
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 4,
+                    }}
+                  >
+                    <Text style={styles.subtitle}>{placeData.rating}</Text>
+                    <FontAwesome name="star" size={18} color={Colors.yellow} />
+                  </View>
                   <Text style={styles.subtitle}>{placeData.price}</Text>
                 </View>
 
@@ -157,66 +170,54 @@ export default function DetailsView({
                 </Text>
               </TouchableOpacity>
 
-              {rightButtonState === "liked" && (
-                <TouchableOpacity
-                  style={[styles.button, { backgroundColor: Colors.redLight }]}
-                  onPress={() => onLikeToggle(placeData.id)}
+              <TouchableOpacity
+                style={[
+                  styles.button,
+                  {
+                    backgroundColor:
+                      rightButtonState === "randomize"
+                        ? Colors.yellowLight
+                        : Colors.redLight,
+                  },
+                ]}
+                onPress={() =>
+                  rightButtonState === "randomize"
+                    ? onRandomize()
+                    : onLikeToggle(placeData.id)
+                }
+              >
+                <Ionicons
+                  name={
+                    rightButtonState === "liked"
+                      ? "heart-dislike"
+                      : rightButtonState === "notLiked"
+                      ? "heart"
+                      : "dice-outline"
+                  }
+                  size={28}
+                  color={
+                    rightButtonState === "randomize"
+                      ? Colors.orangeDark
+                      : Colors.redDark
+                  }
+                />
+                <Text
+                  style={{
+                    color:
+                      rightButtonState === "randomize"
+                        ? Colors.orangeDark
+                        : Colors.redDark,
+                    fontSize: 18,
+                    fontWeight: "bold",
+                  }}
                 >
-                  <Ionicons name="heart-dislike" size={28} color={Colors.red} />
-                  <Text
-                    style={{
-                      color: Colors.redDark,
-                      fontSize: 18,
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Remove Save
-                  </Text>
-                </TouchableOpacity>
-              )}
-
-              {rightButtonState === "notLiked" && (
-                <TouchableOpacity
-                  style={[styles.button, { backgroundColor: Colors.redLight }]}
-                  onPress={() => onLikeToggle(placeData.id)}
-                >
-                  <Ionicons name="heart" size={28} color={Colors.red} />
-                  <Text
-                    style={{
-                      color: Colors.redDark,
-                      fontSize: 18,
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Save
-                  </Text>
-                </TouchableOpacity>
-              )}
-
-              {rightButtonState === "randomize" && (
-                <TouchableOpacity
-                  style={[
-                    styles.button,
-                    { backgroundColor: Colors.yellowLight },
-                  ]}
-                  onPress={() => console.log("Randomize")}
-                >
-                  <Ionicons
-                    name="dice-outline"
-                    size={28}
-                    color={Colors.orangeDark}
-                  />
-                  <Text
-                    style={{
-                      color: Colors.orangeDark,
-                      fontSize: 18,
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Randomize
-                  </Text>
-                </TouchableOpacity>
-              )}
+                  {rightButtonState === "liked"
+                    ? "Remove Save"
+                    : rightButtonState === "notLiked"
+                    ? "Save"
+                    : "Randomize"}
+                </Text>
+              </TouchableOpacity>
             </View>
             <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
           </>
