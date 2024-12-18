@@ -11,8 +11,8 @@ export interface SavedViewProps {
   searchResults: PlacePreviewSchema[];
   searchQuery: string;
   onChangeText: (searchQuery: string) => void;
-  toggleLike: (id: string) => () => void;
-  onPressItem: (id: string) => () => void;
+  toggleLike: (id: string) => void;
+  onPressItem: (id: string) => void;
 }
 
 const SearchBarComponent = ({
@@ -93,8 +93,8 @@ export default function SavedView({
       renderItem={({ item }) => (
         <PlaceListItem
           key={item.id}
-          toggleLike={toggleLike(item.id)}
-          onPress={onPressItem(item.id)}
+          toggleLike={() => toggleLike(item.id)}
+          onPress={() => onPressItem(item.id)}
           isLiked
           {...item}
         />

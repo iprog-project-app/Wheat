@@ -11,8 +11,8 @@ export interface SearchViewProps {
   searchResults: PlacePreviewSchema[];
   searchQuery: string;
   onChangeText: (searchQuery: string) => void;
-  toggleLike: (id: string) => () => void;
-  onPressItem: (id: string) => () => void;
+  toggleLike: (id: string) => void;
+  onPressItem: (id: string) => void;
   onSearch: () => void;
 }
 
@@ -90,8 +90,8 @@ export default function SearchView({
       renderItem={({ item }) => (
         <PlaceListItem
           key={item.id}
-          toggleLike={toggleLike(item.id)}
-          onPress={onPressItem(item.id)}
+          toggleLike={() => toggleLike(item.id)}
+          onPress={() => onPressItem(item.id)}
           isLiked={isLikedPlace(item.id)}
           {...item}
         />
