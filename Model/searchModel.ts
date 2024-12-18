@@ -33,11 +33,11 @@ export const fetchPlacesByTextSearch = async (query: string): Promise<PlaceFullS
   const proxyUrl = 'https://brfenergi.se/iprog/group/46';
   const targetUrl = 'https://maps.googleapis.com/maps/api/place/textsearch/json';
   const location = await getCurrentLocation();
-  const endpoint = `${proxyUrl}/${targetUrl}`;
+  const placesEndpoint = `${proxyUrl}/${targetUrl}`;
 
   try {
     const response = await fetch(
-      `${endpoint}?query=${encodeURIComponent(query)}&key=${GOOGLE_API_KEY}&location=${location}&radius=50000`, {
+      `${placesEndpoint}?query=${encodeURIComponent(query)}&type=restaurant&key=${GOOGLE_API_KEY}&location=${location}&radius=50000`, {
         method: 'GET',
         headers: {
           'X-DH2642-Key': '3d2a031b4cmsh5cd4e7b939ada54p19f679jsn9a775627d767',
@@ -69,7 +69,7 @@ export const fetchPlacesByTextSearch = async (query: string): Promise<PlaceFullS
       title: place.name,
       imageUri: place.photos
         ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${place.photos[0].photo_reference}&key=${GOOGLE_API_KEY}`
-        : "",
+        : "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
       rating: place.rating || 0,
       location: place.formatted_address || "",
       isLiked: false, // Default value
