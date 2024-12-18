@@ -12,11 +12,8 @@ export default function SearchPresenter() {
   const isLikedPlace = useStore((state) => state.isLikedPlace);
   const { searchQuery, setSearchQuery } = useStore();
   const { searchResultsData, setSearchResultsData } = useStore();
-
-  // TODO: Move to store/model.ts as its used multiple times
-  function idToItem(id: string) {
-    return searchResultsData.find((item) => item.id === id);
-  }
+  const idToItem = useStore((state) => state.idToItem);
+  const handleToggleLike = useStore((state) => state.handleToggleLike)
 
   const sortResults = (results: PlaceFullSchema[]) => {
     return results.sort((a, b) => a.title.localeCompare(b.title));
@@ -32,22 +29,6 @@ export default function SearchPresenter() {
       console.log("Active data: ", data.id);
       setActivePlaceData(data as PlaceFullSchema);
       router.push("/details");
-    }
-  };
-
-  // TODO: Move to store/model.ts as its used multiple times
-  const handleToggleLike = (id: string) => () => {
-    const place = idToItem(id);
-    if (isLikedPlace(id)) {
-      removeLikedPlace(id);
-      console.log("Removed from liked places: ", id);
-    } else {
-      if (place) {
-        addLikedPlace(place);
-        console.log("Added to liked places: ", id), likedPlaces;
-      } else {
-        console.error("Could not find item with id: ", id);
-      }
     }
   };
 
