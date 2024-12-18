@@ -82,8 +82,8 @@ export default function SignInView({
                 </Text>
               ) : (
                 <Image
-                  source={require("../assets/images/loadGiff.gif")} // Path to your image in the project
-                  style={{ width: 150, height: 25 }}
+                  source={require("../assets/images/buttonLoad.gif")} // Path to your image in the project
+                  style={{ width: 100, height: 50, marginBottom: 10 }}
                 />
               )}
             </TouchableOpacity>
@@ -110,15 +110,22 @@ export default function SignInView({
             />
             {error && <Text style={styles.errorMessage}>{error}</Text>}
             <TouchableOpacity onPress={onSignUp} style={styles.signButton}>
-              <Text
-                style={{
-                  color: Colors.white,
-                  fontWeight: "bold",
-                  fontSize: 15,
-                }}
-              >
-                Create account
-              </Text>
+              {!loading ? (
+                <Text
+                  style={{
+                    color: Colors.white,
+                    fontWeight: "bold",
+                    fontSize: 15,
+                  }}
+                >
+                  Create account
+                </Text>
+              ) : (
+                <Image
+                  source={require("../assets/images/buttonLoad.gif")} // Path to your image in the project
+                  style={{ width: 100, height: 50, marginBottom: 10 }}
+                />
+              )}
             </TouchableOpacity>
           </View>
         )}
@@ -166,5 +173,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: "red",
     alignItems: "center",
+    justifyContent: "center",
   },
 });
