@@ -19,7 +19,8 @@ export default function TabBar({}: BottomTabBarProps) {
     <View style={styles.tabBar}>
       {/* TODO: Add random modal. First implementation would just be the details modal with a random id from saved */}
       <Link
-        href="/details?source=randomize"
+        //href="/details?source=randomize"
+        href="/randomize"
         asChild={Platform.OS === "ios"}
         onPress={handleSetRandom}
       >

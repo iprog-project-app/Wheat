@@ -1,4 +1,3 @@
-import React from "react";
 import DetailsView from "../views/DetailsView";
 import useStore from "@/store/model";
 import { router } from "expo-router";
@@ -12,8 +11,7 @@ export default function DetailsPresenter() {
   const removeLikedPlace = useStore((state) => state.removeLikedPlace);
   const addLikedPlace = useStore((state) => state.addLikedPlace);
   const isLikedPlace = useStore((state) => state.isLikedPlace);
-  const setActivePlaceData = useStore((state) => state.setActivePlaceData); 
-
+  const setActivePlaceData = useStore((state) => state.setActivePlaceData);
 
   // Event handlers
   // TODO: Move to store/model.ts as its used multiple times
@@ -61,13 +59,13 @@ export default function DetailsPresenter() {
       : "notLiked"
     : "notLiked";
 
-    const handleRandomize = () => {
-        const randomPlace =
-          likedPlaces[Math.floor(Math.random() * likedPlaces.length)];
-        setActivePlaceData(randomPlace); 
-        //TODO add a check if the random place is the same as the current active place
-    };
-  
+  const handleRandomize = () => {
+    const randomPlace =
+      likedPlaces[Math.floor(Math.random() * likedPlaces.length)];
+    setActivePlaceData(randomPlace);
+    //TODO add a check if the random place is the same as the current active place
+  };
+
   return (
     <DetailsView
       placeData={activePlaceData}
