@@ -45,7 +45,11 @@ export default function SignInView({
   loading,
 }: SignInViewProps) {
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback
+      onPress={
+        Platform.OS === "web" ? () => console.log("Dismiss") : Keyboard.dismiss
+      }
+    >
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === "ios" ? "padding" : "height"} // Adjust for iOS/Android
