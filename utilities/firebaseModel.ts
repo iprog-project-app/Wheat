@@ -78,7 +78,7 @@ export const friendsSearch = async (searchQuery: string) => {
     );
     const userSnapshots = await getDocs(q);
     const userData = userSnapshots.docs.map(extractFriendData);
-    console.log(userData);
+    return userData;
   } catch (err) {
     console.error("Error fetching document: ", err);
   }
