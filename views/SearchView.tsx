@@ -92,7 +92,6 @@ export default function SearchView({
           key={item.id}
           toggleLike={toggleLike(item.id)}
           onPress={onPressItem(item.id)}
-          isLiked={isLikedPlace(item.id)}
           {...item}
         />
       )}
