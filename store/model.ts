@@ -64,6 +64,24 @@ export const useStore = create<StoreSchema>((set, get) => ({
     const likedIds = get().likedPlaces.map((place) => place.id);
     return likedIds.includes(id);
   },
+  idToItem(id: string) {
+    return get().likedPlaces.find((item) => item.id === id);
+  },
+  handleToggleLike: (id: string) => {
+    const { idToItem, isLikedPlace, removeLikedPlace, addLikedPlace } = get(); // Destructure the functions
+    const place = idToItem(id); // Get place using idToItem
+    if (isLikedPlace(id)) {
+      removeLikedPlace(id); // Remove place if liked
+    } else {
+      if (place) {
+        addLikedPlace(place); // Add place if not liked
+      } else {
+        console.error(
+          `Could not find place from id: ${id} when adding to saved places.`
+        );
+      }
+    }
+  },
 }));
 
 export default useStore;

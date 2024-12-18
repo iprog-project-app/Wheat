@@ -53,4 +53,6 @@ export type StoreSchema = UserSchema & {
   removeLikedPlace: (id: string) => void;
   addLikedPlace: (place: PlaceFullSchema) => void;
   isLikedPlace: (id: string) => boolean;
+  idToItem: (id: string) => PlaceFullSchema | undefined;
+  handleToggleLike: (id: string) => void;
 };
