@@ -41,9 +41,6 @@ export default function AccountView({
           Sign Out
         </Text>
       </Pressable>
-      <Pressable onPress={() => router.push("/signIn")}>
-        <Text>Sign in screen</Text>
-      </Pressable>
     </View>
   );
 }
