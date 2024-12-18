@@ -11,7 +11,8 @@ import {
 } from "firebase/firestore";
 import { db } from "@/Config/firebaseConfig";
 import { FriendSchema, PlaceFullSchema } from "@/constants/types";
-import { StoreSchema, UserSchema } from "@/constants/types";
+import { UserSchema } from "@/constants/types";
+import { StoreSchema } from "@/store/model";
 
 export const addUser = async (user: UserSchema, uid: string) => {
   try {
@@ -66,7 +67,7 @@ export const friendsSearch = async (searchQuery: string) => {
       name: data.name,
       email: data.email,
       userId: snapshot.id,
-    };
+    } as FriendSchema;
   };
 
   try {
