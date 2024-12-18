@@ -4,10 +4,18 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import { Platform } from "react-native";
+import { useEffect, useState } from "react";
+import { Platform, Image, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
+
+// SIGNIN
+// Firebase
+import { onAuthStateChanged, User } from "firebase/auth";
+import { auth } from "../Config/firebaseConfig";
+import { fetchUser } from "@/utilities/firebaseModel";
+
+import SignInScreen from "./signIn";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -28,7 +36,16 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  const { friends, recentSearches, likedPlaces } = useStore();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const {
+    friends,
+    recentSearches,
+    likedPlaces,
+    loggedInUserId,
+    setLoggedInUserId,
+    setUser,
+  } = useStore();
   const storeState = useStore();
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
@@ -46,11 +63,53 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
+  // ------------------- SIGN IN ---------------------- //
+
+  const handleAuthChange = async (user: User | null) => {
+    setLoading(false);
+    if (user) {
+      const uid = user.uid;
+      console.log(uid);
+      setLoggedInUserId(uid);
+      const userInfo = await fetchUser(uid);
+      setUser(userInfo);
+    } else {
+      setLoggedInUserId("");
+    }
+    setLoading(true);
+  };
+  // ------------------- SIGN IN ---------------------- //
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, handleAuthChange);
+
+    return () => unsub();
+  }, []);
+
   if (!loaded) {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return loading ? (
+    loggedInUserId ? (
+      <RootLayoutNav />
+    ) : (
+      <SignInScreen />
+    )
+  ) : (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Image
+        source={require("../assets/images/loadGif.gif")} // Path to your image in the project
+        style={{ width: 100, height: 100 }}
+      />
+    </View>
+  );
 }
 
 function RootLayoutNav() {
