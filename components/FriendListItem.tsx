@@ -4,18 +4,20 @@ import { Ionicons } from "@expo/vector-icons";
 
 export interface FriendListItemProps {
   name: string;
-  email: string;
+  email?: string;
   onPressItem: () => void;
-  onToggleFollow: () => void;
-  following: boolean;
+  onButtonPress: () => void;
+  following?: boolean;
+  selected?: boolean;
 }
 
 export function FriendListItem({
   name,
   email,
   onPressItem,
-  onToggleFollow,
+  onButtonPress,
   following,
+  selected,
 }: FriendListItemProps) {
   return (
     <Pressable
@@ -36,23 +38,34 @@ export function FriendListItem({
         }}
       >
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>{name}</Text>
-        <Text style={{ color: Colors.gray1 }}>{email}</Text>
+        {email && <Text style={{ color: Colors.gray1 }}>{email}</Text>}
       </View>
-      <Pressable
-        onPress={onToggleFollow}
-        style={({ pressed }) => ({
-          paddingVertical: 8,
-          paddingHorizontal: 16,
-          backgroundColor: following ? Colors.gray5 : Colors.primary,
-          borderRadius: 8,
-          borderCurve: "continuous",
-          opacity: pressed ? 0.8 : 1,
-        })}
-      >
-        <Text style={{ color: following ? Colors.black : Colors.white }}>
-          {following ? "Unfollow" : "Follow"}
-        </Text>
-      </Pressable>
+      {following !== undefined && !selected && (
+        <Pressable
+          onPress={onButtonPress}
+          style={({ pressed }) => ({
+            paddingVertical: 8,
+            paddingHorizontal: 16,
+            backgroundColor: following ? Colors.gray5 : Colors.primary,
+            borderRadius: 8,
+            borderCurve: "continuous",
+            opacity: pressed ? 0.8 : 1,
+          })}
+        >
+          <Text style={{ color: following ? Colors.black : Colors.white }}>
+            {following ? "Unfollow" : "Follow"}
+          </Text>
+        </Pressable>
+      )}
+      {selected !== undefined && !following && (
+        <Pressable onPress={onButtonPress}>
+          <Ionicons
+            name={selected ? "checkbox" : "square-outline"}
+            size={24}
+            color={Colors.primary}
+          />
+        </Pressable>
+      )}
     </Pressable>
   );
 }

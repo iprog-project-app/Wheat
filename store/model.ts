@@ -13,6 +13,12 @@ export interface StoreSchema extends UserSchema {
   addFriend: (friend: FriendSchema) => void;
   removeFriend: (id: string) => void;
   isFriend: (id: string) => boolean;
+  selectedFriends: FriendSchema[] | undefined;
+  setSelectedFriends: (friends: FriendSchema[] | undefined) => void;
+  addSelectedFriend: (friend: FriendSchema) => void;
+  removeSelectedFriend: (id: string) => void;
+  allLikedPlaces: PlaceFullSchema[];
+  setAllLikedPlaces: (places: PlaceFullSchema[]) => void;
 
   // Friend Search
   friendSearchQuery: string;
@@ -87,6 +93,48 @@ export const useStore = create<StoreSchema>((set, get) => ({
     const friendIds = get().friends.map((friend) => friend.userId);
     return friendIds.includes(id);
   },
+  selectedFriends: undefined,
+  setSelectedFriends: (friends: FriendSchema[] | undefined) =>
+    set({ selectedFriends: friends }),
+  addSelectedFriend: (friend: FriendSchema) => {
+    const currentSelectedFriends = get().selectedFriends;
+    const exists = currentSelectedFriends?.some(
+      (f) => f.userId === friend.userId
+    );
+    if (exists) {
+      console.warn(`Friend with id ${friend.userId} already exists.`);
+      return;
+    }
+    const updatedSelectedFriends = [
+      ...(currentSelectedFriends ?? []),
+      friend,
+    ];
+    set({ selectedFriends: updatedSelectedFriends });
+  }
+  ,
+  removeSelectedFriend: (id: string) => {
+    const currentSelectedFriends = get().selectedFriends;
+    if (!currentSelectedFriends) {
+      console.warn(
+        `Tried to remove friend from selectedFriends, but selectedFriends was undefined.`
+      );
+      return;
+    }
+    const updatedSelectedFriends = currentSelectedFriends.filter(
+      (friend) => friend.userId !== id
+    );
+    if (updatedSelectedFriends.length === currentSelectedFriends.length) {
+      console.warn(
+        `Tried to remove friend that was not in selectedFriends, with id: ${id}`
+      );
+    }
+    set({ selectedFriends: updatedSelectedFriends
+    });
+  }
+  ,
+  allLikedPlaces: [],
+  setAllLikedPlaces: (places: PlaceFullSchema[]) =>
+    set({ allLikedPlaces: places }),
 
   // Friend Search
   friendSearchQuery: "",

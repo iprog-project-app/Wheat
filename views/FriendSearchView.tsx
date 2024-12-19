@@ -88,7 +88,7 @@ export default function FriendSearchView({
       renderItem={({ item }) => (
         <FriendListItem
           onPressItem={() => onPressItem(item)}
-          onToggleFollow={() => onToggleFollow(item)}
+          onButtonPress={() => onToggleFollow(item)}
           following={isFriend(item.userId)}
           {...item}
         />

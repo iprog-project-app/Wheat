@@ -56,6 +56,7 @@ export default function FriendProfileView({
           <Ionicons name="person-circle" size={64} color={Colors.gray1} />
           <View style={{ gap: 8, justifyContent: "center" }}>
             <Text style={styles.title}>{name}</Text>
+            {/* TODO: make pressable flexShrink. Now it is as far as the name of the user */}
             <Pressable
               style={{
                 paddingVertical: 8,
@@ -67,7 +68,10 @@ export default function FriendProfileView({
               onPress={onToggleFollow}
             >
               <Text
-                style={{ color: isFollowing ? Colors.black : Colors.white }}
+                style={{
+                  color: isFollowing ? Colors.black : Colors.white,
+                  textAlign: "center",
+                }}
               >
                 {isFollowing ? "Unfollow" : "Follow"}
               </Text>
@@ -105,11 +109,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
   },
   emptyContainer: {
     paddingTop: "30%",
