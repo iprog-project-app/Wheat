@@ -6,7 +6,6 @@ import { router } from "expo-router";
 
 export default function SearchPresenter() {
   const setActivePlaceData = useStore((state) => state.setActivePlaceData);
-  const likedPlaces = useStore((state) => state.likedPlaces);
   const addLikedPlace = useStore((state) => state.addLikedPlace);
   const removeLikedPlace = useStore((state) => state.removeLikedPlace);
   const isLikedPlace = useStore((state) => state.isLikedPlace);
@@ -44,7 +43,7 @@ export default function SearchPresenter() {
     } else {
       if (place) {
         addLikedPlace(place);
-        console.log("Added to liked places: ", id), likedPlaces;
+        console.log("Added to liked places: ", id);
       } else {
         console.error("Could not find item with id: ", id);
       }

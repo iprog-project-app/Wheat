@@ -43,20 +43,22 @@ export default function TabBar({}: BottomTabBarProps) {
         </AnimatedButton>
       </Link>
 
-      <AnimatedButton>
-        <View
-          style={[
-            styles.secondaryButton,
-            { backgroundColor: Colors.greenLight },
-          ]}
-        >
-          <Ionicons
-            name="person-add-outline"
-            size={28}
-            color={Colors.greenDark}
-          />
-        </View>
-      </AnimatedButton>
+      <Link href={"/friendSearch"}>
+        <AnimatedButton>
+          <View
+            style={[
+              styles.secondaryButton,
+              { backgroundColor: Colors.greenLight },
+            ]}
+          >
+            <Ionicons
+              name="person-add-outline"
+              size={28}
+              color={Colors.greenDark}
+            />
+          </View>
+        </AnimatedButton>
+      </Link>
     </View>
   );
 }
