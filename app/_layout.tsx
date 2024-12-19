@@ -143,6 +143,14 @@ function RootLayoutNav() {
             headerShown: Platform.OS !== "ios",
           }}
         />
+        <Stack.Screen
+          name="randomize"
+          options={{
+            title: "Randomize a restaurant",
+            presentation: "modal",
+            headerShown: Platform.OS !== "ios",
+          }}
+        />
         <Stack.Screen name="account" options={{ title: "Account Settings" }} />
         <Stack.Screen name="friends" options={{ title: "Manage Friends" }} />
         <Stack.Screen name="signIn" />
