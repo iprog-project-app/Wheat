@@ -3,7 +3,6 @@ import useStore from "@/store/model";
 import { useRouter } from "expo-router";
 
 export default function RandomizePresenter() {
-
   const likedPlaces = useStore((state) => state.likedPlaces);
 
   const setActivePlaceData = useStore((state) => state.setActivePlaceData);
@@ -32,6 +31,7 @@ export default function RandomizePresenter() {
     <RandomizeView
       onPressMyFavorites={handleRandomizeMy}
       onPressFriends={handleRandomizeFriends}
+      // TODO: onPressFilter={handleFilter}
     />
   );
 }
