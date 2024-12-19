@@ -1,20 +1,56 @@
-import { PlaceFullSchema, UserSchema } from "@/constants/types";
+import { PlaceFullSchema, UserSchema, FriendSchema } from "@/constants/types";
 import { create } from "zustand";
-import { StoreSchema } from "@/constants/types";
+
+export interface StoreSchema extends UserSchema {
+  // User
+  loggedInUserId: string | null;
+  setLoggedInUserId: (uid: string) => void;
+  setUser: (user: UserSchema | undefined) => void;
+
+  // Friends
+  friends: FriendSchema[];
+  setFriends: (friends: FriendSchema[]) => void;
+  addFriend: (friend: FriendSchema) => void;
+  removeFriend: (id: string) => void;
+  isFriend: (id: string) => boolean;
+
+  // Friend Search
+  friendSearchQuery: string;
+  setFriendSearchQuery: (query: string) => void;
+  friendSearchResultsData: FriendSchema[];
+  setFriendSearchResultsData: (data: FriendSchema[]) => void;
+  activeFriendData: FriendSchema | null;
+  setActiveFriendData: (friend: FriendSchema) => void;
+
+  // Places Search
+  activePlaceData: PlaceFullSchema | null;
+  setActivePlaceData: (place: PlaceFullSchema) => void;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  searchResultsData: PlaceFullSchema[];
+  setSearchResultsData: (data: PlaceFullSchema[]) => void;
+  setRecentSearches: (places: PlaceFullSchema[]) => void;
+
+  // Liked Places
+  likedPlaces: PlaceFullSchema[];
+  setLikedPlaces: (places: PlaceFullSchema[]) => void;
+  removeLikedPlace: (id: string) => void;
+  addLikedPlace: (place: PlaceFullSchema) => void;
+  isLikedPlace: (id: string) => boolean;
+}
 
 export const useStore = create<StoreSchema>((set, get) => ({
+  // User
   loggedInUserId: null,
   name: "",
+  setName: (name: string) => set({ name }),
   email: "",
+  setEmail: (email: string) => set({ email }),
   imgUrl: "",
-  friends: [],
-  likedPlaces: [],
-  recentSearches: [],
-
+  setImgUrl: (imgUrl: string) => set({ imgUrl }),
   setLoggedInUserId: (uid: string) => {
     set({ loggedInUserId: uid });
   },
-
   setUser: (user: UserSchema | undefined) => {
     set((state) => ({
       ...state,
@@ -22,6 +58,47 @@ export const useStore = create<StoreSchema>((set, get) => ({
     }));
   },
 
+  // Friends
+  friends: [],
+  setFriends: (friends: FriendSchema[]) => set({ friends }),
+  addFriend: (friend: FriendSchema) => {
+    const currentFriends = get().friends;
+    const exists = currentFriends.some((f) => f.userId === friend.userId);
+    if (exists) {
+      console.warn(`Friend with id ${friend.userId} already exists.`);
+      return;
+    }
+    const updatedFriends = [...currentFriends, friend];
+    set({ friends: updatedFriends });
+  },
+  removeFriend: (id: string) => {
+    const currentFriends = get().friends;
+    const updatedFriends = currentFriends.filter(
+      (friend) => friend.userId !== id
+    );
+    if (updatedFriends.length === currentFriends.length) {
+      console.warn(
+        `Tried to remove friend that was not in friends, with id: ${id}`
+      );
+    }
+    set({ friends: updatedFriends });
+  },
+  isFriend: (id: string) => {
+    const friendIds = get().friends.map((friend) => friend.userId);
+    return friendIds.includes(id);
+  },
+
+  // Friend Search
+  friendSearchQuery: "",
+  setFriendSearchQuery: (query: string) => set({ friendSearchQuery: query }),
+  friendSearchResultsData: [],
+  setFriendSearchResultsData: (data: FriendSchema[]) =>
+    set({ friendSearchResultsData: data }),
+  activeFriendData: null,
+  setActiveFriendData: (friend: FriendSchema) =>
+    set({ activeFriendData: friend }),
+
+  // Places Search
   activePlaceData: null,
   setActivePlaceData: (place: PlaceFullSchema) =>
     set({ activePlaceData: place }),
@@ -30,6 +107,12 @@ export const useStore = create<StoreSchema>((set, get) => ({
   searchResultsData: [],
   setSearchResultsData: (data: PlaceFullSchema[]) =>
     set({ searchResultsData: data }),
+  recentSearches: [],
+  setRecentSearches: (places: PlaceFullSchema[]) =>
+    set({ recentSearches: places }),
+
+  // Liked Places
+  likedPlaces: [],
   setLikedPlaces: (places: PlaceFullSchema[]) => set({ likedPlaces: places }),
   removeLikedPlace: (id: string) => {
     const currentLikedPlaces = get().likedPlaces;
@@ -43,20 +126,15 @@ export const useStore = create<StoreSchema>((set, get) => ({
     }
     set({ likedPlaces: updatedLikedPlaces });
   },
-
   addLikedPlace: (place: PlaceFullSchema) => {
     const currentLikedPlaces = get().likedPlaces;
-
-    // Kontrollera om platsen redan finns i listan baserat på id
     const exists = currentLikedPlaces.some(
       (existingPlace) => existingPlace.id === place.id
     );
     if (exists) {
       console.warn(`Place with id ${place.id} already exists in likedPlaces.`);
-      return; // Om den redan finns, gör inget
+      return;
     }
-
-    // Lägg till platsen om den inte redan finns
     const updatedLikedPlaces = [...currentLikedPlaces, place];
     set({ likedPlaces: updatedLikedPlaces });
   },
