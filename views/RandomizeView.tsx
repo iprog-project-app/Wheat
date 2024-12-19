@@ -1,22 +1,7 @@
-import { StatusBar } from "expo-status-bar";
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  Button,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import Colors from "../constants/Colors";
-import { PlaceFullSchema } from "@/constants/types";
-import { useFocusEffect } from "expo-router";
 import React from "react";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
-import { Linking } from "react-native";
-import { Link } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
 interface RadomizeViewProps {
   onPressFriends: () => void;
@@ -44,7 +29,11 @@ export default function RadomizeView({
       <View style={styles.options}>
         <TouchableOpacity style={styles.button} onPress={onPressFriends}>
           <View style={styles.iconTextContainer}>
-            <Ionicons name="people-outline" size={28} color={"#0B6809"} />
+            <Ionicons
+              name="people-outline"
+              size={28}
+              color={Colors.greenDark}
+            />
             <Text style={styles.buttonText}>Together with friends</Text>
           </View>
         </TouchableOpacity>
@@ -88,11 +77,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.white,
     paddingHorizontal: 32,
-    paddingVertical: 0,
-    gap: 0,
+    paddingVertical: 64,
   },
   info: {
-    //backgroundColor: "red",
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
@@ -101,19 +88,15 @@ const styles = StyleSheet.create({
     gap: 24,
   },
   options: {
-    //backgroundColor: "blue",
-
     flexDirection: "column",
     justifyContent: "center",
-
     paddingBottom: 64,
     gap: 16,
   },
   title: {
     color: Colors.gray1,
-    fontSize: 26,
-    fontFamily: "SF Pro",
-    fontWeight: 700,
+    fontSize: 24,
+    fontWeight: "bold",
   },
   description: {
     fontSize: 18,
@@ -123,8 +106,9 @@ const styles = StyleSheet.create({
   button: {
     padding: 16,
     borderRadius: 16,
+    borderCurve: "continuous",
     alignItems: "center",
-    backgroundColor: "#D6FCCF",
+    backgroundColor: Colors.greenLight,
     // Shadow for iOS
     shadowColor: Colors.black,
     shadowOffset: {
@@ -132,15 +116,14 @@ const styles = StyleSheet.create({
       height: 2,
     },
     shadowOpacity: 0.1,
-    shadowRadius: 8,
+    shadowRadius: 2,
     // Shadow for Android
     elevation: 5,
   },
   buttonText: {
     fontSize: 18,
-    fontFamily: "SF Pro",
-    fontWeight: 700,
-    color: "#0B6809",
+    fontWeight: "bold",
+    color: Colors.greenDark,
   },
   filterButtonText: {
     fontSize: 16,
@@ -156,20 +139,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     padding: 12,
     borderRadius: 999,
+    borderCurve: "continuous",
     borderWidth: 1,
     borderColor: Colors.gray1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#D6FCCF",
-    // Shadow for iOS
-    shadowColor: Colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    // Shadow for Android
-    elevation: 5,
   },
 });
