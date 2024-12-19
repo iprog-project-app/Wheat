@@ -5,7 +5,7 @@ import { router } from "expo-router";
 import { friendsSearch } from "@/utilities/firebaseModel";
 import { useState } from "react";
 import FriendSearchView from "@/views/FriendSearchView";
-import { Alert } from "react-native";
+import { Alert, Platform } from "react-native";
 
 export default function FriendSearchPresenter() {
   // const setActiveUserData = useStore((state) => state.setActiveUserData); // TODO
@@ -57,23 +57,31 @@ export default function FriendSearchPresenter() {
   };
 
   const handleRemoveFriend = (user: FriendSchema) => {
-    Alert.alert(
-      "Remove Friend",
-      `Are you sure you want to stop following ${user.name}?`,
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Remove",
-          style: "destructive",
-          onPress: () => {
-            removeFriend(user.userId);
+    if (Platform.OS === "web") {
+      if (
+        window.confirm(`Are you sure you want to stop following ${user.name}?`)
+      ) {
+        removeFriend(user.userId);
+      }
+    } else {
+      Alert.alert(
+        "Remove Friend",
+        `Are you sure you want to stop following ${user.name}?`,
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
           },
-        },
-      ]
-    );
+          {
+            text: "Remove",
+            style: "destructive",
+            onPress: () => {
+              removeFriend(user.userId);
+            },
+          },
+        ]
+      );
+    }
   };
 
   return (

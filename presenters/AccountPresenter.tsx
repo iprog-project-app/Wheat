@@ -10,7 +10,12 @@ export default function AccountPresenter() {
   const { name, email } = useStore();
 
   const handleSignOut = async () => {
-    if (!(Platform.OS === "web")) {
+    if (Platform.OS === "web") {
+      if (window.confirm("Are you sure you want to sign out?")) {
+        await signOut(auth);
+        console.log("Sign out");
+      }
+    } else {
       Alert.alert(
         "Sign out",
         "Are you sure you want to sign out?",
@@ -30,8 +35,6 @@ export default function AccountPresenter() {
         ],
         { cancelable: false }
       );
-    } else {
-      await signOut(auth);
     }
   };
 

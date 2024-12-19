@@ -8,7 +8,7 @@ import useStore from "../store/model";
 import { router } from "expo-router";
 import FriendProfileView from "@/views/FriendProfileView";
 import { idToLikedPlaces } from "@/utilities/firebaseModel";
-import { Alert } from "react-native";
+import { Alert, Platform } from "react-native";
 
 export default function FriendProfilePresenter() {
   const setActivePlaceData = useStore((state) => state.setActivePlaceData);
@@ -77,23 +77,31 @@ export default function FriendProfilePresenter() {
   };
 
   const handleRemoveFriend = (user: FriendSchema) => {
-    Alert.alert(
-      "Remove Friend",
-      `Are you sure you want to stop following ${user.name}?`,
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Remove",
-          style: "destructive",
-          onPress: () => {
-            removeFriend(user.userId);
+    if (Platform.OS === "web") {
+      if (
+        window.confirm(`Are you sure you want to stop following ${user.name}?`)
+      ) {
+        removeFriend(user.userId);
+      }
+    } else {
+      Alert.alert(
+        "Remove Friend",
+        `Are you sure you want to stop following ${user.name}?`,
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
           },
-        },
-      ]
-    );
+          {
+            text: "Remove",
+            style: "destructive",
+            onPress: () => {
+              removeFriend(user.userId);
+            },
+          },
+        ]
+      );
+    }
   };
 
   return (
