@@ -23,6 +23,7 @@ export default function RandomizePresenter() {
 
   const handleRandomizeFriends = () => {
     console.log("pressed With Friends");
+    router.push("/selectFriends");
   };
 
   //TODO: lägg till onPressFilter handler om vi hinner
