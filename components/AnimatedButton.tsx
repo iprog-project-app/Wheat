@@ -56,15 +56,12 @@ export const AnimatedButton = forwardRef(
       <TouchableWithoutFeedback
         onPressIn={() => {
           pressAnimation(minScale)();
-          console.log("pressIn");
         }}
         onPressOut={() => {
           pressAnimation(1)();
-          console.log("pressOut");
         }}
         onPress={onPress}
         onLongPress={() => {
-          console.log("longPress");
           pressAnimation(1)();
           onLongPress?.();
         }}

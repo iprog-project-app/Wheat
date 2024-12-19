@@ -4,7 +4,6 @@ import RandomizePresenter from "@/presenters/RandomizePresenter";
 
 export default function RandomizeScreen() {
   return (
-    // TODO: Allow scroll to bottom
     <View style={styles.container}>
       {/* <View style={{ height: "92%" }}>  */}
       <RandomizePresenter />
