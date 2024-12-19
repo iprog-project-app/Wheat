@@ -170,6 +170,13 @@ function RootLayoutNav() {
             headerShown: Platform.OS !== "ios",
           }}
         />
+        <Stack.Screen
+          name="selectFriends"
+          options={{
+            title: "Select Friends",
+            presentation: "modal",
+          }}
+        />
       </Stack>
     </GestureHandlerRootView>
   );
