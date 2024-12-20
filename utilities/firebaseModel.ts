@@ -75,7 +75,10 @@ export const updateFirebase = async (storeState: StoreSchema) => {
 // Output: An array with all users on format {id: sdasfasm, name: Samuel, email: sam@gmail.com}
 //         with an email that contais the input string.
 
-export const friendsSearch = async (searchQuery: string) => {
+export const friendsSearch = async (
+  searchQuery: string,
+  currentUser: string
+) => {
   const extractFriendData = (snapshot: QueryDocumentSnapshot) => {
     const data = snapshot.data();
     return {
@@ -84,27 +87,38 @@ export const friendsSearch = async (searchQuery: string) => {
       userId: snapshot.id,
     } as FriendSchema;
   };
-  const searchLower = searchQuery.toLowerCase();
-  try {
-    const ref = collection(db, "users");
-    const q = query(
-      ref,
-      or(
-        and(
-          where("email", ">=", searchLower),
-          where("email", "<", searchLower + "\uf8ff")
-        ),
-        and(
-          where("queryName", ">=", searchLower),
-          where("queryName", "<", searchLower + "\uf8ff")
+
+  const filterCurrentUser = (user: FriendSchema) => {
+    return user.email !== currentUser;
+  };
+
+  if (searchQuery) {
+    const searchLower = searchQuery.toLowerCase();
+    try {
+      const ref = collection(db, "users");
+      const q = query(
+        ref,
+        or(
+          and(
+            where("email", ">=", searchLower),
+            where("email", "<", searchLower + "\uf8ff")
+          ),
+          and(
+            where("queryName", ">=", searchLower),
+            where("queryName", "<", searchLower + "\uf8ff")
+          )
         )
-      )
-    );
-    const userSnapshots = await getDocs(q);
-    const userData = userSnapshots.docs.map(extractFriendData);
-    return userData;
-  } catch (err) {
-    console.error("Error fetching document: ", err);
+      );
+      const userSnapshots = await getDocs(q);
+      const userData = userSnapshots.docs
+        .map(extractFriendData)
+        .filter(filterCurrentUser);
+      return userData;
+    } catch (err) {
+      console.error("Error fetching document: ", err);
+    }
+  } else {
+    return [];
   }
 };
 
