@@ -95,7 +95,6 @@ export default function SavedView({
           key={item.id}
           toggleLike={toggleLike(item.id)}
           onPress={onPressItem(item.id)}
-          isLiked
           {...item}
         />
       )}

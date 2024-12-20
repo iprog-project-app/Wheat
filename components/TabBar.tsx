@@ -19,7 +19,7 @@ export default function TabBar({}: BottomTabBarProps) {
     <View style={styles.tabBar}>
       {/* TODO: Add random modal. First implementation would just be the details modal with a random id from saved */}
       <Link
-        href="/details?source=randomize"
+        href="/randomize"
         asChild={Platform.OS === "ios"}
         onPress={handleSetRandom}
       >
@@ -43,20 +43,22 @@ export default function TabBar({}: BottomTabBarProps) {
         </AnimatedButton>
       </Link>
 
-      <AnimatedButton>
-        <View
-          style={[
-            styles.secondaryButton,
-            { backgroundColor: Colors.greenLight },
-          ]}
-        >
-          <Ionicons
-            name="person-add-outline"
-            size={28}
-            color={Colors.greenDark}
-          />
-        </View>
-      </AnimatedButton>
+      <Link href={"/friendSearch"}>
+        <AnimatedButton>
+          <View
+            style={[
+              styles.secondaryButton,
+              { backgroundColor: Colors.greenLight },
+            ]}
+          >
+            <Ionicons
+              name="person-add-outline"
+              size={28}
+              color={Colors.greenDark}
+            />
+          </View>
+        </AnimatedButton>
+      </Link>
     </View>
   );
 }

@@ -12,8 +12,9 @@ export default function DetailsPresenter() {
   const addLikedPlace = useStore((state) => state.addLikedPlace);
   const isLikedPlace = useStore((state) => state.isLikedPlace);
   const setActivePlaceData = useStore((state) => state.setActivePlaceData);
-  const setNote = useStore((state) => state.setNote);
+  const allLikedPlaces = useStore((state) => state.allLikedPlaces);
   const getNoteFromId = useStore((state) => state.getNoteFromId);
+  const setNote = useStore((state) => state.setNote);
 
   // Event handlers
   // TODO: Move to store/model.ts as its used multiple times
@@ -48,7 +49,7 @@ export default function DetailsPresenter() {
   };
 
   const checkButtonState = activePlaceData
-    ? source === "randomize"
+    ? source === "randomize" || source === "friends"
       ? "randomize"
       : isLikedPlace(activePlaceData.id)
       ? "liked"
@@ -56,10 +57,20 @@ export default function DetailsPresenter() {
     : "notLiked";
 
   const handleRandomize = () => {
-    const randomPlace =
-      likedPlaces[Math.floor(Math.random() * likedPlaces.length)];
-    setActivePlaceData(randomPlace);
-    //TODO add a check if the random place is the same as the current active place
+    let randomPlace;
+    if (source === "friends") {
+      do {
+        randomPlace =
+          allLikedPlaces[Math.floor(Math.random() * allLikedPlaces.length)];
+      } while (randomPlace?.id === activePlaceData?.id);
+      setActivePlaceData(randomPlace);
+    } else {
+      do {
+        randomPlace =
+          likedPlaces[Math.floor(Math.random() * likedPlaces.length)];
+      } while (randomPlace?.id === activePlaceData?.id);
+      setActivePlaceData(randomPlace);
+    }
   };
 
   return (

@@ -37,22 +37,3 @@ export type UserSchema = {
   likedPlaces: PlaceFullSchema[];
   recentSearches: PlaceFullSchema[];
 };
-
-export type StoreSchema = UserSchema & {
-  loggedInUserId: string | null;
-  setLoggedInUserId: (uid: string) => void;
-  setUser: (user: UserSchema | undefined) => void;
-  activePlaceData: PlaceFullSchema | null;
-  setActivePlaceData: (place: PlaceFullSchema) => void;
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
-  searchResultsData: PlaceFullSchema[];
-  setSearchResultsData: (data: PlaceFullSchema[]) => void;
-  likedPlaces: PlaceFullSchema[];
-  setLikedPlaces: (places: PlaceFullSchema[]) => void;
-  removeLikedPlace: (id: string) => void;
-  addLikedPlace: (place: PlaceFullSchema) => void;
-  isLikedPlace: (id: string) => boolean;
-  setNote: (note: string) => void;
-  getNoteFromId: (id: string) => string | undefined;
-};

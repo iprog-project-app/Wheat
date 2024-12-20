@@ -9,18 +9,6 @@ export interface PlaceListItemProps {
   location: string;
   imageUri: string;
   rating: number;
-  isLiked: boolean;
-  note?: string;
-  toggleLike: () => void;
-  onPress: () => void;
-}
-//TODO: ta bort isLiked och klassifiera om rött genom helper function
-export interface PlaceListItemProps {
-  id: string;
-  title: string;
-  location: string;
-  imageUri: string;
-  rating: number;
   note?: string;
   toggleLike: () => void;
   onPress: () => void;
