@@ -84,12 +84,17 @@ export default function SignInView({
                 >
                   Log in
                 </Text>
-              ) : (
+              ) : Platform.OS !== "web" ? (
                 <LottieView
                   source={require("../assets/lottie/dotsLoading.json")}
                   style={{ width: 100, height: 100 }}
                   autoPlay
                   loop
+                />
+              ) : (
+                <Image
+                  source={require("../assets/images/buttonLoad.gif")}
+                  style={{ width: 100, height: 100 }}
                 />
               )}
             </TouchableOpacity>
@@ -126,12 +131,17 @@ export default function SignInView({
                 >
                   Create account
                 </Text>
-              ) : (
+              ) : Platform.OS !== "web" ? (
                 <LottieView
                   source={require("../assets/lottie/dotsLoading.json")}
                   style={{ width: 100, height: 100 }}
                   autoPlay
                   loop
+                />
+              ) : (
+                <Image
+                  source={require("../assets/images/buttonLoad.gif")}
+                  style={{ width: 100, height: 100 }}
                 />
               )}
             </TouchableOpacity>
