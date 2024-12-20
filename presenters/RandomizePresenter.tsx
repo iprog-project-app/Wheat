@@ -1,8 +1,20 @@
 import RandomizeView from "@/views/RandomizeView";
 import useStore from "@/store/model";
+import { useState } from "react";
 import { useRouter } from "expo-router";
+import SegmentedControl from "@react-native-segmented-control/segmented-control";
+import SelectFriendsView from "@/views/SelectFriendsView";
+import { useSelectFriendsPresenter } from "@/utilities/useSelectFriendsPresenter";
 
 export default function RandomizePresenter() {
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const {
+    friendsAndSelected,
+    selectedFriends,
+    handlePressItem,
+    handleToggleSelected,
+    handlePressRandomize,
+  } = useSelectFriendsPresenter();
   const likedPlaces = useStore((state) => state.likedPlaces);
 
   const setActivePlaceData = useStore((state) => state.setActivePlaceData);
@@ -26,13 +38,33 @@ export default function RandomizePresenter() {
     router.push("/selectFriends");
   };
 
-  //TODO: lägg till onPressFilter handler om vi hinner
+  const handleSegmentChange = (event: any) => {
+    const newIndex = event.nativeEvent.selectedSegmentIndex;
+    setSelectedIndex(newIndex);
+  };
 
   return (
-    <RandomizeView
-      onPressMyFavorites={handleRandomizeMy}
-      onPressFriends={handleRandomizeFriends}
-      // TODO: onPressFilter={handleFilter}
-    />
+    <>
+      <SegmentedControl
+        values={["Together with friends", "Just my favorites"]}
+        selectedIndex={selectedIndex}
+        onChange={handleSegmentChange}
+        style={{ margin: 20 }}
+      />
+      {selectedIndex === 0 ? (
+        <SelectFriendsView
+          friendsList={friendsAndSelected}
+          selectedFriends={selectedFriends}
+          onPressItem={handlePressItem}
+          onToggleSelected={handleToggleSelected}
+          onPressRandomize={handlePressRandomize}
+        />
+      ) : (
+        <RandomizeView
+          onPressMyFavorites={handleRandomizeMy}
+          onPressFriends={handleRandomizeFriends}
+        />
+      )}
+    </>
   );
 }

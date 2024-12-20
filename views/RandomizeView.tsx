@@ -11,45 +11,26 @@ interface RadomizeViewProps {
 
 export default function RadomizeView({
   onPressMyFavorites,
-  onPressFriends,
   onPressFilter,
 }: RadomizeViewProps) {
   return (
     <View style={styles.container}>
-      {/* en container för header och info om vad som händer. Flex grow. både justifyContent och alignItems center, gap= 24 */}
       <View style={styles.info}>
         <Ionicons name="restaurant-outline" size={100} color={Colors.gray1} />
         <Text style={styles.title}>Find tonights dining spot!</Text>
         <Text style={styles.description}>
-          Get a recommendation from all your friends' favorite spots or just
-          your own. Refine with filters to match tonight’s mood!
+          Get a recommendation from your favorite spots!
         </Text>
       </View>
-      {/* TODO: se till att knapparna har fast height och flytande width */}
       <View style={styles.options}>
-        <TouchableOpacity style={styles.button} onPress={onPressFriends}>
-          <View style={styles.iconTextContainer}>
-            <Ionicons
-              name="people-outline"
-              size={28}
-              color={Colors.greenDark}
-            />
-            <Text style={styles.buttonText}>Together with friends</Text>
-          </View>
-        </TouchableOpacity>
-
         <TouchableOpacity
           style={[styles.button, { backgroundColor: Colors.yellowLight }]}
           onPress={onPressMyFavorites}
         >
           <View style={styles.iconTextContainer}>
-            <Ionicons
-              name="person-outline"
-              size={28}
-              color={Colors.orangeDark}
-            />
+            <Ionicons name="dice-outline" size={28} color={Colors.orangeDark} />
             <Text style={[styles.buttonText, { color: Colors.orangeDark }]}>
-              Just my favorites
+              Find tonights dining spot!
             </Text>
           </View>
         </TouchableOpacity>

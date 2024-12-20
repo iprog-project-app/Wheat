@@ -27,6 +27,11 @@ export default function SelectFriendsView({
 }: SelectFriendsViewProps) {
   return (
     <View style={styles.container}>
+      <View style={styles.info}>
+        <Text style={styles.description}>
+          Get a recommendation from all your and your friends’ favorite spots!
+        </Text>
+      </View>
       <FlatList
         style={{
           flex: 1,
@@ -50,8 +55,8 @@ export default function SelectFriendsView({
       />
       <TouchableOpacity style={[styles.button]} onPress={onPressRandomize}>
         <View style={styles.iconTextContainer}>
-          <Ionicons name="dice-outline" size={28} color={Colors.greenDark} />
-          <Text style={[styles.buttonText, { color: Colors.greenDark }]}>
+          <Ionicons name="dice-outline" size={28} color={Colors.orangeDark} />
+          <Text style={[styles.buttonText, { color: Colors.orangeDark }]}>
             Find tonights dining spot!
           </Text>
         </View>
@@ -64,6 +69,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.white,
   },
+  info: {
+    padding: 16,
+  },
   button: {
     bottom: 64,
     marginHorizontal: 32,
@@ -72,7 +80,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderCurve: "continuous",
     alignItems: "center",
-    backgroundColor: Colors.greenLight,
+    backgroundColor: Colors.yellowLight,
     // Shadow for iOS
     shadowColor: Colors.black,
     shadowOffset: {
@@ -93,5 +101,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
+  },
+  description: {
+    fontSize: 18,
+    color: Colors.gray0,
+    textAlign: "center",
   },
 });
