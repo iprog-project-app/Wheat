@@ -25,39 +25,65 @@ export const useStore = create<StoreSchema>((set, get) => ({
   activePlaceData: null,
   setActivePlaceData: (place: PlaceFullSchema) =>
     set({ activePlaceData: place }),
+
+  setNote: (note: string, id?: string) =>
+    set((state) => {
+      const updatedLikedPlaces = state.likedPlaces.map((place) =>
+        place.id === (id || state.activePlaceData?.id)
+          ? { ...place, note }
+          : place
+      );
+      return { likedPlaces: updatedLikedPlaces };
+    }),
+
+
+  getNoteFromId: (id: string) => {
+    const place = get().likedPlaces.find((place) => place.id === id);
+    return place?.note && place.note ;
+  },
+
+
   searchQuery: "",
   setSearchQuery: (query: string) => set({ searchQuery: query }),
   searchResultsData: [],
   setSearchResultsData: (data: PlaceFullSchema[]) =>
     set({ searchResultsData: data }),
-  setLikedPlaces: (places: PlaceFullSchema[]) => set({likedPlaces: places}),
+
+  setLikedPlaces: (places: PlaceFullSchema[]) => set({ likedPlaces: places }),
   removeLikedPlace: (id: string) => {
     const currentLikedPlaces = get().likedPlaces;
-    const updatedLikedPlaces = currentLikedPlaces.filter(place => place.id !== id);
-    if (updatedLikedPlaces.length === currentLikedPlaces.length){
-      console.warn(`Tried to remove place that was not in likedPlaces, with id: ${id}`)
+    const updatedLikedPlaces = currentLikedPlaces.filter(
+      (place) => place.id !== id
+    );
+    if (updatedLikedPlaces.length === currentLikedPlaces.length) {
+      console.warn(
+        `Tried to remove place that was not in likedPlaces, with id: ${id}`
+      );
     }
     set({ likedPlaces: updatedLikedPlaces });
   },
 
-    addLikedPlace: (place: PlaceFullSchema) => {
-      const currentLikedPlaces = get().likedPlaces;
+  addLikedPlace: (place: PlaceFullSchema) => {
+    const currentLikedPlaces = get().likedPlaces;
 
-      // Kontrollera om platsen redan finns i listan baserat på id
-      const exists = currentLikedPlaces.some(existingPlace => existingPlace.id === place.id);
-      if (exists) {
-          console.warn(`Place with id ${place.id} already exists in likedPlaces.`);
-          return; // Om den redan finns, gör inget
-      }
-
-      // Lägg till platsen om den inte redan finns
-      const updatedLikedPlaces = [...currentLikedPlaces, place];
-      set({ likedPlaces: updatedLikedPlaces });
-  },
-    isLikedPlace: (id: string) => {
-      const likedIds = get().likedPlaces.map(place => place.id)
-      return likedIds.includes(id);
+    const exists = currentLikedPlaces.some(
+      (existingPlace) => existingPlace.id === place.id
+    );
+    if (exists) {
+      console.warn(
+        `Place with id ${place.id} already exists in likedPlaces.`
+      );
+      return;
     }
+
+    const updatedLikedPlaces = [...currentLikedPlaces, place];
+    set({ likedPlaces: updatedLikedPlaces });
+  },
+
+  isLikedPlace: (id: string) => {
+    const likedIds = get().likedPlaces.map((place) => place.id);
+    return likedIds.includes(id);
+  },
 }));
 
 export default useStore;

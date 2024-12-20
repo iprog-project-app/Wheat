@@ -12,8 +12,9 @@ export default function DetailsPresenter() {
   const removeLikedPlace = useStore((state) => state.removeLikedPlace);
   const addLikedPlace = useStore((state) => state.addLikedPlace);
   const isLikedPlace = useStore((state) => state.isLikedPlace);
-  const setActivePlaceData = useStore((state) => state.setActivePlaceData); 
-
+  const setActivePlaceData = useStore((state) => state.setActivePlaceData);
+  const setNote = useStore((state) => state.setNote);
+  const getNoteFromId = useStore((state) => state.getNoteFromId);
 
   // Event handlers
   // TODO: Move to store/model.ts as its used multiple times
@@ -33,19 +34,13 @@ export default function DetailsPresenter() {
     }
   };
 
-  // TODO: Remove onNoteChange
-  const handleNoteChange = () => {
-    console.log("Note changed");
-  };
-
   const handleBackPress = () => {
     router.back();
   };
 
-  const handleModalClose = () => {
-    // Ha kvar TODO:n nedan, men tills vidare kan passa *note* in i denna funktion och console.logga
-    console.log("Modal closed, save note");
-    // TODO
+  const handleNoteChange = (note: string) => {
+    console.log("Modal closed with note:", note);
+    setNote(note); // Save note to store
   };
 
   const handleLinkPress = () => {
@@ -61,25 +56,28 @@ export default function DetailsPresenter() {
       : "notLiked"
     : "notLiked";
 
-    const handleRandomize = () => {
-        const randomPlace =
-          likedPlaces[Math.floor(Math.random() * likedPlaces.length)];
-        setActivePlaceData(randomPlace); 
-        //TODO add a check if the random place is the same as the current active place
-    };
-  
+  const handleRandomize = () => {
+    const randomPlace =
+      likedPlaces[Math.floor(Math.random() * likedPlaces.length)];
+    setActivePlaceData(randomPlace);
+    //TODO add a check if the random place is the same as the current active place
+  };
+
   return (
     <DetailsView
       placeData={activePlaceData}
       onLikeToggle={handleLikeToggle}
-      // TODO: Remove onNoteChange
-      onNoteChange={handleNoteChange}
       onBackPress={handleBackPress}
       // TODO: Add note parameter to onModalClose
-      onModalClose={handleModalClose}
+      onNoteChange={handleNoteChange}
       onLinkPress={handleLinkPress}
       rightButtonState={checkButtonState}
       onRandomize={handleRandomize}
+      note={
+        activePlaceData
+          ? getNoteFromId(activePlaceData.id) || undefined
+          : undefined
+      }
     />
   );
 }

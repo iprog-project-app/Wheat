@@ -11,219 +11,208 @@ import {
 } from "react-native";
 import Colors from "../constants/Colors";
 import { PlaceFullSchema } from "@/constants/types";
-import { useFocusEffect } from "expo-router";
-import React from "react";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { Linking } from "react-native";
 
 type DetailsViewProps = {
   placeData: PlaceFullSchema | null;
   onLikeToggle: (id: string) => void;
-  onNoteChange: (text: string) => void;
   onBackPress: () => void;
-  onModalClose: () => void;
+  onNoteChange: (note: string) => void;
   onLinkPress: () => void;
   onRandomize: () => void;
   rightButtonState: "liked" | "notLiked" | "randomize";
+  note: string | undefined;
 };
 
 export default function DetailsView({
   placeData,
   onLikeToggle,
-  onNoteChange,
   onBackPress,
-  onModalClose,
+  onNoteChange,
   onLinkPress,
   onRandomize,
   rightButtonState,
+  note,
 }: DetailsViewProps) {
   return (
-    useFocusEffect(
-      React.useCallback(() => {
-        return () => {
-          onModalClose();
-        };
-      }, [])
-    ),
-    (
-      <View style={styles.container}>
-        {!placeData ? (
-          // TODO: Check if any other cases need to be handled
-          <Text
-            style={{ fontSize: 16, color: Colors.gray2, textAlign: "center" }}
-          >
-            No saved restaurants to chose from
-          </Text>
-        ) : (
-          <>
-            <ScrollView style={{ flex: 1 }}>
-              <View style={styles.imageContainer}>
-                <Image
-                  source={{ uri: placeData.imageUri }}
-                  style={styles.image}
-                />
-              </View>
+    <View style={styles.container}>
+      {!placeData ? (
+        // TODO: Check if any other cases need to be handled
+        <Text
+          style={{ fontSize: 16, color: Colors.gray2, textAlign: "center" }}
+        >
+          No saved restaurants to chose from
+        </Text>
+      ) : (
+        <>
+          <ScrollView style={{ flex: 1 }}>
+            <View style={styles.imageContainer}>
+              <Image
+                source={{ uri: placeData.imageUri }}
+                style={styles.image}
+              />
+            </View>
 
-              {/* Title and Information */}
-              <View style={styles.infoContainer}>
-                <View style={styles.titleRow}>
-                  <Text style={styles.title}>{placeData.title}</Text>
-                </View>
+            {/* Title and Information */}
+            <View style={styles.infoContainer}>
+              <View style={styles.titleRow}>
+                <Text style={styles.title}>{placeData.title}</Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 16,
+                }}
+              >
                 <View
                   style={{
                     flexDirection: "row",
                     alignItems: "center",
-                    gap: 16,
+                    gap: 4,
                   }}
                 >
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 4,
-                    }}
-                  >
-                    <Text style={styles.subtitle}>{placeData.rating}</Text>
-                    <FontAwesome name="star" size={18} color={Colors.yellow} />
-                  </View>
-                  <Text style={styles.subtitle}>{placeData.price}</Text>
+                  <Text style={styles.subtitle}>{placeData.rating}</Text>
+                  <FontAwesome name="star" size={18} color={Colors.yellow} />
                 </View>
-
-                <TouchableOpacity
-                  onPress={() =>
-                    Linking.openURL(
-                      `https://www.google.com/maps/search/?api=1&query=<address>&query_place_id=${placeData.id}`
-                    )
-                  }
-                >
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 4,
-                    }}
-                  >
-                    <Ionicons
-                      name="location-outline"
-                      size={18}
-                      color={Colors.gray0}
-                    />
-                    <Text style={styles.subtitle}>{placeData.location}</Text>
-                  </View>
-                </TouchableOpacity>
-
-                {placeData.website && (
-                  <TouchableOpacity
-                    style={{
-                      alignItems: "center",
-                      flexDirection: "row",
-                      gap: 4,
-                    }}
-                    onPress={onLinkPress}
-                  >
-                    <Ionicons
-                      name="link-outline"
-                      size={18}
-                      color={Colors.primary}
-                    />
-                    <Text style={styles.link}>{placeData.website}</Text>
-                  </TouchableOpacity>
-                )}
-                <Text style={styles.description}>{placeData.description}</Text>
+                <Text style={styles.subtitle}>{placeData.price}</Text>
               </View>
 
-              {/* Notes Section */}
-              <View style={styles.notesContainer}>
-                <Text style={styles.notesTitle}>Notes</Text>
-                <TextInput
-                  style={styles.notesInput}
-                  placeholder="Add a note"
-                  value={placeData.note}
-                  onChangeText={onNoteChange}
-                  multiline
-                />
-              </View>
-
-              {/* Flexible space to push buttons to the bottom */}
-              <View style={{ flex: 1 }} />
-            </ScrollView>
-
-            {/* Buttons */}
-            <View style={styles.buttonContainer}>
               <TouchableOpacity
-                style={[styles.button, { backgroundColor: Colors.secondary }]}
-                onPress={onBackPress}
-              >
-                <Ionicons
-                  name="arrow-back"
-                  size={28}
-                  color={Colors.primaryDisabled}
-                />
-                <Text
-                  style={{
-                    color: Colors.primaryDisabled,
-                    fontSize: 18,
-                    fontWeight: "bold",
-                  }}
-                >
-                  Back
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[
-                  styles.button,
-                  {
-                    backgroundColor:
-                      rightButtonState === "randomize"
-                        ? Colors.yellowLight
-                        : Colors.redLight,
-                  },
-                ]}
                 onPress={() =>
-                  rightButtonState === "randomize"
-                    ? onRandomize()
-                    : onLikeToggle(placeData.id)
+                  Linking.openURL(
+                    `https://www.google.com/maps/search/?api=1&query=<address>&query_place_id=${placeData.id}`
+                  )
                 }
               >
-                <Ionicons
-                  name={
-                    rightButtonState === "liked"
-                      ? "heart-dislike"
-                      : rightButtonState === "notLiked"
-                      ? "heart"
-                      : "dice-outline"
-                  }
-                  size={28}
-                  color={
-                    rightButtonState === "randomize"
-                      ? Colors.orangeDark
-                      : Colors.redDark
-                  }
-                />
-                <Text
+                <View
                   style={{
-                    color:
-                      rightButtonState === "randomize"
-                        ? Colors.orangeDark
-                        : Colors.redDark,
-                    fontSize: 18,
-                    fontWeight: "bold",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 4,
                   }}
                 >
-                  {rightButtonState === "liked"
-                    ? "Remove Save"
-                    : rightButtonState === "notLiked"
-                    ? "Save"
-                    : "Randomize"}
-                </Text>
+                  <Ionicons
+                    name="location-outline"
+                    size={18}
+                    color={Colors.gray0}
+                  />
+                  <Text style={styles.subtitle}>{placeData.location}</Text>
+                </View>
               </TouchableOpacity>
+
+              {placeData.website && (
+                <TouchableOpacity
+                  style={{
+                    alignItems: "center",
+                    flexDirection: "row",
+                    gap: 4,
+                  }}
+                  onPress={onLinkPress}
+                >
+                  <Ionicons
+                    name="link-outline"
+                    size={18}
+                    color={Colors.primary}
+                  />
+                  <Text style={styles.link}>{placeData.website}</Text>
+                </TouchableOpacity>
+              )}
+              <Text style={styles.description}>{placeData.description}</Text>
             </View>
-            <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
-          </>
-        )}
-      </View>
-    )
+
+            {/* Notes Section */}
+            <View style={styles.notesContainer}>
+              <Text style={styles.notesTitle}>Notes</Text>
+              <TextInput
+                style={styles.notesInput}
+                placeholder="Add a note"
+                value={note || ""}
+                onChangeText={onNoteChange}
+                multiline
+              />
+            </View>
+
+            {/* Flexible space to push buttons to the bottom */}
+            <View style={{ flex: 1 }} />
+          </ScrollView>
+
+          {/* Buttons */}
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={[styles.button, { backgroundColor: Colors.secondary }]}
+              onPress={onBackPress}
+            >
+              <Ionicons
+                name="arrow-back"
+                size={28}
+                color={Colors.primaryDisabled}
+              />
+              <Text
+                style={{
+                  color: Colors.primaryDisabled,
+                  fontSize: 18,
+                  fontWeight: "bold",
+                }}
+              >
+                Back
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.button,
+                {
+                  backgroundColor:
+                    rightButtonState === "randomize"
+                      ? Colors.yellowLight
+                      : Colors.redLight,
+                },
+              ]}
+              onPress={() =>
+                rightButtonState === "randomize"
+                  ? onRandomize()
+                  : onLikeToggle(placeData.id)
+              }
+            >
+              <Ionicons
+                name={
+                  rightButtonState === "liked"
+                    ? "heart-dislike"
+                    : rightButtonState === "notLiked"
+                    ? "heart"
+                    : "dice-outline"
+                }
+                size={28}
+                color={
+                  rightButtonState === "randomize"
+                    ? Colors.orangeDark
+                    : Colors.redDark
+                }
+              />
+              <Text
+                style={{
+                  color:
+                    rightButtonState === "randomize"
+                      ? Colors.orangeDark
+                      : Colors.redDark,
+                  fontSize: 18,
+                  fontWeight: "bold",
+                }}
+              >
+                {rightButtonState === "liked"
+                  ? "Remove Save"
+                  : rightButtonState === "notLiked"
+                  ? "Save"
+                  : "Randomize"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
+        </>
+      )}
+    </View>
   );
 }
 

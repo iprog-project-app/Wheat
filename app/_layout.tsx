@@ -28,8 +28,8 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  const { friends, recentSearches, likedPlaces } = useStore();
-  const storeState = useStore();
+  const storeState = useStore((state) => state);
+  const { friends, recentSearches, likedPlaces } = storeState;
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
