@@ -67,7 +67,6 @@ export default function SignInPresenter() {
   // Email passsword
   const signInUser = async () => {
     setLoading(true);
-    console.log("hej");
     if (email && password) {
       try {
         const userCredential = await signInWithEmailAndPassword(
@@ -75,7 +74,6 @@ export default function SignInPresenter() {
           email,
           password
         );
-        console.log("he");
         if (userCredential) {
           const user = userCredential.user;
         }
