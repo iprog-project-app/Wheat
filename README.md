@@ -9,27 +9,28 @@ Wheat is a mobile application designed to answer the question: "**Wh**ere do we 
 ### What We Have Done  
 
 - **Core Setup**: Built using React Native and TypeScript.
-- **Authentication & Storage**: Integrated Firebase for user authentication and data storage (setup complete, integration pending).
-- **Search Functionality**: Developed restaurant search powered by the Google Places API, including locations, restaurants, and categories.
-- **Restaurant Library**: Laid the groundwork for saving and managing favorite restaurants.
+- **Authentication & Storage**: Integrated Firebase for user authentication and data persistence.
+- **Search Functionality**: Developed restaurant search powered by the Google Places API, finding restaurants based on locations.
 - **Hosting**: Configured Firebase Hosting.
+- - **Social Features**:
+  - Functionality for connecting with friends.
+  - Find shared favourites for group outings.
+
+---
+
+### 3rd party components
+
+- **[Lottie Animation](https://lottiefiles.com/)**:
+  - Implemented animations for loading states.
+- **[Segment Controll](https://www.npmjs.com/package/@react-native-segmented-control/segmented-control)**:
+  - Implemented a segment control for toggling randomising places with friends or alone.
 
 ---
 
 ### What We Still Plan to Do
 
 - **Search Enhancements**:
-  - Limit search results to restaurants and bars.
-  - Add filtering options for price, region, and other preferences.
-- **User Experience**:
-  - Display icons across platforms (currently visible only on iOS and Android).
-  - Improve UI design and usability.
-- **Social Features**:
-  - Enable user accounts with data persistence for likes and notes.
-  - Add functionality for connecting with friends.
-  - Find shared favorites for group outings.
-- **Technical Improvements**:
-  - Refactor project structure by merging `/store` and `/Model`.
+  - Add filtering options for price, region and if it's open now.
 
 ---
 
@@ -43,9 +44,7 @@ Wheat is a mobile application designed to answer the question: "**Wh**ere do we 
 - **components/**: Reusable UI components.
 - **Config/**: Configuration files.
 - **constants/**: App-wide constants.
-- **Model/**: Data models.
+- **model/**: Data models and state management files.
 - **presenters/**: Presentational logic bridging data and UI.
 - **src/**: Source code.
-- **store/**: State management files and test model.
-- **utilities/**: Helper functions and utilities.
 - **views/**: View components.
