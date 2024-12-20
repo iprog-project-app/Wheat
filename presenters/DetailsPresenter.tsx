@@ -1,4 +1,3 @@
-import React from "react";
 import DetailsView from "../views/DetailsView";
 import useStore from "@/store/model";
 import { router } from "expo-router";
@@ -68,7 +67,6 @@ export default function DetailsPresenter() {
       placeData={activePlaceData}
       onLikeToggle={handleLikeToggle}
       onBackPress={handleBackPress}
-      // TODO: Add note parameter to onModalClose
       onNoteChange={handleNoteChange}
       onLinkPress={handleLinkPress}
       rightButtonState={checkButtonState}
