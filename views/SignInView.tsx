@@ -11,9 +11,9 @@ import {
   Keyboard,
 } from "react-native";
 
-import { useState } from "react";
 import InputBox from "@/components/InputBox";
 import Colors from "@/constants/Colors";
+import LottieView from "lottie-react-native";
 
 export interface SignInViewProps {
   onLogIn: () => void;
@@ -85,9 +85,11 @@ export default function SignInView({
                   Log in
                 </Text>
               ) : (
-                <Image
-                  source={require("../assets/images/buttonLoad.gif")} // Path to your image in the project
-                  style={{ width: 100, height: 50, marginBottom: 10 }}
+                <LottieView
+                  source={require("../assets/lottie/dotsLoading.json")}
+                  style={{ width: 100, height: 100 }}
+                  autoPlay
+                  loop
                 />
               )}
             </TouchableOpacity>
@@ -125,9 +127,11 @@ export default function SignInView({
                   Create account
                 </Text>
               ) : (
-                <Image
-                  source={require("../assets/images/buttonLoad.gif")} // Path to your image in the project
-                  style={{ width: 100, height: 50, marginBottom: 10 }}
+                <LottieView
+                  source={require("../assets/lottie/dotsLoading.json")}
+                  style={{ width: 100, height: 100 }}
+                  autoPlay
+                  loop
                 />
               )}
             </TouchableOpacity>
