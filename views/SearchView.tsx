@@ -64,7 +64,7 @@ export default function SearchView({
   onPressItem,
   onSearch,
 }: SearchViewProps) {
-  const { isLikedPlace, getNoteFromId } = useStore();
+  const { getNoteFromId } = useStore();
   const headerComponent = useMemo(
     () => (
       <SearchBarComponent
