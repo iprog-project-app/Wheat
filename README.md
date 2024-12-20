@@ -19,9 +19,7 @@ Wheat is a mobile application designed to answer the question: "**Wh**ere do we 
 ---
 
 ### 3rd party components
-
-- **[Lottie Animation](https://lottiefiles.com/)**:
-  - Implemented animations for loading states.
+React Native relies on third-party libraries for most features like animations, gestures, and UI components. Here is an example of one component we used:
 - **[Segment Controll](https://www.npmjs.com/package/@react-native-segmented-control/segmented-control)**:
   - Implemented a segment control for toggling randomising places with friends or alone.
 
