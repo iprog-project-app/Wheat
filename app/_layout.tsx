@@ -1,5 +1,5 @@
-import useStore from "@/store/model";
-import { updateFirebase } from "@/utilities/firebaseModel";
+import useStore from "@/model/model";
+import { updateFirebase } from "@/model/firebaseModel";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -11,8 +11,8 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 // SIGNIN
 // Firebase
 import { onAuthStateChanged, User } from "firebase/auth";
-import { auth } from "../Config/firebaseConfig";
-import { fetchUser } from "@/utilities/firebaseModel";
+import { auth } from "../config/firebaseConfig";
+import { fetchUser } from "@/model/firebaseModel";
 
 import SignInScreen from "./signIn";
 

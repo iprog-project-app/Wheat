@@ -8,8 +8,8 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
-import { auth } from "../Config/firebaseConfig";
-import { addUser } from "@/utilities/firebaseModel";
+import { auth } from "../config/firebaseConfig";
+import { addUser } from "@/model/firebaseModel";
 
 import SignInView from "@/views/SignInView";
 

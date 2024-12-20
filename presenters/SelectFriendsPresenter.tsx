@@ -1,9 +1,9 @@
 import { Alert } from "react-native";
-import useStore from "@/store/model";
+import useStore from "@/model/model";
 import { router } from "expo-router";
 import { FriendSchema } from "@/constants/types";
 import SelectFriendsView from "@/views/SelectFriendsView";
-import { idToLikedPlaces } from "@/utilities/firebaseModel";
+import { idToLikedPlaces } from "@/model/firebaseModel";
 import { PlaceFullSchema } from "@/constants/types";
 
 export default function SelectFriendsPresenter() {

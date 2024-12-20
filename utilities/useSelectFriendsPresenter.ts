@@ -1,8 +1,8 @@
 import { Alert } from "react-native";
-import useStore from "@/store/model";
+import useStore from "@/model/model";
 import { router } from "expo-router";
 import { FriendSchema, PlaceFullSchema } from "@/constants/types";
-import { idToLikedPlaces } from "@/utilities/firebaseModel";
+import { idToLikedPlaces } from "@/model/firebaseModel";
 
 export function useSelectFriendsPresenter() {
   const friends = useStore((state) => state.friends);

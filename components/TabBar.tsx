@@ -5,7 +5,7 @@ import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { AnimatedButton } from "./AnimatedButton";
-import useStore from "@/store/model";
+import useStore from "@/model/model";
 
 export default function TabBar({}: BottomTabBarProps) {
   const { setActivePlaceData, likedPlaces } = useStore();
