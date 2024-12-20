@@ -1,6 +1,6 @@
 import FriendsView from "@/views/FriendsView";
 import { Alert, Platform } from "react-native";
-import useStore from "@/store/model";
+import useStore from "@/model/storeModel";
 import { router } from "expo-router";
 import { FriendSchema } from "@/constants/types";
 

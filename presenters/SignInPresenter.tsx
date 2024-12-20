@@ -9,7 +9,7 @@ import {
 } from "firebase/auth";
 
 import { auth } from "../Config/firebaseConfig";
-import { addUser } from "@/utilities/firebaseModel";
+import { addUser } from "@/model/firebaseModel";
 
 import SignInView from "@/views/SignInView";
 

@@ -3,7 +3,7 @@ import Colors from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { FriendSchema } from "@/constants/types";
 import { FriendListItem } from "@/components/FriendListItem";
-import useStore from "@/store/model";
+import useStore from "@/model/storeModel";
 
 export interface FriendsViewProps {
   friendsList: FriendSchema[];

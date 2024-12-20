@@ -1,8 +1,8 @@
 import { FriendSchema, PlaceFullSchema } from "@/constants/types";
 import SearchView from "../views/SearchView";
-import { useStore } from "@/store/model";
+import { useStore } from "@/model/storeModel";
 import { router } from "expo-router";
-import { friendsSearch } from "@/utilities/firebaseModel";
+import { friendsSearch } from "@/model/firebaseModel";
 import { useState } from "react";
 import FriendSearchView from "@/views/FriendSearchView";
 import { Alert, Platform } from "react-native";

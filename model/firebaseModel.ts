@@ -12,7 +12,7 @@ import {
 import { db } from "@/Config/firebaseConfig";
 import { FriendSchema, PlaceFullSchema } from "@/constants/types";
 import { UserSchema } from "@/constants/types";
-import { StoreSchema } from "@/store/model";
+import { StoreSchema } from "@/model/storeModel";
 
 export const addUser = async (user: UserSchema, uid: string) => {
   try {
