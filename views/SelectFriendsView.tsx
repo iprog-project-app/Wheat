@@ -53,11 +53,19 @@ export default function SelectFriendsView({
           />
         )}
       />
-      <TouchableOpacity style={[styles.button]} onPress={onPressRandomize}>
+      {/* TODO: Nicer fix for disabling button when no one is selected */}
+      <TouchableOpacity
+        style={[
+          styles.button,
+          { opacity: selectedFriends.length === 0 ? 0.5 : 1 },
+        ]}
+        onPress={selectedFriends.length === 0 ? undefined : onPressRandomize}
+        disabled={selectedFriends.length === 0}
+      >
         <View style={styles.iconTextContainer}>
           <Ionicons name="dice-outline" size={28} color={Colors.orangeDark} />
           <Text style={[styles.buttonText, { color: Colors.orangeDark }]}>
-            Find tonights dining spot!
+            Find tonight's dining spot!
           </Text>
         </View>
       </TouchableOpacity>
