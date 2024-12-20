@@ -4,10 +4,10 @@ import {
   PlacePreviewSchema,
 } from "@/constants/types";
 import { useEffect, useState } from "react";
-import useStore from "../store/model";
+import useStore from "../model/storeModel";
 import { router } from "expo-router";
 import FriendProfileView from "@/views/FriendProfileView";
-import { idToLikedPlaces } from "@/utilities/firebaseModel";
+import { idToLikedPlaces } from "@/model/firebaseModel";
 import { Alert, Platform } from "react-native";
 
 export default function FriendProfilePresenter() {

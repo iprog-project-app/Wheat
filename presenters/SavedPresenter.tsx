@@ -1,7 +1,7 @@
 import { PlaceFullSchema, PlacePreviewSchema } from "@/constants/types";
 import SavedView from "../views/SavedView";
 import { useState } from "react";
-import useStore from "../store/model";
+import useStore from "../model/storeModel";
 import { router } from "expo-router";
 
 export default function SavedPresenter() {

@@ -1,5 +1,5 @@
-import useStore from "@/store/model";
-import { updateFirebase } from "@/utilities/firebaseModel";
+import useStore from "@/model/storeModel";
+import { updateFirebase } from "@/model/firebaseModel";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -13,7 +13,7 @@ import LottieView from "lottie-react-native";
 // Firebase
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../Config/firebaseConfig";
-import { fetchUser } from "@/utilities/firebaseModel";
+import { fetchUser } from "@/model/firebaseModel";
 
 import SignInScreen from "./signIn";
 

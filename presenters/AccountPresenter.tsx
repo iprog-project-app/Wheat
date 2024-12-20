@@ -1,4 +1,4 @@
-import useStore from "@/store/model";
+import useStore from "@/model/storeModel";
 import AccountView from "@/views/AccountView";
 import { Alert, Platform } from "react-native";
 

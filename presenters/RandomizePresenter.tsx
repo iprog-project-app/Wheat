@@ -1,5 +1,5 @@
 import RandomizeView from "@/views/RandomizeView";
-import useStore from "@/store/model";
+import useStore from "@/model/storeModel";
 import { useRouter } from "expo-router";
 
 export default function RandomizePresenter() {

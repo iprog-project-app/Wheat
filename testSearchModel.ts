@@ -1,4 +1,4 @@
-import { SearchModel } from "./Model/searchModel"; // Import the SearchModel
+import { SearchModel } from "./model/searchModel"; // Import the SearchModel
 
 const testSearch = async (query: string) => {
   try {

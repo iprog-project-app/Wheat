@@ -1,7 +1,7 @@
 import { View, Image, Text, StyleSheet, Pressable } from "react-native";
 import Colors from "../constants/Colors";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
-import { useStore } from "@/store/model";
+import { useStore } from "@/model/storeModel";
 
 export interface PlaceListItemProps {
   id: string;
