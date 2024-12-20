@@ -9,11 +9,7 @@ import {
 } from "firebase/auth";
 
 import { auth } from "../Config/firebaseConfig";
-import {
-  addUser,
-  friendsSearch,
-  idToLikedPlaces,
-} from "@/utilities/firebaseModel";
+import { addUser } from "@/utilities/firebaseModel";
 
 import SignInView from "@/views/SignInView";
 
@@ -71,6 +67,7 @@ export default function SignInPresenter() {
   // Email passsword
   const signInUser = async () => {
     setLoading(true);
+    console.log("hej");
     if (email && password) {
       try {
         const userCredential = await signInWithEmailAndPassword(
@@ -78,6 +75,7 @@ export default function SignInPresenter() {
           email,
           password
         );
+        console.log("he");
         if (userCredential) {
           const user = userCredential.user;
         }

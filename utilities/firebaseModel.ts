@@ -8,6 +8,8 @@ import {
   collection,
   where,
   QueryDocumentSnapshot,
+  or,
+  and,
 } from "firebase/firestore";
 import { db } from "@/Config/firebaseConfig";
 import { FriendSchema, PlaceFullSchema } from "@/constants/types";
@@ -17,6 +19,8 @@ export const addUser = async (user: UserSchema, uid: string) => {
   try {
     await setDoc(doc(db, "users", uid), {
       ...user,
+      name: user.name.toLowerCase(),
+      email: user.email.toLowerCase(),
     });
     console.log("Document written!");
   } catch (e) {
@@ -24,11 +28,26 @@ export const addUser = async (user: UserSchema, uid: string) => {
   }
 };
 
+const nameConvert = (name: string) => {
+  const nameReducer = (acc: string, name: string) => {
+    return (acc += name[0].toUpperCase() + name.slice(1) + " ");
+  };
+  const caseCorrectName = name.split(" ").reduce(nameReducer, "").slice(0, -1);
+  return caseCorrectName;
+};
+
 export const fetchUser = async (uid: string) => {
   try {
     const userSnapshot = await getDoc(doc(db, "users", uid));
     const userData = userSnapshot.data();
-    return userData as UserSchema;
+
+    if (userData) {
+      const caseCorrectUser = {
+        ...userData,
+        name: nameConvert(userData.name),
+      };
+      return caseCorrectUser as UserSchema;
+    }
   } catch (err) {
     console.error("Error fetching document: ", err);
   }
@@ -63,18 +82,26 @@ export const friendsSearch = async (searchQuery: string) => {
   const extractFriendData = (snapshot: QueryDocumentSnapshot) => {
     const data = snapshot.data();
     return {
-      name: data.name,
+      name: nameConvert(data.name),
       email: data.email,
       userId: snapshot.id,
     };
   };
-
+  const searchLower = searchQuery.toLowerCase();
   try {
     const ref = collection(db, "users");
     const q = query(
       ref,
-      where("email", ">=", searchQuery),
-      where("email", "<", searchQuery + "\uf8ff")
+      or(
+        and(
+          where("email", ">=", searchLower),
+          where("email", "<", searchLower + "\uf8ff")
+        ),
+        and(
+          where("name", ">=", searchLower),
+          where("name", "<", searchLower + "\uf8ff")
+        )
+      )
     );
     const userSnapshots = await getDocs(q);
     const userData = userSnapshots.docs.map(extractFriendData);
