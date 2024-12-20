@@ -43,6 +43,8 @@ export interface StoreSchema extends UserSchema {
   removeLikedPlace: (id: string) => void;
   addLikedPlace: (place: PlaceFullSchema) => void;
   isLikedPlace: (id: string) => boolean;
+  setNote: (note: string) => void;
+  getNoteFromId: (id: string) => string | undefined;
 }
 
 export const useStore = create<StoreSchema>((set, get) => ({
@@ -150,6 +152,24 @@ export const useStore = create<StoreSchema>((set, get) => ({
   activePlaceData: null,
   setActivePlaceData: (place: PlaceFullSchema) =>
     set({ activePlaceData: place }),
+
+  setNote: (note: string, id?: string) =>
+    set((state) => {
+      const updatedLikedPlaces = state.likedPlaces.map((place) =>
+        place.id === (id || state.activePlaceData?.id)
+          ? { ...place, note }
+          : place
+      );
+      return { likedPlaces: updatedLikedPlaces };
+    }),
+
+
+  getNoteFromId: (id: string) => {
+    const place = get().likedPlaces.find((place) => place.id === id);
+    return place?.note && place.note ;
+  },
+
+
   searchQuery: "",
   setSearchQuery: (query: string) => set({ searchQuery: query }),
   searchResultsData: [],
@@ -161,7 +181,8 @@ export const useStore = create<StoreSchema>((set, get) => ({
 
   // Liked Places
   likedPlaces: [],
-  setLikedPlaces: (places: PlaceFullSchema[]) => set({ likedPlaces: places }),
+
+  setLikedPlaces: (places: PlaceFullSchema[]) => set({  likedPlaces: places  }),
   removeLikedPlace: (id: string) => {
     const currentLikedPlaces = get().likedPlaces;
     const updatedLikedPlaces = currentLikedPlaces.filter(

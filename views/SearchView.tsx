@@ -64,7 +64,7 @@ export default function SearchView({
   onPressItem,
   onSearch,
 }: SearchViewProps) {
-  const { isLikedPlace } = useStore();
+  const { getNoteFromId } = useStore();
   const headerComponent = useMemo(
     () => (
       <SearchBarComponent
@@ -93,6 +93,7 @@ export default function SearchView({
           toggleLike={toggleLike(item.id)}
           onPress={onPressItem(item.id)}
           {...item}
+          note={getNoteFromId(item.id)}
         />
       )}
       keyExtractor={(item) => item.id}

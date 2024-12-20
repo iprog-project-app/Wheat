@@ -13,6 +13,8 @@ export default function DetailsPresenter() {
   const isLikedPlace = useStore((state) => state.isLikedPlace);
   const setActivePlaceData = useStore((state) => state.setActivePlaceData);
   const allLikedPlaces = useStore((state) => state.allLikedPlaces);
+  const getNoteFromId = useStore((state) => state.getNoteFromId);
+  const setNote = useStore((state) => state.setNote);
 
   // Event handlers
   // TODO: Move to store/model.ts as its used multiple times
@@ -32,19 +34,13 @@ export default function DetailsPresenter() {
     }
   };
 
-  // TODO: Remove onNoteChange
-  const handleNoteChange = () => {
-    console.log("Note changed");
-  };
-
   const handleBackPress = () => {
     router.back();
   };
 
-  const handleModalClose = () => {
-    // Ha kvar TODO:n nedan, men tills vidare kan passa *note* in i denna funktion och console.logga
-    console.log("Modal closed, save note");
-    // TODO
+  const handleNoteChange = (note: string) => {
+    console.log("Modal closed with note:", note);
+    setNote(note); // Save note to store
   };
 
   const handleLinkPress = () => {
@@ -81,14 +77,16 @@ export default function DetailsPresenter() {
     <DetailsView
       placeData={activePlaceData}
       onLikeToggle={handleLikeToggle}
-      // TODO: Remove onNoteChange
-      onNoteChange={handleNoteChange}
       onBackPress={handleBackPress}
-      // TODO: Add note parameter to onModalClose
-      onModalClose={handleModalClose}
+      onNoteChange={handleNoteChange}
       onLinkPress={handleLinkPress}
       rightButtonState={checkButtonState}
       onRandomize={handleRandomize}
+      note={
+        activePlaceData
+          ? getNoteFromId(activePlaceData.id) || undefined
+          : undefined
+      }
     />
   );
 }
