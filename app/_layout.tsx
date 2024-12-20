@@ -5,9 +5,9 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
-import { Platform, Image, View } from "react-native";
+import { Platform, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import "react-native-reanimated";
+import LottieView from "lottie-react-native";
 
 // SIGNIN
 // Firebase
@@ -104,9 +104,11 @@ export default function RootLayout() {
         alignItems: "center",
       }}
     >
-      <Image
-        source={require("../assets/images/loadGif.gif")} // Path to your image in the project
+      <LottieView
+        source={require("../assets/lottie/spinnerLoading.json")}
         style={{ width: 100, height: 100 }}
+        autoPlay
+        loop
       />
     </View>
   );

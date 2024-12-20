@@ -9,11 +9,7 @@ import {
 } from "firebase/auth";
 
 import { auth } from "../Config/firebaseConfig";
-import {
-  addUser,
-  friendsSearch,
-  idToLikedPlaces,
-} from "@/utilities/firebaseModel";
+import { addUser } from "@/utilities/firebaseModel";
 
 import SignInView from "@/views/SignInView";
 
