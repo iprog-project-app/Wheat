@@ -13,7 +13,6 @@ import {
 
 import InputBox from "@/components/InputBox";
 import Colors from "@/constants/Colors";
-import LottieView from "lottie-react-native";
 
 export interface SignInViewProps {
   onLogIn: () => void;
@@ -85,11 +84,9 @@ export default function SignInView({
                   Log in
                 </Text>
               ) : (
-                <LottieView
-                  source={require("../assets/lottie/dotsLoading.json")}
+                <Image
+                  source={require("../assets/images/buttonLoad.gif")}
                   style={{ width: 100, height: 100 }}
-                  autoPlay
-                  loop
                 />
               )}
             </TouchableOpacity>
@@ -127,11 +124,9 @@ export default function SignInView({
                   Create account
                 </Text>
               ) : (
-                <LottieView
-                  source={require("../assets/lottie/dotsLoading.json")}
+                <Image
+                  source={require("../assets/images/buttonLoad.gif")}
                   style={{ width: 100, height: 100 }}
-                  autoPlay
-                  loop
                 />
               )}
             </TouchableOpacity>
