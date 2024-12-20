@@ -20,7 +20,7 @@ export const addUser = async (user: UserSchema, uid: string) => {
   try {
     await setDoc(doc(db, "users", uid), {
       ...user,
-      name: user.name.toLowerCase(),
+      queryName: user.name.toLowerCase(),
       email: user.email.toLowerCase(),
     });
     console.log("Document written!");
@@ -41,13 +41,9 @@ export const fetchUser = async (uid: string) => {
   try {
     const userSnapshot = await getDoc(doc(db, "users", uid));
     const userData = userSnapshot.data();
-
     if (userData) {
-      const caseCorrectUser = {
-        ...userData,
-        name: nameConvert(userData.name),
-      };
-      return caseCorrectUser as UserSchema;
+      const { queryName, ...dataWithouthQuery } = userData;
+      return dataWithouthQuery as UserSchema;
     }
   } catch (err) {
     console.error("Error fetching document: ", err);
@@ -83,7 +79,7 @@ export const friendsSearch = async (searchQuery: string) => {
   const extractFriendData = (snapshot: QueryDocumentSnapshot) => {
     const data = snapshot.data();
     return {
-      name: nameConvert(data.name),
+      name: data.name,
       email: data.email,
       userId: snapshot.id,
     } as FriendSchema;
@@ -99,27 +95,14 @@ export const friendsSearch = async (searchQuery: string) => {
           where("email", "<", searchLower + "\uf8ff")
         ),
         and(
-          where("name", ">=", searchLower),
-          where("name", "<", searchLower + "\uf8ff")
+          where("queryName", ">=", searchLower),
+          where("queryName", "<", searchLower + "\uf8ff")
         )
       )
     );
-    const q2 = query(
-      ref,
-      where("name", ">=", searchQuery.toLowerCase()),
-      where("name", "<", searchQuery.toLowerCase() + "\uf8ff")
-    );
-    const [userSnapshotsByEmail, userSnapshotsByName] = await Promise.all([
-      getDocs(q),
-      getDocs(q2),
-    ]);
-    const userDataByEmail = userSnapshotsByEmail.docs.map(extractFriendData);
-    const userDataByName = userSnapshotsByName.docs.map(extractFriendData);
-    const userData = [...userDataByEmail, ...userDataByName];
-    const uniqueUserData = Array.from(
-      new Map(userData.map((item) => [item.userId, item])).values()
-    );
-    return uniqueUserData;
+    const userSnapshots = await getDocs(q);
+    const userData = userSnapshots.docs.map(extractFriendData);
+    return userData;
   } catch (err) {
     console.error("Error fetching document: ", err);
   }
