@@ -1,10 +1,10 @@
-import useStore from "@/store/model";
+import useStore from "@/model/model";
 import AccountView from "@/views/AccountView";
 import { Alert, Platform } from "react-native";
 
 // Firebase Auth
 import { signOut } from "firebase/auth";
-import { auth } from "@/Config/firebaseConfig";
+import { auth } from "@/config/firebaseConfig";
 
 export default function AccountPresenter() {
   const { name, email } = useStore();

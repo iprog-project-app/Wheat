@@ -5,7 +5,7 @@ import { FlatList, StyleSheet, View, Text } from "react-native";
 import Colors from "../constants/Colors";
 import { useMemo } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import useStore from "@/store/model";
+import useStore from "@/model/model";
 
 export interface SearchViewProps {
   searchResults: PlacePreviewSchema[];

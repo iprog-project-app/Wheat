@@ -11,10 +11,10 @@ import {
   or,
   and,
 } from "firebase/firestore";
-import { db } from "@/Config/firebaseConfig";
+import { db } from "@/config/firebaseConfig";
 import { FriendSchema, PlaceFullSchema } from "@/constants/types";
 import { UserSchema } from "@/constants/types";
-import { StoreSchema } from "@/store/model";
+import { StoreSchema } from "@/model/model";
 
 export const addUser = async (user: UserSchema, uid: string) => {
   try {

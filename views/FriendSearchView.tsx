@@ -5,7 +5,7 @@ import Colors from "../constants/Colors";
 import { useMemo } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { FriendListItem } from "@/components/FriendListItem";
-import useStore from "@/store/model";
+import useStore from "@/model/model";
 
 export interface FriendSearchViewProps {
   searchResults: FriendSchema[];

@@ -1,7 +1,7 @@
 import { PlaceFullSchema } from "@/constants/types";
 import SearchView from "../views/SearchView";
-import { useStore } from "@/store/model";
-import { SearchModel } from "@/Model/searchModel";
+import { useStore } from "@/model/model";
+import { SearchModel } from "@/model/searchModel";
 import { router } from "expo-router";
 
 export default function SearchPresenter() {

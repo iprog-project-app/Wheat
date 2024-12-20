@@ -1,5 +1,5 @@
 import DetailsView from "../views/DetailsView";
-import useStore from "@/store/model";
+import useStore from "@/model/model";
 import { router } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 

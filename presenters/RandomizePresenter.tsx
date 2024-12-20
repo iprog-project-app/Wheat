@@ -1,5 +1,5 @@
 import RandomizeView from "@/views/RandomizeView";
-import useStore from "@/store/model";
+import useStore from "@/model/model";
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import SegmentedControl from "@react-native-segmented-control/segmented-control";
