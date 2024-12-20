@@ -1,31 +1,35 @@
-import { PlaceListItem } from "@/components/PlaceListItem";
-import { PlacePreviewSchema } from "@/constants/types";
+import { FriendSchema } from "@/constants/types";
 import { SearchBar } from "../components/SearchBar";
 import { FlatList, StyleSheet, View, Text } from "react-native";
 import Colors from "../constants/Colors";
 import { useMemo } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { FriendListItem } from "@/components/FriendListItem";
 import useStore from "@/store/model";
 
-export interface SavedViewProps {
-  searchResults: PlacePreviewSchema[];
+export interface FriendSearchViewProps {
+  searchResults: FriendSchema[];
   searchQuery: string;
   onChangeText: (searchQuery: string) => void;
-  toggleLike: (id: string) => () => void;
-  onPressItem: (id: string) => () => void;
+  onToggleFollow: (user: FriendSchema) => void;
+  onPressItem: (user: FriendSchema) => void;
+  onSearch: () => void;
 }
 
 const SearchBarComponent = ({
   searchQuery,
   onChangeText,
+  onSubmit,
 }: {
   searchQuery: string;
   onChangeText: (text: string) => void;
+  onSubmit: () => void;
 }) => (
   // TODO: Keyboard does not persist taps. Maybe add above FlatList: https://stackoverflow.com/questions/62148855/flatlist-search-bar-does-not-persist-keyboard-react-native
   <SearchBar
     key="searchBar"
-    placeholder="Search saved restaurants"
+    placeholder="Find friends"
+    autoFocus
     value={searchQuery}
     onChangeText={onChangeText}
     containerStyle={{
@@ -39,66 +43,57 @@ const SearchBarComponent = ({
       borderRadius: 8,
       borderCurve: "continuous",
     }}
+    onSubmitEditing={() => onSubmit()}
   />
 );
 
-const EmptyState = ({ searchQuery }: { searchQuery: string }) => (
+const EmptyState = () => (
   <View style={styles.emptyContainer}>
-    <Ionicons
-      name={searchQuery ? "search" : "heart-outline"}
-      size={40}
-      color={Colors.gray2}
-    />
-    <Text style={styles.emptyText}>
-      {searchQuery
-        ? "No results found.\nTry a different search."
-        : "Save restaurants to see them here!"}
-    </Text>
+    <Ionicons name="person-add" size={40} color={Colors.gray2} />
+    <Text style={styles.emptyText}>{"Start searching to find friends!"}</Text>
   </View>
 );
 
-export default function SavedView({
+export default function FriendSearchView({
   searchResults,
   searchQuery,
   onChangeText,
-  toggleLike,
+  onToggleFollow,
   onPressItem,
-}: SavedViewProps) {
+  onSearch,
+}: FriendSearchViewProps) {
   const headerComponent = useMemo(
     () => (
       <SearchBarComponent
         searchQuery={searchQuery}
         onChangeText={onChangeText}
+        onSubmit={onSearch}
       />
     ),
     [searchQuery, onChangeText]
   );
+  const { isFriend } = useStore();
 
   return (
     // TODO: Allow scroll to bottom
     <FlatList
       style={{
-        width: "100%",
         backgroundColor: Colors.white,
       }}
       contentContainerStyle={{ marginBottom: 32 }}
       data={searchResults}
-      getItemLayout={(data, index) => ({
-        // TODO: Might not be the best way
-        length: 73, // approximate height of each item
-        offset: 73 * index,
-        index,
-      })}
-      ListEmptyComponent={<EmptyState searchQuery={searchQuery} />}
+      ListHeaderComponent={headerComponent}
+      stickyHeaderIndices={[0]}
+      ListEmptyComponent={<EmptyState />}
       renderItem={({ item }) => (
-        <PlaceListItem
-          key={item.id}
-          toggleLike={toggleLike(item.id)}
-          onPress={onPressItem(item.id)}
+        <FriendListItem
+          onPressItem={() => onPressItem(item)}
+          onButtonPress={() => onToggleFollow(item)}
+          following={isFriend(item.userId)}
           {...item}
         />
       )}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item.userId}
       ItemSeparatorComponent={() => (
         <View
           style={{ height: 1, width: "100%", backgroundColor: Colors.gray4 }}

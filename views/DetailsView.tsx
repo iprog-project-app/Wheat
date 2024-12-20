@@ -16,7 +16,7 @@ import React from "react";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { Linking } from "react-native";
 
-type DetailsViewProps = {
+interface DetailsViewProps {
   placeData: PlaceFullSchema | null;
   onLikeToggle: (id: string) => void;
   onNoteChange: (text: string) => void;
