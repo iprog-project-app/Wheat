@@ -8,6 +8,8 @@ import {
   collection,
   where,
   QueryDocumentSnapshot,
+  or,
+  and,
 } from "firebase/firestore";
 import { db } from "@/Config/firebaseConfig";
 import { FriendSchema, PlaceFullSchema } from "@/constants/types";
@@ -18,6 +20,8 @@ export const addUser = async (user: UserSchema, uid: string) => {
   try {
     await setDoc(doc(db, "users", uid), {
       ...user,
+      queryName: user.name.toLowerCase(),
+      email: user.email.toLowerCase(),
     });
     console.log("Document written!");
   } catch (e) {
@@ -25,11 +29,22 @@ export const addUser = async (user: UserSchema, uid: string) => {
   }
 };
 
+const nameConvert = (name: string) => {
+  const nameReducer = (acc: string, name: string) => {
+    return (acc += name[0].toUpperCase() + name.slice(1) + " ");
+  };
+  const caseCorrectName = name.split(" ").reduce(nameReducer, "").slice(0, -1);
+  return caseCorrectName;
+};
+
 export const fetchUser = async (uid: string) => {
   try {
     const userSnapshot = await getDoc(doc(db, "users", uid));
     const userData = userSnapshot.data();
-    return userData as UserSchema;
+    if (userData) {
+      const { queryName, ...dataWithouthQuery } = userData;
+      return dataWithouthQuery as UserSchema;
+    }
   } catch (err) {
     console.error("Error fetching document: ", err);
   }
@@ -60,7 +75,10 @@ export const updateFirebase = async (storeState: StoreSchema) => {
 // Output: An array with all users on format {id: sdasfasm, name: Samuel, email: sam@gmail.com}
 //         with an email that contais the input string.
 
-export const friendsSearch = async (searchQuery: string) => {
+export const friendsSearch = async (
+  searchQuery: string,
+  currentUser: string
+) => {
   const extractFriendData = (snapshot: QueryDocumentSnapshot) => {
     const data = snapshot.data();
     return {
@@ -70,26 +88,37 @@ export const friendsSearch = async (searchQuery: string) => {
     } as FriendSchema;
   };
 
-  try {
-    const ref = collection(db, "users");
-    const q = query(
-      ref,
-      where("email", ">=", searchQuery.toLowerCase()),
-      where("email", "<", searchQuery.toLowerCase() + "\uf8ff")
-    );
-    const q2 = query(
-      ref,
-      where("name", ">=", searchQuery.toLowerCase()),
-      where("name", "<", searchQuery.toLowerCase() + "\uf8ff")
-    );
-    const [userSnapshotsByEmail, userSnapshotsByName] = await Promise.all([getDocs(q), getDocs(q2)]);
-    const userDataByEmail = userSnapshotsByEmail.docs.map(extractFriendData);
-    const userDataByName = userSnapshotsByName.docs.map(extractFriendData);
-    const userData = [...userDataByEmail, ...userDataByName];
-    const uniqueUserData = Array.from(new Map(userData.map(item => [item.userId, item])).values());
-    return uniqueUserData;
-  } catch (err) {
-    console.error("Error fetching document: ", err);
+  const filterCurrentUser = (user: FriendSchema) => {
+    return user.email !== currentUser;
+  };
+
+  if (searchQuery) {
+    const searchLower = searchQuery.toLowerCase();
+    try {
+      const ref = collection(db, "users");
+      const q = query(
+        ref,
+        or(
+          and(
+            where("email", ">=", searchLower),
+            where("email", "<", searchLower + "\uf8ff")
+          ),
+          and(
+            where("queryName", ">=", searchLower),
+            where("queryName", "<", searchLower + "\uf8ff")
+          )
+        )
+      );
+      const userSnapshots = await getDocs(q);
+      const userData = userSnapshots.docs
+        .map(extractFriendData)
+        .filter(filterCurrentUser);
+      return userData;
+    } catch (err) {
+      console.error("Error fetching document: ", err);
+    }
+  } else {
+    return [];
   }
 };
 
@@ -97,7 +126,9 @@ export const friendsSearch = async (searchQuery: string) => {
 // Input: a string (user id)
 // Output: An array with their liked places e.g. [{likedPlace1}, {likedPlace2}]
 
-export const idToLikedPlaces = async (uid: string): Promise<PlaceFullSchema[]> => {
+export const idToLikedPlaces = async (
+  uid: string
+): Promise<PlaceFullSchema[]> => {
   try {
     const ref = doc(db, "users", uid);
     const snapshot = await getDoc(ref);

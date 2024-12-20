@@ -16,6 +16,7 @@ export default function FriendSearchPresenter() {
   const { friendSearchResultsData, setFriendSearchResultsData } = useStore();
   const { friends } = useStore();
   const { isFriend } = useStore();
+  const { email } = useStore();
 
   // TODO: Move to store/model.ts as its used multiple times
   const sortResults = (results: FriendSchema[]) => {
@@ -36,7 +37,7 @@ export default function FriendSearchPresenter() {
   const handleSearch = async () => {
     try {
       // Call the fetchPlacesByTextSearch function and await the result
-      const friendsResults = await friendsSearch(friendSearchQuery);
+      const friendsResults = await friendsSearch(friendSearchQuery, email);
       console.log("Friends results: ", friendsResults);
       if (friendsResults) {
         setFriendSearchResultsData(friendsResults);

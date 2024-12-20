@@ -5,9 +5,8 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
-import { Platform, View } from "react-native";
+import { Platform, View, Image } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import LottieView from "lottie-react-native";
 
 // SIGNIN
 // Firebase
@@ -38,6 +37,7 @@ export default function RootLayout() {
 
   const [loading, setLoading] = useState<boolean>(false);
 
+  const storeState = useStore((state) => state);
   const {
     friends,
     recentSearches,
@@ -45,8 +45,7 @@ export default function RootLayout() {
     loggedInUserId,
     setLoggedInUserId,
     setUser,
-  } = useStore();
-  const storeState = useStore();
+  } = storeState;
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
@@ -104,11 +103,9 @@ export default function RootLayout() {
         alignItems: "center",
       }}
     >
-      <LottieView
-        source={require("../assets/lottie/spinnerLoading.json")}
+      <Image
+        source={require("../assets/images/loadGif.gif")}
         style={{ width: 100, height: 100 }}
-        autoPlay
-        loop
       />
     </View>
   );

@@ -37,18 +37,14 @@ export default function InputBox({
   );
 }
 
-const { width } = Dimensions.get("window");
-
 const styles = StyleSheet.create({
   input: {
-    padding: 15,
-    height: 50,
+    padding: 16,
     backgroundColor: Colors.gray5,
-    width: width * 0.85,
-    marginTop: 16,
     borderRadius: 8,
     borderColor: "red",
-    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
   },
   focused: {
     borderWidth: 1,

@@ -13,7 +13,6 @@ import {
 
 import InputBox from "@/components/InputBox";
 import Colors from "@/constants/Colors";
-import LottieView from "lottie-react-native";
 
 export interface SignInViewProps {
   onLogIn: () => void;
@@ -59,7 +58,7 @@ export default function SignInView({
           source={require("../assets/images/wheatLogo.png")}
         />
         {hasAccount ? (
-          <View>
+          <View style={styles.inputsContainer}>
             <InputBox
               error={error}
               value={email}
@@ -85,17 +84,15 @@ export default function SignInView({
                   Log in
                 </Text>
               ) : (
-                <LottieView
-                  source={require("../assets/lottie/dotsLoading.json")}
+                <Image
+                  source={require("../assets/images/buttonLoad.gif")}
                   style={{ width: 100, height: 100 }}
-                  autoPlay
-                  loop
                 />
               )}
             </TouchableOpacity>
           </View>
         ) : (
-          <View>
+          <View style={styles.inputsContainer}> 
             <InputBox
               error={error}
               value={name}
@@ -127,11 +124,9 @@ export default function SignInView({
                   Create account
                 </Text>
               ) : (
-                <LottieView
-                  source={require("../assets/lottie/dotsLoading.json")}
+                <Image
+                  source={require("../assets/images/buttonLoad.gif")}
                   style={{ width: 100, height: 100 }}
-                  autoPlay
-                  loop
                 />
               )}
             </TouchableOpacity>
@@ -151,19 +146,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
     paddingTop: 50,
+    paddingHorizontal: 32,
   },
   logo: {
     width: 100,
     height: 100,
     borderRadius: 10,
     marginBottom: 90,
+    alignSelf: "center",
   },
   toggleAccount: {
     color: Colors.gray3,
     padding: 20,
     marginTop: 20,
+    alignSelf: "center",
+
   },
   errorMessage: {
     padding: 20,
@@ -172,12 +170,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignSelf: "center",
   },
+
+  inputsContainer: {
+    flexDirection: "column",
+    justifyContent: "center",
+    gap: 16,
+  },
+
   signButton: {
-    padding: 15,
-    height: 50,
+    padding: 16,
     backgroundColor: Colors.primary,
-    width: width * 0.85,
-    marginTop: 16,
     borderRadius: 8,
     borderColor: "red",
     alignItems: "center",
