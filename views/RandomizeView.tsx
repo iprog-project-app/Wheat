@@ -29,15 +29,11 @@ export default function RadomizeView({
         >
           <View style={styles.iconTextContainer}>
             <Ionicons name="dice-outline" size={28} color={Colors.orangeDark} />
-            <Text style={[styles.buttonText, { color: Colors.orangeDark }]}>
-              Find tonights dining spot!
-            </Text>
+            <Text style={styles.buttonText}>Find tonights dining spot!</Text>
           </View>
         </TouchableOpacity>
         {onPressFilter && (
-          <TouchableOpacity
-            style={[styles.filterButton, { backgroundColor: Colors.white }]}
-          >
+          <TouchableOpacity style={styles.filterButton}>
             <View style={styles.iconTextContainer}>
               <Ionicons
                 name="filter-circle-outline"
@@ -58,7 +54,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.white,
     paddingHorizontal: 32,
-    paddingVertical: 64,
+    paddingBottom: 64,
   },
   info: {
     flex: 1,
@@ -71,7 +67,6 @@ const styles = StyleSheet.create({
   options: {
     flexDirection: "column",
     justifyContent: "center",
-    paddingBottom: 64,
     gap: 16,
   },
   title: {
@@ -89,7 +84,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderCurve: "continuous",
     alignItems: "center",
-    backgroundColor: Colors.greenLight,
+    backgroundColor: Colors.yellowLight,
     // Shadow for iOS
     shadowColor: Colors.black,
     shadowOffset: {
@@ -104,7 +99,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: Colors.greenDark,
+    color: Colors.orangeDark,
   },
   filterButtonText: {
     fontSize: 16,

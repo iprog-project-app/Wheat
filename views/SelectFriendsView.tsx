@@ -68,14 +68,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.white,
+    paddingVertical: 64,
   },
   info: {
     padding: 16,
   },
   button: {
-    bottom: 64,
     marginHorizontal: 32,
-    marginVertical: 16,
     padding: 16,
     borderRadius: 16,
     borderCurve: "continuous",
