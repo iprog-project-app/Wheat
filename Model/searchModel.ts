@@ -85,8 +85,6 @@ export const fetchPlacesByTextSearch = async (
         ? ("$".repeat(place.price_level) as PlaceFullSchema["price"])
         : "$",
       website: "", // Needs another API call to fetch this detail
-      // TODO: Should we load in the note here already?
-      // note: getNoteFromId(place.place_id),
     }));
   } catch (error) {
     console.error("Fetch error:", error);
