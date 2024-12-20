@@ -113,7 +113,7 @@ export default function RootLayout() {
         />
       ) : (
         <Image
-          source={require("../assets/images/loading.gif")}
+          source={require("../assets/images/loadGif.gif")}
           style={{ width: 100, height: 100 }}
         />
       )}
