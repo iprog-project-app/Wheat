@@ -6,6 +6,7 @@ import Colors from "../constants/Colors";
 import { useMemo } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import useStore from "@/model/model";
+import { AnimatedButton } from "@/components/AnimatedButton";
 
 export interface SavedViewProps {
   searchResults: PlacePreviewSchema[];
@@ -50,9 +51,20 @@ const EmptyState = ({ searchQuery }: { searchQuery: string }) => (
       color={Colors.gray2}
     />
     <Text style={styles.emptyText}>
-      {searchQuery
-        ? "No results found.\nTry a different search."
-        : "Save restaurants to see them here!"}
+      {searchQuery ? (
+        "No results found.\nTry a different search."
+      ) : (
+        <>
+          {" "}
+          Press{" "}
+          <AnimatedButton>
+            <View style={styles.mainButton}>
+              <Ionicons name="search" size={16} color={Colors.white} />
+            </View>
+          </AnimatedButton>{" "}
+          to find and save your favourite restaurants.
+        </>
+      )}
     </Text>
   </View>
 );
@@ -136,5 +148,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.gray2,
     textAlign: "center",
+  },
+  mainButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 999,
+    backgroundColor: Colors.primary,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
