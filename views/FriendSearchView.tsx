@@ -6,10 +6,12 @@ import { useMemo } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { FriendListItem } from "@/components/FriendListItem";
 import useStore from "@/model/model";
+import { LoadingState } from "@/components/LoadingState";
 
 export interface FriendSearchViewProps {
   searchResults: FriendSchema[];
   searchQuery: string;
+  isLoading: boolean;
   onChangeText: (searchQuery: string) => void;
   onToggleFollow: (user: FriendSchema) => void;
   onPressItem: (user: FriendSchema) => void;
@@ -57,6 +59,7 @@ const EmptyState = () => (
 export default function FriendSearchView({
   searchResults,
   searchQuery,
+  isLoading,
   onChangeText,
   onToggleFollow,
   onPressItem,
@@ -75,31 +78,40 @@ export default function FriendSearchView({
   const { isFriend } = useStore();
 
   return (
-    // TODO: Allow scroll to bottom
-    <FlatList
-      style={{
-        backgroundColor: Colors.white,
-      }}
-      contentContainerStyle={{ marginBottom: 32 }}
-      data={searchResults}
-      ListHeaderComponent={headerComponent}
-      stickyHeaderIndices={[0]}
-      ListEmptyComponent={<EmptyState />}
-      renderItem={({ item }) => (
-        <FriendListItem
-          onPressItem={() => onPressItem(item)}
-          onButtonPress={() => onToggleFollow(item)}
-          following={isFriend(item.userId)}
-          {...item}
+    <View style={{ flex: 1 }}>
+      {headerComponent}
+      {isLoading ? (
+        <LoadingState />
+      ) : (
+        <FlatList
+          style={{
+            backgroundColor: Colors.white,
+          }}
+          contentContainerStyle={{ marginBottom: 32 }}
+          data={searchResults}
+          stickyHeaderIndices={[0]}
+          ListEmptyComponent={<EmptyState />}
+          renderItem={({ item }) => (
+            <FriendListItem
+              onPressItem={() => onPressItem(item)}
+              onButtonPress={() => onToggleFollow(item)}
+              following={isFriend(item.userId)}
+              {...item}
+            />
+          )}
+          keyExtractor={(item) => item.userId}
+          ItemSeparatorComponent={() => (
+            <View
+              style={{
+                height: 1,
+                width: "100%",
+                backgroundColor: Colors.gray4,
+              }}
+            />
+          )}
         />
       )}
-      keyExtractor={(item) => item.userId}
-      ItemSeparatorComponent={() => (
-        <View
-          style={{ height: 1, width: "100%", backgroundColor: Colors.gray4 }}
-        />
-      )}
-    />
+    </View>
   );
 }
 

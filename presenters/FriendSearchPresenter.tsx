@@ -17,6 +17,7 @@ export default function FriendSearchPresenter() {
   const { friends } = useStore();
   const { isFriend } = useStore();
   const { email } = useStore();
+  const [isLoading, setIsLoading] = useState(false);
 
   // TODO: Move to store/model.ts as its used multiple times
   const sortResults = (results: FriendSchema[]) => {
@@ -35,6 +36,7 @@ export default function FriendSearchPresenter() {
   // TODO:handle toggle follow
 
   const handleSearch = async () => {
+    setIsLoading(true);
     try {
       // Call the fetchPlacesByTextSearch function and await the result
       const friendsResults = await friendsSearch(friendSearchQuery, email);
@@ -44,6 +46,8 @@ export default function FriendSearchPresenter() {
       }
     } catch (error) {
       console.error("Error fetching places:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -93,6 +97,7 @@ export default function FriendSearchPresenter() {
       onToggleFollow={handleToggleFollow}
       onPressItem={toggleActiveData}
       onSearch={handleSearch}
+      isLoading={isLoading}
     />
   );
 }

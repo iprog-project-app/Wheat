@@ -3,6 +3,7 @@ import SearchView from "../views/SearchView";
 import { useStore } from "@/model/model";
 import { SearchModel } from "@/model/searchModel";
 import { router } from "expo-router";
+import { useState } from "react";
 
 export default function SearchPresenter() {
   const setActivePlaceData = useStore((state) => state.setActivePlaceData);
@@ -11,6 +12,7 @@ export default function SearchPresenter() {
   const isLikedPlace = useStore((state) => state.isLikedPlace);
   const { searchQuery, setSearchQuery } = useStore();
   const { searchResultsData, setSearchResultsData } = useStore();
+  const [isLoading, setIsLoading] = useState(false);
 
   // TODO: Move to store/model.ts as its used multiple times
   function idToItem(id: string) {
@@ -51,6 +53,7 @@ export default function SearchPresenter() {
   };
 
   const handleSearch = async () => {
+    setIsLoading(true);
     try {
       // Call the fetchPlacesByTextSearch function and await the result
       const places = await SearchModel.fetchPlacesByTextSearch(searchQuery);
@@ -61,6 +64,8 @@ export default function SearchPresenter() {
       console.log("Search Results:", places);
     } catch (error) {
       console.error("Error fetching places:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -68,6 +73,7 @@ export default function SearchPresenter() {
     <SearchView
       searchQuery={searchQuery}
       searchResults={sortResults(searchResultsData)}
+      isLoading={isLoading}
       onChangeText={updateSearch}
       toggleLike={handleToggleLike}
       onPressItem={toggleActiveData}

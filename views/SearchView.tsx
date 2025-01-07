@@ -1,15 +1,17 @@
 import { PlaceListItem } from "@/components/PlaceListItem";
 import { PlacePreviewSchema } from "@/constants/types";
 import { SearchBar } from "../components/SearchBar";
-import { FlatList, StyleSheet, View, Text } from "react-native";
+import { FlatList, StyleSheet, View, Text, Image } from "react-native";
 import Colors from "../constants/Colors";
 import { useMemo } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import useStore from "@/model/model";
+import { LoadingState } from "@/components/LoadingState";
 
 export interface SearchViewProps {
   searchResults: PlacePreviewSchema[];
   searchQuery: string;
+  isLoading: boolean;
   onChangeText: (searchQuery: string) => void;
   toggleLike: (id: string) => () => void;
   onPressItem: (id: string) => () => void;
@@ -59,6 +61,7 @@ const EmptyState = () => (
 export default function SearchView({
   searchResults,
   searchQuery,
+  isLoading,
   onChangeText,
   toggleLike,
   onPressItem,
@@ -77,37 +80,48 @@ export default function SearchView({
   );
 
   return (
-    // TODO: Allow scroll to bottom
-    <FlatList
-      style={{
-        backgroundColor: Colors.white,
-      }}
-      contentContainerStyle={{ marginBottom: 32 }}
-      data={searchResults}
-      ListHeaderComponent={headerComponent}
-      stickyHeaderIndices={[0]}
-      ListEmptyComponent={<EmptyState />}
-      renderItem={({ item }) => (
-        <PlaceListItem
-          key={item.id}
-          toggleLike={toggleLike(item.id)}
-          onPress={onPressItem(item.id)}
-          {...item}
-          note={getNoteFromId(item.id)}
+    <View style={{ flex: 1 }}>
+      {headerComponent}
+      {isLoading ? (
+        <LoadingState />
+      ) : (
+        <FlatList
+          style={{
+            backgroundColor: Colors.white,
+          }}
+          contentContainerStyle={{ marginBottom: 32 }}
+          data={searchResults}
+          ListHeaderComponent={null}
+          stickyHeaderIndices={[0]}
+          ListEmptyComponent={<EmptyState />}
+          renderItem={({ item }) => (
+            <PlaceListItem
+              key={item.id}
+              toggleLike={toggleLike(item.id)}
+              onPress={onPressItem(item.id)}
+              {...item}
+              note={getNoteFromId(item.id)}
+            />
+          )}
+          keyExtractor={(item) => item.id}
+          ItemSeparatorComponent={() => (
+            <View
+              style={{
+                height: 1,
+                width: "100%",
+                backgroundColor: Colors.gray4,
+              }}
+            />
+          )}
         />
       )}
-      keyExtractor={(item) => item.id}
-      ItemSeparatorComponent={() => (
-        <View
-          style={{ height: 1, width: "100%", backgroundColor: Colors.gray4 }}
-        />
-      )}
-    />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: Colors.white,
     flex: 1,
     paddingHorizontal: 16,
     gap: 8,
